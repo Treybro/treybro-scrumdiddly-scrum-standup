@@ -9,6 +9,11 @@ import styles from '../styles/welcomeScreenStyle';
 
 const styleSettings = require ('../settings/styleSettings');
 
+/*
+* Responsible for displaying the welcome screen
+* to the user.
+* TODO - May ask for login details here?
+*/
 class WelcomeScreen extends Component {
 
   constructor (props) {

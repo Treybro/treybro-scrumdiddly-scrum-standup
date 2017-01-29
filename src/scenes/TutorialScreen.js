@@ -11,6 +11,10 @@ import Swiper from 'react-native-swiper';
 
 import styles from '../styles/tutorialScreenStyle';
 
+/*
+* Handles the display of our
+* tutorial section to users
+*/
 class TutorialScreen extends Component {
 
   constructor (props) {
@@ -40,14 +44,17 @@ class TutorialScreen extends Component {
   }
 }
 
+//  Redux functions mapping
 const mapDispatchToProps = dispatch => ({
 
   finishTutorial: () => dispatch(completeTutorial()),
 });
 
-function mapStateToProps(state) {
+//  Redux state mapping
+const mapStateToProps = state => ({
 
-  return {};
-}
+  hasViewedTutorial: state.hasViewedTutorial,
+});
 
+//  Wire this component to redux with our state and dispatch mappings
 export default connect (mapStateToProps, mapDispatchToProps)(TutorialScreen);

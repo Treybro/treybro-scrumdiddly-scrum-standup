@@ -6,6 +6,10 @@ import {
 
 import styles from '../styles/loadingScreenStyle';
 
+/*
+* Responsible for displaying the main app
+* loading screen/animations/transitions
+*/
 class LoadingScreen extends Component {
 
   constructor (props) {

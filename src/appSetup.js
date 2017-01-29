@@ -10,6 +10,13 @@ import App from './App';
 
 let store = createStore(toDoApp);
 
+/*
+* Responsible for configuring middleware
+* to be used by the entire app
+*
+* TODO - create different component to handle the store
+* creation process
+*/
 class Setup extends Component {
 
   constructor (props) {
@@ -21,7 +28,9 @@ class Setup extends Component {
 
     return (
 
+      //  Redux provider for our app
       <Provider store={store}>
+        {/* Our app root component */}
         <App />
       </Provider>
     );
