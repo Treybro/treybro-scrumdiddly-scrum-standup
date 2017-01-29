@@ -6,6 +6,8 @@ import {
 import appSettings from './settings/appSettings';
 
 import LoadingScreen from './scenes/LoadingScreen';
+import WelcomeScreen from './scenes/WelcomeScreen';
+import TutorialScreen from './scenes/TutorialScreen';
 
 class App extends Component {
 
@@ -15,6 +17,7 @@ class App extends Component {
     this.state = {
 
       isLoading: true,
+      hasViewedTutorial: false,
     }
 
     //  Set timer for loading screen
@@ -33,12 +36,16 @@ class App extends Component {
       return <LoadingScreen />;
     }
 
-    return <Text>Hello</Text>;
+    if (this.state.hasViewedTutorial === false) {
+
+      return <TutorialScreen />;
+    }
+
+    return <WelcomeScreen />;
   }
 
   _stopLoading = () => {
-
-    console.log ('djwbaiodaw');
+    
     this.setState ({
 
       isLoading: false,

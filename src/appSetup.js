@@ -2,8 +2,13 @@ import React, { Component } from 'react';
 import {
   Text,
 } from 'react-native';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import toDoApp from './reducers/tutorialReducer';
 
 import App from './App';
+
+let store = createStore(toDoApp);
 
 class Setup extends Component {
 
@@ -16,7 +21,9 @@ class Setup extends Component {
 
     return (
 
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     );
   }
 }
