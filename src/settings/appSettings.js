@@ -1,6 +1,6 @@
 const appSettings = {
 
-  appLoadingTime: 1000,
+	appLoadingTime: 1000,
 };
 
 module.exports = appSettings;

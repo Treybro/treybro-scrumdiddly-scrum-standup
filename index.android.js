@@ -1,4 +1,4 @@
-import { AppRegistry } from 'react-native';
-import Setup from './src/appSetup';
+import { AppRegistry } from "react-native";
+import Setup from "./src/appSetup";
 
-AppRegistry.registerComponent('scrumdiddly', () => Setup);
+AppRegistry.registerComponent("scrumdiddly", () => Setup);

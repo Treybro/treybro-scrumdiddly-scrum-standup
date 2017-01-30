@@ -1,12 +1,9 @@
-import React, { Component } from 'react';
-import {
-  Text,
-} from 'react-native';
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import toDoApp from './reducers/tutorialReducer';
+import React, { Component } from "react";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import toDoApp from "./reducers/tutorialReducer";
 
-import App from './App';
+import App from "./App";
 
 let store = createStore(toDoApp);
 
@@ -19,22 +16,22 @@ let store = createStore(toDoApp);
 */
 class Setup extends Component {
 
-  constructor (props) {
+	constructor (props) {
 
-    super (props);
-  }
+		super (props);
+	}
 
-  render () {
+	render () {
 
-    return (
+		return (
 
-      //  Redux provider for our app
-      <Provider store={store}>
-        {/* Our app root component */}
-        <App />
-      </Provider>
-    );
-  }
+			//  Redux provider for our app
+			<Provider store={store}>
+				{/* Our app root component */}
+				<App />
+			</Provider>
+		);
+	}
 }
 
 export default Setup;

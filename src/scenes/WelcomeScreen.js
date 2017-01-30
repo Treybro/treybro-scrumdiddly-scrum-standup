@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
-  View,
-  Text,
-  TouchableHighlight,
-} from 'react-native';
+	View,
+	Text,
+	TouchableHighlight,
+} from "react-native";
 
-import styles from '../styles/welcomeScreenStyle';
+import styles from "../styles/welcomeScreenStyle";
 
-const styleSettings = require ('../settings/styleSettings');
+const styleSettings = require ("../settings/styleSettings");
 
 /*
 * Responsible for displaying the welcome screen
@@ -16,28 +16,40 @@ const styleSettings = require ('../settings/styleSettings');
 */
 class WelcomeScreen extends Component {
 
-  constructor (props) {
+	constructor (props) {
 
-    super (props);
-  }
+		super (props);
+		this.state = {
 
-  render () {
+			enterButtonPressed: false,
+		};
+	}
 
-    return (
+	render () {
 
-      <View style={styles.containerView}>
-        <Text style={styles.welcomeText}>Welcome to Scrumdiddly!</Text>
-        <TouchableHighlight underlayColor={styleSettings.lightBlue} onPress={this._onPressButton} style={styles.enterButton}>
-          <Text style={styles.enterButtonText}>Enter</Text>
-        </TouchableHighlight>
-      </View>
-    );
-  }
+		if (this.state.enterButtonPressed === false) {
 
-  _onPressButton = () => {
+			return (
 
-    console.log ('Press me!');
-  }
+				<View style={styles.containerView}>
+					<Text style={styles.welcomeText}>Welcome to Scrumdiddly!</Text>
+					<TouchableHighlight underlayColor={styleSettings.lightBlue} onPress={this._onPressButton} style={styles.enterButton}>
+						<Text style={styles.enterButtonText}>Enter</Text>
+					</TouchableHighlight>
+				</View>
+			);
+		}
+
+		return (<Text>Yo</Text>);
+	}
+
+	_onPressButton = () => {
+
+		this.setState ({
+
+			enterButtonPressed: true,
+		});
+	}
 }
 
 export default WelcomeScreen;

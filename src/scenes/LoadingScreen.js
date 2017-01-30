@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
-  View,
-  Text,
-} from 'react-native';
+	View,
+	Text,
+} from "react-native";
 
-import styles from '../styles/loadingScreenStyle';
+import styles from "../styles/loadingScreenStyle";
 
 /*
 * Responsible for displaying the main app
@@ -12,20 +12,20 @@ import styles from '../styles/loadingScreenStyle';
 */
 class LoadingScreen extends Component {
 
-  constructor (props) {
+	constructor (props) {
 
-    super (props);
-  }
+		super (props);
+	}
 
-  render () {
+	render () {
 
-    return (
+		return (
 
-      <View style={styles.containerView}>
-        <Text style={styles.loadingText}>Loading, please wait...</Text>
-      </View>
-    );
-  }
+			<View style={styles.containerView}>
+				<Text style={styles.loadingText}>Loading, please wait...</Text>
+			</View>
+		);
+	}
 }
 
 export default LoadingScreen;

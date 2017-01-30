@@ -1,19 +1,19 @@
-const styleSettings = require ('../settings/styleSettings');
+const styleSettings = require ("../settings/styleSettings");
 
-const React = require ('react-native');
+const React = require ("react-native");
 const { StyleSheet } = React;
 
 module.exports = StyleSheet.create ({
 
-  containerView: {
+	containerView: {
 
-    flex: 1,
-    backgroundColor: styleSettings.pink,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  loadingText: {
+		flex: 1,
+		backgroundColor: styleSettings.pink,
+		justifyContent: "center",
+		alignItems: "center",
+	},
+	loadingText: {
 
-    color: styleSettings.white,
-  }
+		color: styleSettings.white,
+	}
 });

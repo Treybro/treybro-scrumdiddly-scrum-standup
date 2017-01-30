@@ -1,14 +1,11 @@
-import React, { Component } from 'react';
-import {
-  Text,
-} from 'react-native';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { connect } from "react-redux";
 
-import appSettings from './settings/appSettings';
+import appSettings from "./settings/appSettings";
 
-import LoadingScreen from './scenes/LoadingScreen';
-import WelcomeScreen from './scenes/WelcomeScreen';
-import TutorialScreen from './scenes/TutorialScreen';
+import LoadingScreen from "./scenes/LoadingScreen";
+import WelcomeScreen from "./scenes/WelcomeScreen";
+import TutorialScreen from "./scenes/TutorialScreen";
 
 /*
 * App Root
@@ -17,51 +14,56 @@ import TutorialScreen from './scenes/TutorialScreen';
 */
 class App extends Component {
 
-  constructor (props) {
+	static propTypes = {
 
-    super (props);
-    //  Spoof loading screen
-    //  TODO add this to redux - reducer/action
-    this.state = {
+		hasViewedTutorial: React.PropTypes.bool,
+	};
 
-      isLoading: true,
-    }
+	constructor (props) {
 
-    //  Set timer for loading screen
-    var intervalReference = setInterval (() => {
+		super (props);
+		//  Spoof loading screen
+		//  TODO add this to redux - reducer/action
+		this.state = {
 
-      this._stopLoading ();
-      //  Cancel the loading timer
-      clearInterval(intervalReference);
-    }, appSettings.appLoadingTime);
-  }
+			isLoading: true,
+		};
 
-  render () {
+		//  Set timer for loading screen
+		var intervalReference = setInterval (() => {
 
-    //  Are we loading?
-    if (this.state.isLoading === true) {
+			this._stopLoading ();
+			//  Cancel the loading timer
+			clearInterval(intervalReference);
+		}, appSettings.appLoadingTime);
+	}
 
-      return <LoadingScreen />;
-    }
+	render () {
 
-    //  First time app open?
-    if (this.props.hasViewedTutorial === false) {
+		//  Are we loading?
+		if (this.state.isLoading === true) {
 
-      return <TutorialScreen />;
-    }
+			return <LoadingScreen />;
+		}
 
-    //  User has been here before
-    return <WelcomeScreen />;
-  }
+		//  First time app open?
+		if (this.props.hasViewedTutorial === false) {
 
-  //  Tell the component to stop loading
-  _stopLoading = () => {
-    
-    this.setState ({
+			return <TutorialScreen />;
+		}
 
-      isLoading: false,
-    });
-  };
+		//  User has been here before
+		return <WelcomeScreen />;
+	}
+
+	//  Tell the component to stop loading
+	_stopLoading = () => {
+		
+		this.setState ({
+
+			isLoading: false,
+		});
+	};
 }
 
 /*
@@ -72,7 +74,7 @@ class App extends Component {
 */
 const mapStateToProps = state => ({
 
-  hasViewedTutorial: state.hasViewedTutorial,
+	hasViewedTutorial: state.hasViewedTutorial,
 });
 
 export default connect(mapStateToProps)(App);

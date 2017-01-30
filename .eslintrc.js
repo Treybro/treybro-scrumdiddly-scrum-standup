@@ -1,12 +1,19 @@
 module.exports = {
+
+    "parser": "babel-eslint",
     "env": {
-        "browser": true,
+
         "node": true,
         "es6": true
     },
-    "extends": "eslint:recommended",
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended"
+    ],
     "parserOptions": {
+
         "ecmaFeatures": {
+
             "experimentalObjectRestSpread": true,
             "modules": true,
             "jsx": true
@@ -14,24 +21,34 @@ module.exports = {
         "sourceType": "module"
     },
     "plugins": [
-        "react"
+
+        "react",
+        "react-native",
     ],
     "rules": {
+
         "indent": [
+
             "error",
-            2
+            "tab"
         ],
         "linebreak-style": [
+
             "error",
             "windows",
         ],
         "quotes": [
+
             "error",
-            "single"
+            "double"
         ],
         "semi": [
+
             "error",
             "always"
-        ]
+        ],
+        "react-native/no-unused-styles": 2,
+        "react-native/split-platform-components": 2,
+        "react-native/no-inline-styles": 2,
     }
 };
