@@ -5,6 +5,8 @@ import {
 	Text,
 	TouchableOpacity,
 } from "react-native";
+import { connect } from "react-redux";
+import { selectedListItem } from "../actions/drawerActions";
 
 //	Styles for this component
 import styles from "../styles/drawerListItemStyle";
@@ -20,6 +22,7 @@ class DrawerHeader extends Component {
 
 		listItemData: React.PropTypes.string,
 		navigator: React.PropTypes.object,
+		selectListItem: React.PropTypes.func,
 	};
 
 	//	Set style based if the button is selected or not
@@ -29,28 +32,16 @@ class DrawerHeader extends Component {
 	constructor (props) {
 
 		super (props);
-
-		this.state =  ({
-
-			selected: false,
-		});
-		//	Are we showing the screen associated with the drawer option?
-		if (this.props.listItemRowId == this.props.navigator.state.index) {
-
-			isSelected = true;
-		} else {
-
-			isSelected = false;
-		}
+		console.log ("HEEEEEELLOOOO" + this.props.navigator.state.index);
 	}
 
 	render () {
 
-		if (this.state.selected === true || isSelected === true) {
+		if (this.props.selected === true) {
 
 			return (
 
-				<TouchableOpacity onPress={() => this._navigate ()} style={styles.selectedButton}>
+				<TouchableOpacity onPress={this.props.selectListItem} style={styles.selectedButton}>
 					<Text style={styles.buttonText}>{this.props.listItemData}</Text>
 				</TouchableOpacity>
 			);
@@ -58,7 +49,7 @@ class DrawerHeader extends Component {
 
 		return (
 
-			<TouchableOpacity onPress={() => this._navigate ()} style={styles.button}>
+			<TouchableOpacity onPress={this._navigate} style={styles.button}>
 				<Text style={styles.buttonText}>{this.props.listItemData}</Text>
 			</TouchableOpacity>
 		);
@@ -66,13 +57,26 @@ class DrawerHeader extends Component {
 
 	_navigate = () => {
 
-		console.log ("Navigate baby");
-		this.setState ({
-
-			selected: true,
-		});
+		this.props.selectListItem ();
 		this.props.navigator.navigate ("ScreenTwo");
 	}
 }
 
-export default DrawerHeader;
+//  Redux functions mapping
+const mapDispatchToProps = dispatch => ({
+
+	selectListItem: () => {
+
+		dispatch(selectedListItem());
+	},
+});
+
+//  Redux state mapping
+const mapStateToProps = state => ({
+
+	selected: state.selected,
+});
+
+
+//  Wire this component to redux with our state and dispatch mappings
+export default connect (mapStateToProps, mapDispatchToProps)(DrawerHeader);
