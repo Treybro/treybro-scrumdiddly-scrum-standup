@@ -3,7 +3,7 @@ import { TUTORIAL_COMPLETED } from "../actions/tutorialActions";
 //  Default state to prepare for null
 const tutorialState = {
 
-	hasViewedTutorial: true,
+	hasViewedTutorial: false,
 };
 
 const tutorialReducer = (state = tutorialState, action) => {

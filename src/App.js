@@ -53,11 +53,13 @@ class App extends Component {
 			return <TutorialScreen />;
 		}
 
+		//	Display welcome screen?
 		if (this.props.enterButtonPressed === false) {
 
 			return <WelcomeScreen />;
 		}
 
+		//	Last option - show the app
 		return <RootNavigation />;
 	}
 

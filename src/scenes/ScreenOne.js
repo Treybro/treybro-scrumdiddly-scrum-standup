@@ -2,8 +2,16 @@
 import React, { Component } from "react";
 //	React native components
 import {
+	Text,
+	View,
 	Button,
+	Image,
+	TouchableOpacity,
 } from "react-native";
+
+import styles from "../styles/screenOneStyle";
+
+import icon from "../assets/images/icon-add.png";
 
 class ScreenOne extends Component {
 
@@ -23,11 +31,45 @@ class ScreenOne extends Component {
 
 		return (
 
-			<Button
-				title="Zippy"
-				onPress={() => this.props.navigation.navigate ("ScreenThree")}
-				label="Go to notifications"/>
+			<View style={styles.containerView}>
+				<View style={styles.navbar}>
+					<Text style={styles.title}>Hello</Text>
+					<TouchableOpacity onPress={this._pressMe}>
+						<Image source={icon}/>
+					</TouchableOpacity>
+				</View>
+				<View style={styles.card}>
+					<Text>
+						dkwnadoaw oabdoawbdaowjbd aowkdnawodnawopidnaw pianwdpnawdopanwdop naowdnawopidnaw
+					</Text>
+				</View>
+				<View style={styles.card}>
+					<Text>
+						dkwnadoaw oabdoawbdaowjbd aowkdnawodnawopidnaw pianwdpnawdopanwdop naowdnawopidnaw
+					</Text>
+				</View>
+				<View style={styles.card}>
+					<Text>
+						dkwnadoaw oabdoawbdaowjbd aowkdnawodnawopidnaw pianwdpnawdopanwdop naowdnawopidnaw
+					</Text>
+				</View>
+				<View style={styles.card}>
+					<Text>
+						dkwnadoaw oabdoawbdaowjbd aowkdnawodnawopidnaw pianwdpnawdopanwdop naowdnawopidnaw
+					</Text>
+				</View>
+				<View style={styles.card}>
+					<Text>
+						dkwnadoaw oabdoawbdaowjbd aowkdnawodnawopidnaw pianwdpnawdopanwdop naowdnawopidnaw
+					</Text>
+				</View>
+			</View>
 		);
+	}
+
+	_pressMe = () => {
+
+		console.log ("Hello");
 	}
 }
 

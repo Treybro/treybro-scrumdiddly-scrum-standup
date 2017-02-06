@@ -8,9 +8,6 @@ import {
 import { connect } from "react-redux";
 import { enterButtonPressed } from "../actions/welcomeActions";
 
-//	Root Nav component
-import RootNavigation from "../nav/RootNavigation";
-
 //	Styles for this component
 import styles from "../styles/welcomeScreenStyle";
 
@@ -33,8 +30,6 @@ class WelcomeScreen extends Component {
 	constructor (props) {
 
 		super (props);
-
-		console.log (this.props);
 	}
 
 	//	Main Render
