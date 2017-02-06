@@ -3,7 +3,7 @@ import { ENTER_BUTTON_PRESSED } from "../actions/welcomeActions";
 //  Default state to prepare for null
 const welcomeState = {
 
-	enterButtonPressed: false,
+	enterButtonPressed: true,
 };
 
 const welcomeReducer = (state = welcomeState, action) => {

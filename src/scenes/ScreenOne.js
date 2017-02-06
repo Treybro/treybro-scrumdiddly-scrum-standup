@@ -4,14 +4,14 @@ import React, { Component } from "react";
 import {
 	Text,
 	View,
-	Button,
-	Image,
-	TouchableOpacity,
 } from "react-native";
+import NavBar from "../components/NavBar";
 
+//	Import Scene style
 import styles from "../styles/screenOneStyle";
-
-import icon from "../assets/images/icon-add.png";
+//	Import NavBar Icons
+import menuIcon from "../assets/images/icon-menu.png";
+import addIcon from "../assets/images/icon-add.png";
 
 class ScreenOne extends Component {
 
@@ -32,12 +32,7 @@ class ScreenOne extends Component {
 		return (
 
 			<View style={styles.containerView}>
-				<View style={styles.navbar}>
-					<Text style={styles.title}>Hello</Text>
-					<TouchableOpacity onPress={this._pressMe}>
-						<Image source={icon}/>
-					</TouchableOpacity>
-				</View>
+				<NavBar navTitle="Screen One" navLeftIcon={menuIcon} navRightIcon={addIcon}/>
 				<View style={styles.card}>
 					<Text>
 						dkwnadoaw oabdoawbdaowjbd aowkdnawodnawopidnaw pianwdpnawdopanwdop naowdnawopidnaw
