@@ -6,6 +6,7 @@ import appSettings from "./settings/appSettings";
 import LoadingScreen from "./scenes/LoadingScreen";
 import WelcomeScreen from "./scenes/WelcomeScreen";
 import TutorialScreen from "./scenes/TutorialScreen";
+import RootNavigation from "./nav/RootNavigation";
 
 /*
 * App Root
@@ -52,8 +53,12 @@ class App extends Component {
 			return <TutorialScreen />;
 		}
 
-		//  User has been here before
-		return <WelcomeScreen />;
+		if (this.props.enterButtonPressed === false) {
+
+			return <WelcomeScreen />;
+		}
+
+		return <RootNavigation />;
 	}
 
 	//  Tell the component to stop loading
@@ -74,7 +79,8 @@ class App extends Component {
 */
 const mapStateToProps = state => ({
 
-	hasViewedTutorial: state.hasViewedTutorial,
+	hasViewedTutorial: state.tutorialReducer.hasViewedTutorial,
+	enterButtonPressed: state.welcomeReducer.enterButtonPressed,
 });
 
 export default connect(mapStateToProps)(App);

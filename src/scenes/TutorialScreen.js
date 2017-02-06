@@ -55,11 +55,5 @@ const mapDispatchToProps = dispatch => ({
 	finishTutorial: () => dispatch(completeTutorial()),
 });
 
-//  Redux state mapping
-const mapStateToProps = state => ({
-
-	hasViewedTutorial: state.hasViewedTutorial,
-});
-
 //  Wire this component to redux with our state and dispatch mappings
-export default connect (mapStateToProps, mapDispatchToProps)(TutorialScreen);
+export default connect (null, mapDispatchToProps)(TutorialScreen);

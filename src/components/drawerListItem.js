@@ -32,7 +32,6 @@ class DrawerHeader extends Component {
 	constructor (props) {
 
 		super (props);
-		console.log ("HEEEEEELLOOOO" + this.props.navigator.state.index);
 	}
 
 	render () {

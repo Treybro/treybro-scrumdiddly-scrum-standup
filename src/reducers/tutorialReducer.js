@@ -1,21 +1,24 @@
 import { TUTORIAL_COMPLETED } from "../actions/tutorialActions";
 
 //  Default state to prepare for null
-const initialState = {
+const tutorialState = {
 
-	hasViewedTutorial: false,
+	hasViewedTutorial: true,
 };
 
-//  User has finished the opening tutorial section
-export default function toDoApp (state = initialState, action) {
+const tutorialReducer = (state = tutorialState, action) => {
 
-	if (action.type === TUTORIAL_COMPLETED) {
+	switch (action.type) {
 
-		return Object.assign({}, state, {
+		case "TUTORIAL_COMPLETED":
+			console.log ("Tutorial Reducer :: Tutorial Completed");
+			return Object.assign({}, state, {
 
-			hasViewedTutorial: true,
-		});
+				hasViewedTutorial: true,
+			});
+		default:
+      		return state;
 	}
-
-	return state;
 }
+
+export default tutorialReducer;

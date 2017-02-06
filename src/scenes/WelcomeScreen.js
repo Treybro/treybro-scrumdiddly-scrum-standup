@@ -5,6 +5,8 @@ import {
 	Text,
 	TouchableHighlight,
 } from "react-native";
+import { connect } from "react-redux";
+import { enterButtonPressed } from "../actions/welcomeActions";
 
 //	Root Nav component
 import RootNavigation from "../nav/RootNavigation";
@@ -22,46 +24,38 @@ const styleSettings = require ("../settings/styleSettings");
 */
 class WelcomeScreen extends Component {
 
+	static propTypes = {
+
+		enterApp: React.PropTypes.func,
+	};
+
 	//	Default constructor
 	constructor (props) {
 
 		super (props);
-		// TODO redux should hande this
-		this.state = {
 
-			enterButtonPressed: false,
-		};
+		console.log (this.props);
 	}
 
 	//	Main Render
 	render () {
 
-		//	If the user hasn't actually entered the app yet
-		if (this.state.enterButtonPressed === false) {
+		return (
 
-			return (
-
-				<View style={styles.containerView}>
-					<Text style={styles.welcomeText}>Welcome to Scrumdiddly!</Text>
-					<TouchableHighlight underlayColor={styleSettings.lightBlue} onPress={this._onPressButton} style={styles.enterButton}>
-						<Text style={styles.enterButtonText}>Enter</Text>
-					</TouchableHighlight>
-				</View>
-			);
-		}
-
-		//	Where the main app starts
-		return <RootNavigation />;
-	}
-
-	//	TODO redux should handle this
-	_onPressButton = () => {
-
-		this.setState ({
-
-			enterButtonPressed: true,
-		});
+			<View style={styles.containerView}>
+				<Text style={styles.welcomeText}>Welcome to Scrumdiddly!</Text>
+				<TouchableHighlight underlayColor={styleSettings.lightBlue} onPress={this.props.enterApp} style={styles.enterButton}>
+					<Text style={styles.enterButtonText}>Enter</Text>
+				</TouchableHighlight>
+			</View>
+		);
 	}
 }
 
-export default WelcomeScreen;
+//  Redux functions mapping
+const mapDispatchToProps = dispatch => ({
+
+	enterApp: () => dispatch(enterButtonPressed()),
+});
+
+export default connect (null, mapDispatchToProps)(WelcomeScreen);

@@ -1,18 +1,11 @@
 import React, { Component } from "react";
 import { Provider } from "react-redux";
-import { createStore, combineReducers } from "redux";
-import toDoApp from "./reducers/tutorialReducer";
-import toDoApp2 from "./reducers/drawerReducer";
+import { createStore } from "redux";
+import appReducers from "./reducers/combinator";
 
 import App from "./App";
 
-const appReducers = combineReducers ({
-
-	toDoApp,
-	toDoApp2
-})
-
-let store = createStore(appReducers);
+const store = createStore(appReducers);
 
 /*
 * Responsible for configuring middleware

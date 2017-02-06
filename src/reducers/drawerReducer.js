@@ -1,22 +1,24 @@
 import { LIST_ITEM_SELECTED } from "../actions/drawerActions";
 
 //  Default state to prepare for null
-const initialState = {
+const drawerState = {
 
 	selected: false,
 };
 
-//  User has finished the opening tutorial section
-export default function toDoApp2 (state = initialState, action) {
+const drawerReducer = (state = drawerState, action) => {
+	
+	switch (action.type) {
 
-	if (action.type === LIST_ITEM_SELECTED) {
+		case "LIST_ITEM_SELECTED":
+			console.log ("Drawer Reducer :: List Item Selected");
+			return Object.assign({}, state, {
 
-		console.log ("HELLO FROM ME");
-		return Object.assign({}, state, {
-
-			selected: true,
-		});
+				selected: true,
+			});
+		default:
+      		return state;
 	}
-
-	return state;
 }
+
+export default drawerReducer;

@@ -25,7 +25,7 @@ class ScreenOne extends Component {
 
 			<Button
 				title="Zippy"
-				onPress={() => this.props.navigation.navigate ("ScreenTwo")}
+				onPress={() => this.props.navigation.navigate ("ScreenThree")}
 				label="Go to notifications"/>
 		);
 	}
