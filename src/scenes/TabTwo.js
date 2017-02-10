@@ -1,16 +1,36 @@
+/**
+ * @providesModule TabTwo
+ */
+ 
 //	Main React Import
 import React, { Component } from "react";
 //	React native components
 import {
 	Button,
+	Image,
 } from "react-native";
 
-class ScreenTwo extends Component {
+import addIcon from "../assets/images/icon-add.png";
+
+class TabTwo extends Component {
 
 	//	Validate proptypes
 	static propTypes = {
 
 		navigation: React.PropTypes.object,
+	};
+
+	static navigationOptions = {
+
+		title: "Second Tab",
+		tabBar: {
+
+			label: "Two",
+			icon: ({ tintColor }) => (
+
+				<Image source={addIcon} style={{tintColor: tintColor}}/>
+			),
+		},
 	};
 
 	//	Default constructor
@@ -31,4 +51,4 @@ class ScreenTwo extends Component {
 	}
 }
 
-export default ScreenTwo;
+export default TabTwo;

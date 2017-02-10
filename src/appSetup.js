@@ -1,9 +1,13 @@
+/**
+ * @providesModule AppSetup
+ */
+
 import React, { Component } from "react";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
-import appReducers from "./reducers/combinator";
+import appReducers from "AppReducers";
 
-import App from "./App";
+import App from "App";
 
 const store = createStore(appReducers);
 
@@ -14,7 +18,7 @@ const store = createStore(appReducers);
 * TODO - create different component to handle the store
 * creation process
 */
-class Setup extends Component {
+class AppSetup extends Component {
 
 	constructor (props) {
 
@@ -34,4 +38,4 @@ class Setup extends Component {
 	}
 }
 
-export default Setup;
+export default AppSetup;

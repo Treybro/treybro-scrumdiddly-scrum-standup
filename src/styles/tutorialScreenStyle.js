@@ -1,4 +1,4 @@
-const styleSettings = require ("../settings/styleSettings");
+const styleSettings = require ("AppTheme");
 
 const React = require ("react-native");
 const { StyleSheet } = React;

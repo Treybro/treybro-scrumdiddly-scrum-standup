@@ -1,3 +1,7 @@
+/**
+ * @providesModule AppSettings
+ */
+
 const appSettings = {
 
 	appLoadingTime: 1000,

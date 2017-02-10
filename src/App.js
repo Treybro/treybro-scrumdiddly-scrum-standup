@@ -1,12 +1,16 @@
+/**
+ * @providesModule App
+ */
+
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import appSettings from "./settings/appSettings";
+import appSettings from "AppSettings";
 
-import LoadingScreen from "./scenes/LoadingScreen";
-import WelcomeScreen from "./scenes/WelcomeScreen";
-import TutorialScreen from "./scenes/TutorialScreen";
-import RootNavigation from "./nav/RootNavigation";
+import LoadingScreen from "LoadingScreen";
+import WelcomeScreen from "WelcomeScreen";
+import TutorialScreen from "TutorialScreen";
+import RootNavigation from "RootTabNavigation";
 
 /*
 * App Root

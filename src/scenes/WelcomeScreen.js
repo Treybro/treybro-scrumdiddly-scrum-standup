@@ -1,3 +1,7 @@
+/**
+ * @providesModule WelcomeScreen
+ */
+
 import React, { Component } from "react";
 //	React native components
 import {
@@ -6,13 +10,13 @@ import {
 	TouchableHighlight,
 } from "react-native";
 import { connect } from "react-redux";
-import { enterButtonPressed } from "../actions/welcomeActions";
+import { enterButtonPressed } from "WelcomeActions";
 
 //	Styles for this component
 import styles from "../styles/welcomeScreenStyle";
 
 //	Main app style configuration
-const styleSettings = require ("../settings/styleSettings");
+const styleSettings = require ("AppTheme");
 
 /*
 * Responsible for displaying the welcome screen

@@ -1,9 +1,13 @@
-import { TUTORIAL_COMPLETED } from "../actions/tutorialActions";
+/**
+ * @providesModule TutorialReducer
+ */
+
+import { TUTORIAL_COMPLETED } from "TutorialActions";
 
 //  Default state to prepare for null
 const tutorialState = {
 
-	hasViewedTutorial: true,
+	hasViewedTutorial: false,
 };
 
 const tutorialReducer = (state = tutorialState, action) => {

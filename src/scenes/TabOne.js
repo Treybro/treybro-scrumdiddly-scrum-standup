@@ -1,24 +1,40 @@
+/**
+ * @providesModule TabOne
+ */
+
 //	Main React Import
 import React, { Component } from "react";
 //	React native components
 import {
 	Text,
 	View,
+	Image,
 } from "react-native";
-import NavBar from "../components/NavBar";
 
 //	Import Scene style
 import styles from "../styles/screenOneStyle";
 //	Import NavBar Icons
 import menuIcon from "../assets/images/icon-menu.png";
-import addIcon from "../assets/images/icon-add.png";
 
-class ScreenOne extends Component {
+class TabOne extends Component {
 
 	//	Validate proptypes
 	static propTypes = {
 
 		navigation: React.PropTypes.object,
+	};
+
+	static navigationOptions = {
+
+		title: "First Tab",
+		tabBar: {
+
+			label: "One",
+			icon: ({ tintColor }) => (
+
+				<Image source={menuIcon} style={{tintColor: tintColor}}/>
+			),
+		},
 	};
 
 	//	Default constructor
@@ -32,7 +48,6 @@ class ScreenOne extends Component {
 		return (
 
 			<View style={styles.containerView}>
-				<NavBar navTitle="Screen One" navLeftIcon={menuIcon} navRightIcon={addIcon}/>
 				<View style={styles.card}>
 					<Text>
 						dkwnadoaw oabdoawbdaowjbd aowkdnawodnawopidnaw pianwdpnawdopanwdop naowdnawopidnaw
@@ -68,4 +83,4 @@ class ScreenOne extends Component {
 	}
 }
 
-export default ScreenOne;
+export default TabOne;

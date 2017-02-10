@@ -1,9 +1,13 @@
-import { ENTER_BUTTON_PRESSED } from "../actions/welcomeActions";
+/**
+ * @providesModule WelcomeReducer
+ */
+
+import { ENTER_BUTTON_PRESSED } from "WelcomeActions";
 
 //  Default state to prepare for null
 const welcomeState = {
 
-	enterButtonPressed: true,
+	enterButtonPressed: false,
 };
 
 const welcomeReducer = (state = welcomeState, action) => {

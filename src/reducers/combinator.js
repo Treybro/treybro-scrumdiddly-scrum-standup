@@ -1,3 +1,7 @@
+/**
+ * @providesModule AppReducers
+ */
+
 import { combineReducers } from "redux";
 
 import tutorialReducer from "./tutorialReducer";

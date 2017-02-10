@@ -1,3 +1,7 @@
+/**
+ * @providesModule DrawerReducer
+ */
+
 import { LIST_ITEM_SELECTED } from "../actions/drawerActions";
 
 //  Default state to prepare for null

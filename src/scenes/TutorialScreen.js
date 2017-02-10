@@ -1,3 +1,7 @@
+/**
+ * @providesModule TutorialScreen
+ */
+
 import React, { Component } from "react";
 import {
 	View,
@@ -5,7 +9,7 @@ import {
 	TouchableHighlight
 } from "react-native";
 import { connect } from "react-redux";
-import { completeTutorial } from "../actions/tutorialActions";
+import { completeTutorial } from "TutorialActions";
 
 import Swiper from "react-native-swiper";
 
