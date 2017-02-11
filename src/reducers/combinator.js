@@ -12,7 +12,7 @@ const appReducers = combineReducers ({
 
 	tutorialReducer,
 	drawerReducer,
-	welcomeReducer
+	welcomeReducer,
 });
 
 export default appReducers;

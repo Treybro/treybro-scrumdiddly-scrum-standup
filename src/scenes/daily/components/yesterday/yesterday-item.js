@@ -8,11 +8,13 @@ import React, { Component } from "react";
 import {
 	Text,
 	View,
-	Modal,
-	TouchableHighlight,
+	TouchableOpacity,
+	Image,
 } from "react-native";
 
 import styles from "./yesterday-item.style";
+
+import closeIcon from "../../../../assets/images/icon-remove.png";
 
 /*
 *	Allows the user to create a new
@@ -38,17 +40,21 @@ class YesterdayItem extends Component {
 		return (
 
 			<View style={styles.viewContainer}>
+				<View style={styles.closeContainer}>
+					<TouchableOpacity onPress={this._closeModal}>
+						<Image source={closeIcon} style={styles.closeIcon}/>
+					</TouchableOpacity>
+				</View>
 				<View style={styles.contentView}>
 					<Text>Hello World!</Text>
-					<TouchableHighlight onPress={() => {
-
-							this.props.closeModal();
-						}}>
-						<Text>Hide Modal</Text>
-					</TouchableHighlight>
 				</View>
 			</View>
 		);
+	}
+
+	_closeModal = () => {
+
+		this.props.closeModal ();
 	}
 }
 

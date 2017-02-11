@@ -1,27 +1,27 @@
 /**
- * @providesModule TabOneStack
+ * @providesModule DailyTabNav
  */
 
 import { StackNavigator } from "react-navigation";
-import TabOne from "TabOne";
+import DailyTab from "DailyTab";
 
-const TabOneStack = StackNavigator ({
+const DailyTabNav = StackNavigator ({
 
 	Index: {
 
-		screen: TabOne,
+		screen: DailyTab,
 	},
 }, {
 
-	initialRouteName: 'Index',
+	initialRouteName: "Index",
 	initialRouteParams: {},
 	navigationOptions: {},
 	paths: {},
-	mode: 'card',
-	headerMode: 'float',
+	mode: "card",
+	headerMode: "float",
 	cardStyle: {},
 	onTransitionStart: () => {},
 	onTransitionEnd: () => {},
 });
 
-export default TabOneStack;
+export default DailyTabNav;

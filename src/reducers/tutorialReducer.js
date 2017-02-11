@@ -14,15 +14,14 @@ const tutorialReducer = (state = tutorialState, action) => {
 
 	switch (action.type) {
 
-		case "TUTORIAL_COMPLETED":
-			console.log ("Tutorial Reducer :: Tutorial Completed");
-			return Object.assign({}, state, {
-
-				hasViewedTutorial: true,
-			});
-		default:
-      		return state;
+	case TUTORIAL_COMPLETED:
+		return {
+			...state,
+			hasViewedTutorial: true,
+		};
+	default:
+		return state;
 	}
-}
+};
 
 export default tutorialReducer;

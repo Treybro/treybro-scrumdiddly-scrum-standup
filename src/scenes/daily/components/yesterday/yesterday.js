@@ -14,7 +14,7 @@ import {
 } from "react-native";
 
 import styles from "./yesterday.style";
-import addIcon from "../assets/images/icon-add.png";
+import addIcon from "../../../../assets/images/icon-add.png";
 
 /*
 *	Displays the Yesterday heading
@@ -37,11 +37,16 @@ export class Yesterday extends Component {
 
 			<View style={styles.viewContainer}>
 				<Text style={styles.yesterdayText}>Yesterday I...</Text>
-				<TouchableOpacity onPress={() => {this.props.showModal ()}} style={styles.addButton}>
+				<TouchableOpacity onPress={this._showModal} style={styles.addButton}>
 					<Image source={addIcon} style={styles.addButtonImage}/>
 				</TouchableOpacity>
 			</View>
 		);
+	}
+
+	_showModal = () => {
+
+		this.props.showModal ();
 	}
 }
 

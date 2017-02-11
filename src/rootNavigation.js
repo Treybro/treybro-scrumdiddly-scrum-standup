@@ -1,11 +1,11 @@
 /**
- * @providesModule RootTabNavigation
+ * @providesModule RootNavigation
  */
 
 //	Import drawer from react-navigation package
 import { TabNavigator } from "react-navigation";
 //	Scene imports
-import TabOneStack from "TabOneStack";
+import DailyTabNav from "DailyTabNav";
 import TabTwoStack from "TabTwoStack";
 //	Import theme
 import appTheme from "AppTheme";
@@ -14,11 +14,11 @@ import appTheme from "AppTheme";
 *	Main navigation root.
 *	Responsible for handling the tab nav
 */
-const AppRoot = TabNavigator ({
+const RootNavigation = TabNavigator ({
 
-	TabOne: {
+	DailyTab: {
 
-		screen: TabOneStack,
+		screen: DailyTabNav,
 	},
 	TabTwo: {
 
@@ -30,8 +30,8 @@ const AppRoot = TabNavigator ({
 	swipeEnabled: true,
 	tabBarPosition: "bottom",
 	lazyLoad: false,
-	initialRouteName: "TabOne",
-	order: ["TabOne","TabTwo"],
+	initialRouteName: "DailyTab",
+	order: ["DailyTab","TabTwo"],
 	tabBarOptions: {
 
 		activeTintColor: appTheme.white,
@@ -55,7 +55,7 @@ const AppRoot = TabNavigator ({
 
 			backgroundColor: appTheme.pink,
 		},
-	}
+	},
 });
 
-export default AppRoot;
+export default RootNavigation;

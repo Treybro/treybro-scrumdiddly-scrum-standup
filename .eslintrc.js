@@ -4,7 +4,8 @@ module.exports = {
     "env": {
 
         "node": true,
-        "es6": true
+        "es6": true,
+        "es6": true,
     },
     "extends": [
         "eslint:recommended",
@@ -27,10 +28,16 @@ module.exports = {
     ],
     "rules": {
 
+        "comma-dangle": [
+
+            "error",
+            "always-multiline"
+        ],
+        "eqeqeq": 2,
         "indent": [
 
             "error",
-            "tab"
+            "tab",
         ],
         "linebreak-style": [
 
@@ -40,12 +47,12 @@ module.exports = {
         "quotes": [
 
             "error",
-            "double"
+            "double",
         ],
         "semi": [
 
             "error",
-            "always"
+            "always",
         ],
         "react-native/no-unused-styles": 2,
         "react-native/split-platform-components": 2,

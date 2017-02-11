@@ -14,15 +14,15 @@ const drawerReducer = (state = drawerState, action) => {
 	
 	switch (action.type) {
 
-		case "LIST_ITEM_SELECTED":
-			console.log ("Drawer Reducer :: List Item Selected");
-			return Object.assign({}, state, {
+	case LIST_ITEM_SELECTED:
+		return {
 
-				selected: true,
-			});
-		default:
-      		return state;
+			...state,
+			selected: true,
+		};
+	default:
+		return state;
 	}
-}
+};
 
 export default drawerReducer;

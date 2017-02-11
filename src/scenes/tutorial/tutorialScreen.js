@@ -6,14 +6,14 @@ import React, { Component } from "react";
 import {
 	View,
 	Text,
-	TouchableHighlight
+	TouchableHighlight,
 } from "react-native";
 import { connect } from "react-redux";
 import { completeTutorial } from "TutorialActions";
 
 import Swiper from "react-native-swiper";
 
-import styles from "../styles/tutorialScreenStyle";
+import styles from "./tutorialScreen.style";
 
 /*
 * Handles the display of our

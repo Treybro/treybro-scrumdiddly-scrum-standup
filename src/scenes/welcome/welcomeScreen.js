@@ -13,7 +13,7 @@ import { connect } from "react-redux";
 import { enterButtonPressed } from "WelcomeActions";
 
 //	Styles for this component
-import styles from "../styles/welcomeScreenStyle";
+import styles from "./welcomeScreen.style";
 
 //	Main app style configuration
 const styleSettings = require ("AppTheme");

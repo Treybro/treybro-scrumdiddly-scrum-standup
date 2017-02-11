@@ -1,5 +1,5 @@
 /**
- * @providesModule TabOne
+ * @providesModule DailyTab
  */
 
 //	Main React Import
@@ -19,11 +19,11 @@ import Blocker from "Blocker";
 import YesterdayItem from "YesterdayItem";
 
 //	Import Scene style
-import styles from "../styles/screenOneStyle";
+import styles from "./dailyTab.style";
 //	Import NavBar Icons
-import menuIcon from "../assets/images/icon-menu.png";
+import menuIcon from "../../assets/images/icon-menu.png";
 
-class TabOne extends Component {
+class DailyTab extends Component {
 
 	//	Validate proptypes
 	static propTypes = {
@@ -34,11 +34,11 @@ class TabOne extends Component {
 	//	Navigation bar options
 	static navigationOptions = {
 
-		title: "Scrum Items",
+		title: "Scrum Daily Items",
 		header: {
 
 			visible: true,
-			title: "Scrum Items",
+			title: "Scrum Daily Items",
 			right: () => {},
 			left: () => {},
 			style: {},
@@ -47,7 +47,7 @@ class TabOne extends Component {
 		},
 		tabBar: {
 
-			label: "One",
+			label: "Daily",
 			icon: ({ tintColor }) => (
 
 				<Image source={menuIcon} style={{tintColor: tintColor}}/>
@@ -73,10 +73,10 @@ class TabOne extends Component {
 			<View style={styles.containerView}>
 				{/*	TODO do this better */}
 				<Modal
-					style={{flex: 1}}
-					animationType={"fade"}
+					style={styles.modal}
+					animationType={"slide"}
 					transparent={true}
-					onShow={() => {console.log ("Showing modal");}}
+					onShow={() => {}}
 					visible={this.state.showModal}
 					onRequestClose={() => {this.toggleModal(false);}}>
 					<YesterdayItem closeModal={() => {this.toggleModal(false);}}/>
@@ -141,10 +141,9 @@ class TabOne extends Component {
 	}
 
 	toggleModal (visible) {
-
-		console.log ("toggling");
+		
 		this.setState({showModal: visible});
 	}
 }
 
-export default TabOne;
+export default DailyTab;

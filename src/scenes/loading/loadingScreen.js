@@ -8,7 +8,7 @@ import {
 	Text,
 } from "react-native";
 
-import styles from "../styles/loadingScreenStyle";
+import styles from "./loadingScreen.style";
 
 /*
 * Responsible for displaying the main app

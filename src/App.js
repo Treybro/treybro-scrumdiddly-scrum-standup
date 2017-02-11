@@ -10,7 +10,7 @@ import appSettings from "AppSettings";
 import LoadingScreen from "LoadingScreen";
 import WelcomeScreen from "WelcomeScreen";
 import TutorialScreen from "TutorialScreen";
-import RootNavigation from "RootTabNavigation";
+import RootNavigation from "RootNavigation";
 
 /*
 * App Root
@@ -22,6 +22,7 @@ class App extends Component {
 	static propTypes = {
 
 		hasViewedTutorial: React.PropTypes.bool,
+		enterButtonPressed: React.PropTypes.bool,
 	};
 
 	constructor (props) {

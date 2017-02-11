@@ -42,5 +42,5 @@ module.exports = StyleSheet.create ({
 		width: 110,
 		justifyContent: "center",
 		alignItems: "center",
-	}
+	},
 });
