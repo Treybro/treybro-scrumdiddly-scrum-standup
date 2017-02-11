@@ -9,7 +9,14 @@ import {
 	Text,
 	View,
 	Image,
+	ScrollView,
+	Modal,
 } from "react-native";
+
+import Yesterday from "Yesterday";
+import Today from "Today";
+import Blocker from "Blocker";
+import YesterdayItem from "YesterdayItem";
 
 //	Import Scene style
 import styles from "../styles/screenOneStyle";
@@ -24,9 +31,20 @@ class TabOne extends Component {
 		navigation: React.PropTypes.object,
 	};
 
+	//	Navigation bar options
 	static navigationOptions = {
 
-		title: "First Tab",
+		title: "Scrum Items",
+		header: {
+
+			visible: true,
+			title: "Scrum Items",
+			right: () => {},
+			left: () => {},
+			style: {},
+			titleStyle: {},
+			tintColor: {},
+		},
 		tabBar: {
 
 			label: "One",
@@ -41,6 +59,11 @@ class TabOne extends Component {
 	constructor (props) {
 
 		super (props);
+		//	TODO - get this into redux
+		this.state = {
+
+			showModal: false,
+		};
 	}
 
 	render () {
@@ -48,38 +71,79 @@ class TabOne extends Component {
 		return (
 
 			<View style={styles.containerView}>
-				<View style={styles.card}>
-					<Text>
-						dkwnadoaw oabdoawbdaowjbd aowkdnawodnawopidnaw pianwdpnawdopanwdop naowdnawopidnaw
-					</Text>
-				</View>
-				<View style={styles.card}>
-					<Text>
-						dkwnadoaw oabdoawbdaowjbd aowkdnawodnawopidnaw pianwdpnawdopanwdop naowdnawopidnaw
-					</Text>
-				</View>
-				<View style={styles.card}>
-					<Text>
-						dkwnadoaw oabdoawbdaowjbd aowkdnawodnawopidnaw pianwdpnawdopanwdop naowdnawopidnaw
-					</Text>
-				</View>
-				<View style={styles.card}>
-					<Text>
-						dkwnadoaw oabdoawbdaowjbd aowkdnawodnawopidnaw pianwdpnawdopanwdop naowdnawopidnaw
-					</Text>
-				</View>
-				<View style={styles.card}>
-					<Text>
-						dkwnadoaw oabdoawbdaowjbd aowkdnawodnawopidnaw pianwdpnawdopanwdop naowdnawopidnaw
-					</Text>
-				</View>
+				{/*	TODO do this better */}
+				<Modal
+					style={{flex: 1}}
+					animationType={"fade"}
+					transparent={true}
+					onShow={() => {console.log ("Showing modal");}}
+					visible={this.state.showModal}
+					onRequestClose={() => {this.toggleModal(false);}}>
+					<YesterdayItem closeModal={() => {this.toggleModal(false);}}/>
+				</Modal>
+				<ScrollView>
+					<Yesterday showModal={() => {this.toggleModal(true);}}/>
+					<View style={styles.card}>
+						<Text>
+							dkwnadoaw oabdoawbdaowjbd aowkdnawodnawopidnaw pianwdpnawdopanwdop naowdnawopidnaw
+						</Text>
+					</View>
+					<View style={styles.card}>
+						<Text>
+							dkwnadoaw oabdoawbdaowjbd aowkdnawodnawopidnaw pianwdpnawdopanwdop naowdnawopidnaw
+						</Text>
+					</View>
+					<View style={styles.card}>
+						<Text>
+							dkwnadoaw oabdoawbdaowjbd aowkdnawodnawopidnaw pianwdpnawdopanwdop naowdnawopidnaw
+						</Text>
+					</View>
+					<View style={styles.card}>
+						<Text>
+							dkwnadoaw oabdoawbdaowjbd aowkdnawodnawopidnaw pianwdpnawdopanwdop naowdnawopidnaw
+						</Text>
+					</View>
+					<Today />
+					<View style={styles.card}>
+						<Text>
+							dkwnadoaw oabdoawbdaowjbd aowkdnawodnawopidnaw pianwdpnawdopanwdop naowdnawopidnaw
+						</Text>
+					</View>
+					<View style={styles.card}>
+						<Text>
+							dkwnadoaw oabdoawbdaowjbd aowkdnawodnawopidnaw pianwdpnawdopanwdop naowdnawopidnaw
+						</Text>
+					</View>
+					<View style={styles.card}>
+						<Text>
+							dkwnadoaw oabdoawbdaowjbd aowkdnawodnawopidnaw pianwdpnawdopanwdop naowdnawopidnaw
+						</Text>
+					</View>
+					<View style={styles.card}>
+						<Text>
+							dkwnadoaw oabdoawbdaowjbd aowkdnawodnawopidnaw pianwdpnawdopanwdop naowdnawopidnaw
+						</Text>
+					</View>
+					<View style={styles.card}>
+						<Text>
+							dkwnadoaw oabdoawbdaowjbd aowkdnawodnawopidnaw pianwdpnawdopanwdop naowdnawopidnaw
+						</Text>
+					</View>
+					<Blocker/>
+					<View style={styles.card}>
+						<Text>
+							dkwnadoaw oabdoawbdaowjbd aowkdnawodnawopidnaw pianwdpnawdopanwdop naowdnawopidnaw
+						</Text>
+					</View>
+				</ScrollView>
 			</View>
 		);
 	}
 
-	_pressMe = () => {
+	toggleModal (visible) {
 
-		console.log ("Hello");
+		console.log ("toggling");
+		this.setState({showModal: visible});
 	}
 }
 

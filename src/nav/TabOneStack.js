@@ -11,6 +11,17 @@ const TabOneStack = StackNavigator ({
 
 		screen: TabOne,
 	},
+}, {
+
+	initialRouteName: 'Index',
+	initialRouteParams: {},
+	navigationOptions: {},
+	paths: {},
+	mode: 'card',
+	headerMode: 'float',
+	cardStyle: {},
+	onTransitionStart: () => {},
+	onTransitionEnd: () => {},
 });
 
 export default TabOneStack;
