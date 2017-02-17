@@ -19,7 +19,7 @@ import { connect } from "react-redux";
 import { showYesterdayModal } from "YesterdayModalActions";
 
 import theme from "AppTheme";
-import addIcon from "../../../../assets/images/icon-add.png";
+import getIconAsset from "IconAssets";
 
 /*
 *	Displays the HeaderYesterday heading
@@ -43,7 +43,7 @@ export class HeaderYesterday extends Component {
 			<View style={styles.viewContainer}>
 				<Text style={styles.yesterdayText}>Yesterday I...</Text>
 				<TouchableOpacity onPress={() => this.props.showModal ()} style={styles.addButton}>
-					<Image source={addIcon} style={styles.addButtonImage}/>
+					<Image source={getIconAsset ("pencilIcon")} style={styles.addButtonImage}/>
 				</TouchableOpacity>
 			</View>
 		);
@@ -75,6 +75,8 @@ const styles = StyleSheet.create({
 	addButtonImage: {
 
 		tintColor: theme.lightBlue,
+		height: 15,
+		width: 15,
 	},
 });
 

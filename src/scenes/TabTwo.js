@@ -10,7 +10,7 @@ import {
 	Image,
 } from "react-native";
 
-import addIcon from "../assets/images/icon-add.png";
+import getIconAsset from "IconAssets";
 
 class TabTwo extends Component {
 
@@ -28,7 +28,7 @@ class TabTwo extends Component {
 			label: "Two",
 			icon: ({ tintColor }) => (
 
-				<Image source={addIcon} style={{tintColor: tintColor}}/>
+				<Image source={getIconAsset ("calendarIcon")} style={{tintColor: tintColor}}/>
 			),
 		},
 	};

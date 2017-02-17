@@ -1,5 +1,5 @@
 /**
- * @providesModule YesterdayModalContent
+ * @providesModule BlockerModalContent
  */
 
  //	Main React Import
@@ -12,20 +12,19 @@ import {
 	Image,
 	StyleSheet,
 	Platform,
-	TextInput,
 } from "react-native";
 import { connect } from "react-redux";
-import { closeYesterdayModal } from "YesterdayModalActions";
+import { closeBlockerModal } from "BlockerModalActions";
 
 import theme from "AppTheme";
 import getIconAsset from "IconAssets";
 
 /*
 *	Allows the user to create a new
-*	Yesterday Item.
+*	Blocker Item.
 *	TODO - get this into redux
 */
-class YesterdayModalContent extends Component {
+class BlockerModalContent extends Component {
 
 	//	Validate proptypes
 	static propTypes = {
@@ -37,11 +36,6 @@ class YesterdayModalContent extends Component {
 	constructor (props) {
 
 		super (props);
-
-		this.state = {
-
-			text: "What did you do yesterday?",
-		};
 	}
 
 	render () {
@@ -55,30 +49,10 @@ class YesterdayModalContent extends Component {
 					</TouchableOpacity>
 				</View>
 				<View style={styles.contentView}>
-					<TextInput
-						value={this.state.text}
-						style={styles.textInput}
-						onChangeText={(text) => this.setState({text})}
-						autoCapitalize={"sentences"}
-						autoCorrect={false}
-						autoFocus={false}
-						maxLength={240}
-						onFocus={() => this._clearText ()}
-						returnKeyType={"done"}/>
+					<Text>Blocker modal content!</Text>
 				</View>
 			</View>
 		);
-	}
-
-	_clearText () {
-
-		if (this.state.text === "What did you do yesterday?") {
-
-			this.setState ({
-
-				text: "",
-			});
-		}
 	}
 }
 
@@ -94,7 +68,7 @@ const styles = StyleSheet.create({
 
 		flex: 1,
 		margin: (Platform.OS === "ios") ? 50 : 50,
-		backgroundColor: theme.pink,
+		backgroundColor: theme.white,
 		opacity: 1,
 	},
 	closeContainer: {
@@ -108,10 +82,6 @@ const styles = StyleSheet.create({
 		tintColor: theme.white,
 		marginRight: 22,
 	},
-	textInput: {
-
-		color: theme.white,
-	},
 });
 
 /*
@@ -119,7 +89,7 @@ const styles = StyleSheet.create({
 */
 const mapDispatchToProps = dispatch => ({
 
-	closeModal: () => dispatch (closeYesterdayModal ()),
+	closeModal: () => dispatch (closeBlockerModal ()),
 });
 
-export default connect (null,mapDispatchToProps)(YesterdayModalContent);
+export default connect (null,mapDispatchToProps)(BlockerModalContent);

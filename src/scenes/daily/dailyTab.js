@@ -17,10 +17,11 @@ import HeaderToday from "HeaderToday";
 import HeaderBlocker from "HeaderBlocker";
 import DailyList from "DailyList";
 import YesterdayModal from "YesterdayModal";
+import TodayModal from "TodayModal";
+import BlockerModal from "BlockerModal";
 
 import theme from "AppTheme";
-//	Import NavBar Icons
-import menuIcon from "../../assets/images/icon-menu.png";
+import getIconAsset from "IconAssets";
 
 class DailyTab extends Component {
 
@@ -49,7 +50,7 @@ class DailyTab extends Component {
 			label: "Daily",
 			icon: ({ tintColor }) => (
 
-				<Image source={menuIcon} style={{tintColor: tintColor}}/>
+				<Image source={getIconAsset ("clipboardIcon")} style={{tintColor: tintColor}}/>
 			),
 		},
 	};
@@ -66,12 +67,14 @@ class DailyTab extends Component {
 
 			<View style={styles.containerView}>
 				<YesterdayModal />
+				<TodayModal />
+				<BlockerModal />
 				<ScrollView>
 					<HeaderYesterday />
 					<DailyList />
-					<HeaderToday showModal={() => {this.toggleModal(true);}}/>
+					<HeaderToday />
 					<DailyList />
-					<HeaderBlocker showModal={() => {this.toggleModal(true);}}/>
+					<HeaderBlocker />
 					<DailyList />
 				</ScrollView>
 			</View>

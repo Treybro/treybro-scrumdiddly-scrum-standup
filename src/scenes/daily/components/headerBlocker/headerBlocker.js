@@ -15,8 +15,11 @@ import {
 	Image,
 } from "react-native";
 
+import { connect } from "react-redux";
+import { showBlockerModal } from "BlockerModalActions";
+
 import theme from "AppTheme";
-import addIcon from "../../../../assets/images/icon-add.png";
+import getIconAsset from "IconAssets";
 
 /*
 *	Displays the Blocker heading
@@ -40,7 +43,7 @@ export class HeaderBlocker extends Component {
 			<View style={styles.viewContainer}>
 				<Text style={styles.yesterdayText}>Blockers...</Text>
 				<TouchableOpacity onPress={this._showModal} style={styles.addButton}>
-					<Image source={addIcon} style={styles.addButtonImage}/>
+					<Image source={getIconAsset ("pencilIcon")} style={styles.addButtonImage}/>
 				</TouchableOpacity>
 			</View>
 		);
@@ -77,7 +80,17 @@ const styles = StyleSheet.create({
 	addButtonImage: {
 
 		tintColor: theme.lightBlue,
+		height: 15,
+		width: 15,
 	},
 });
 
-export default HeaderBlocker;
+/*
+* Mapping for redux dispatch functions.
+*/
+const mapDispatchToProps = dispatch => ({
+
+	showModal: () => dispatch (showBlockerModal ()),
+});
+
+export default connect (null, mapDispatchToProps)(HeaderBlocker);
