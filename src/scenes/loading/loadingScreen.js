@@ -6,9 +6,10 @@ import React, { Component } from "react";
 import {
 	View,
 	Text,
+	StyleSheet,
 } from "react-native";
 
-import styles from "./loadingScreen.style";
+import theme from "AppTheme";
 
 /*
 * Responsible for displaying the main app
@@ -31,5 +32,20 @@ class LoadingScreen extends Component {
 		);
 	}
 }
+
+const styles = StyleSheet.create({
+
+	containerView: {
+
+		flex: 1,
+		backgroundColor: theme.pink,
+		justifyContent: "center",
+		alignItems: "center",
+	},
+	loadingText: {
+
+		color: theme.white,
+	},
+});
 
 export default LoadingScreen;

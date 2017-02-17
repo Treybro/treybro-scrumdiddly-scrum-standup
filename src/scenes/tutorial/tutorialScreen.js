@@ -7,13 +7,14 @@ import {
 	View,
 	Text,
 	TouchableHighlight,
+	StyleSheet,
 } from "react-native";
 import { connect } from "react-redux";
 import { completeTutorial } from "TutorialActions";
 
 import Swiper from "react-native-swiper";
 
-import styles from "./tutorialScreen.style";
+import theme from "AppTheme";
 
 /*
 * Handles the display of our
@@ -52,6 +53,48 @@ class TutorialScreen extends Component {
 		);
 	}
 }
+
+const styles = StyleSheet.create({
+
+	wrapper: {
+
+	},
+	slide1: {
+
+		flex: 1,
+		justifyContent: "center",
+		alignItems: "center",
+		backgroundColor: theme.pink,
+	},
+	slide2: {
+
+		flex: 1,
+		justifyContent: "center",
+		alignItems: "center",
+		backgroundColor: theme.pink,
+	},
+	slide3: {
+
+		flex: 1,
+		justifyContent: "center",
+		alignItems: "center",
+		backgroundColor: theme.pink,
+	},
+	text: {
+
+		color: theme.white,
+		fontSize: 30,
+		fontWeight: "bold",
+	},
+	enterButton: {
+
+		backgroundColor: theme.darkGrey,
+		height: 30,
+		width: 110,
+		justifyContent: "center",
+		alignItems: "center",
+	},
+});
 
 //  Redux functions mapping
 const mapDispatchToProps = dispatch => ({

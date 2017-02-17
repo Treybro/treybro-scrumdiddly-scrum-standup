@@ -8,15 +8,12 @@ import {
 	View,
 	Text,
 	TouchableHighlight,
+	StyleSheet,
 } from "react-native";
 import { connect } from "react-redux";
 import { enterButtonPressed } from "WelcomeActions";
 
-//	Styles for this component
-import styles from "./welcomeScreen.style";
-
-//	Main app style configuration
-const styleSettings = require ("AppTheme");
+import theme from "AppTheme";
 
 /*
 * Responsible for displaying the welcome screen
@@ -43,13 +40,42 @@ class WelcomeScreen extends Component {
 
 			<View style={styles.containerView}>
 				<Text style={styles.welcomeText}>Welcome to Scrumdiddly!</Text>
-				<TouchableHighlight underlayColor={styleSettings.lightBlue} onPress={this.props.enterApp} style={styles.enterButton}>
+				<TouchableHighlight underlayColor={theme.lightBlue} onPress={this.props.enterApp} style={styles.enterButton}>
 					<Text style={styles.enterButtonText}>Enter</Text>
 				</TouchableHighlight>
 			</View>
 		);
 	}
 }
+
+const styles = StyleSheet.create({
+
+	containerView: {
+
+		flex: 1,
+		backgroundColor: theme.pink,
+		justifyContent: "center",
+		alignItems: "center",
+	},
+	welcomeText: {
+
+		fontSize: 25,
+		color: theme.white,
+		width: 250,
+	},
+	enterButton: {
+
+		backgroundColor: theme.blue,
+		width: 250,
+		height: 50,
+		marginTop: 10,
+	},
+	enterButtonText: {
+
+		color: theme.white,
+		marginLeft: 10,
+	},
+});
 
 //  Redux functions mapping
 const mapDispatchToProps = dispatch => ({

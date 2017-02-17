@@ -6,20 +6,19 @@
 import React, { Component } from "react";
 //	React native components
 import {
-	Text,
 	View,
 	Image,
 	ScrollView,
-	Modal,
+	StyleSheet,
 } from "react-native";
 
-import Yesterday from "Yesterday";
-import Today from "Today";
-import Blocker from "Blocker";
-import YesterdayItem from "YesterdayItem";
+import HeaderYesterday from "HeaderYesterday";
+import HeaderToday from "HeaderToday";
+import HeaderBlocker from "HeaderBlocker";
+import DailyList from "DailyList";
+import YesterdayModal from "YesterdayModal";
 
-//	Import Scene style
-import styles from "./dailyTab.style";
+import theme from "AppTheme";
 //	Import NavBar Icons
 import menuIcon from "../../assets/images/icon-menu.png";
 
@@ -59,11 +58,6 @@ class DailyTab extends Component {
 	constructor (props) {
 
 		super (props);
-		//	TODO - get this into redux
-		this.state = {
-
-			showModal: false,
-		};
 	}
 
 	render () {
@@ -71,70 +65,14 @@ class DailyTab extends Component {
 		return (
 
 			<View style={styles.containerView}>
-				{/*	TODO do this better */}
-				<Modal
-					style={styles.modal}
-					animationType={"slide"}
-					transparent={true}
-					onShow={() => {}}
-					visible={this.state.showModal}
-					onRequestClose={() => {this.toggleModal(false);}}>
-					<YesterdayItem closeModal={() => {this.toggleModal(false);}}/>
-				</Modal>
+				<YesterdayModal />
 				<ScrollView>
-					<Yesterday showModal={() => {this.toggleModal(true);}}/>
-					<View style={styles.card}>
-						<Text>
-							dkwnadoaw oabdoawbdaowjbd aowkdnawodnawopidnaw pianwdpnawdopanwdop naowdnawopidnaw
-						</Text>
-					</View>
-					<View style={styles.card}>
-						<Text>
-							dkwnadoaw oabdoawbdaowjbd aowkdnawodnawopidnaw pianwdpnawdopanwdop naowdnawopidnaw
-						</Text>
-					</View>
-					<View style={styles.card}>
-						<Text>
-							dkwnadoaw oabdoawbdaowjbd aowkdnawodnawopidnaw pianwdpnawdopanwdop naowdnawopidnaw
-						</Text>
-					</View>
-					<View style={styles.card}>
-						<Text>
-							dkwnadoaw oabdoawbdaowjbd aowkdnawodnawopidnaw pianwdpnawdopanwdop naowdnawopidnaw
-						</Text>
-					</View>
-					<Today />
-					<View style={styles.card}>
-						<Text>
-							dkwnadoaw oabdoawbdaowjbd aowkdnawodnawopidnaw pianwdpnawdopanwdop naowdnawopidnaw
-						</Text>
-					</View>
-					<View style={styles.card}>
-						<Text>
-							dkwnadoaw oabdoawbdaowjbd aowkdnawodnawopidnaw pianwdpnawdopanwdop naowdnawopidnaw
-						</Text>
-					</View>
-					<View style={styles.card}>
-						<Text>
-							dkwnadoaw oabdoawbdaowjbd aowkdnawodnawopidnaw pianwdpnawdopanwdop naowdnawopidnaw
-						</Text>
-					</View>
-					<View style={styles.card}>
-						<Text>
-							dkwnadoaw oabdoawbdaowjbd aowkdnawodnawopidnaw pianwdpnawdopanwdop naowdnawopidnaw
-						</Text>
-					</View>
-					<View style={styles.card}>
-						<Text>
-							dkwnadoaw oabdoawbdaowjbd aowkdnawodnawopidnaw pianwdpnawdopanwdop naowdnawopidnaw
-						</Text>
-					</View>
-					<Blocker/>
-					<View style={styles.card}>
-						<Text>
-							dkwnadoaw oabdoawbdaowjbd aowkdnawodnawopidnaw pianwdpnawdopanwdop naowdnawopidnaw
-						</Text>
-					</View>
+					<HeaderYesterday />
+					<DailyList />
+					<HeaderToday showModal={() => {this.toggleModal(true);}}/>
+					<DailyList />
+					<HeaderBlocker showModal={() => {this.toggleModal(true);}}/>
+					<DailyList />
 				</ScrollView>
 			</View>
 		);
@@ -145,5 +83,14 @@ class DailyTab extends Component {
 		this.setState({showModal: visible});
 	}
 }
+
+const styles = StyleSheet.create({
+
+	containerView: {
+
+		flex: 1,
+		backgroundColor: theme.white,
+	},
+});
 
 export default DailyTab;
