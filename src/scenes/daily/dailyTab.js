@@ -24,6 +24,23 @@ import ListYesterday from "ListYesterday";
 import theme from "AppTheme";
 import getIconAsset from "IconAssets";
 
+const styles = StyleSheet.create({
+
+	containerView: {
+
+		flex: 1,
+		backgroundColor: theme.white,
+	},
+	leftNavIcon: {
+
+		tintColor: theme.white,
+	},
+	tabBarIcon: {
+
+		tintColor: theme.white,
+	},
+});
+
 class DailyTab extends Component {
 
 	//	Validate proptypes
@@ -41,17 +58,23 @@ class DailyTab extends Component {
 			visible: true,
 			title: "Scrum Daily Items",
 			right: () => {},
-			left: () => {},
-			style: {backgroundColor:theme.pink},
+			left: (
+
+				<Image source={getIconAsset ("menuIcon")} style={styles.leftNavIcon}/>
+			),
+			style: {
+
+				backgroundColor:theme.pink,
+			},
 			titleStyle: {color:theme.white},
 			tintColor: {},
 		},
 		tabBar: {
 
 			label: "Daily",
-			icon: ({ tintColor }) => (
+			icon: () => (
 
-				<Image source={getIconAsset ("clipboardIcon")} style={{tintColor: tintColor}}/>
+				<Image source={getIconAsset ("clipboardIcon")} style={styles.tabBarIcon}/>
 			),
 		},
 	};
@@ -87,14 +110,5 @@ class DailyTab extends Component {
 		this.setState({showModal: visible});
 	}
 }
-
-const styles = StyleSheet.create({
-
-	containerView: {
-
-		flex: 1,
-		backgroundColor: theme.white,
-	},
-});
 
 export default DailyTab;

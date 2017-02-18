@@ -8,7 +8,7 @@ import { TabNavigator } from "react-navigation";
 import DailyTabNav from "DailyTabNav";
 import TabTwoStack from "TabTwoStack";
 //	Import theme
-import appTheme from "AppTheme";
+import theme from "AppTheme";
 
 /*
 *	Main navigation root.
@@ -34,18 +34,18 @@ const RootNavigation = TabNavigator ({
 	order: ["DailyTab","TabTwo"],
 	tabBarOptions: {
 
-		activeTintColor: appTheme.white,
-		inactiveTintColor: appTheme.lightPink,
+		activeTintColor: theme.white,
+		inactiveTintColor: theme.lightPink,
 		showIcon: true,
 		showLabel: true,
 		scrollEnabled: false,
 		tabStyle: {
 
-			backgroundColor: appTheme.pink,
+			backgroundColor: theme.pink,
 		},
 		indicatorStyle: {
 
-			backgroundColor: appTheme.pink,
+			backgroundColor: theme.pink,
 		},
 		labelStyle: {
 
@@ -53,7 +53,7 @@ const RootNavigation = TabNavigator ({
 		},
 		style: {
 
-			backgroundColor: appTheme.pink,
+			backgroundColor: theme.pink,
 		},
 	},
 });
