@@ -45,6 +45,9 @@ export class DailyList extends Component {
 				<Text>
 					dkwnadoaw oabdoawbdaowjbd aowkdnawodnawopidnaw pianwdpnawdopanwdop naowdnawopidnaw
 				</Text>
+				<Text>
+					dkwnadonaw pianwdpnawdopanwdop naowdnawopidnaw
+				</Text>
 			</View>
 		);
 	}

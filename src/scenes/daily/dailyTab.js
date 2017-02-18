@@ -19,6 +19,7 @@ import DailyList from "DailyList";
 import YesterdayModal from "YesterdayModal";
 import TodayModal from "TodayModal";
 import BlockerModal from "BlockerModal";
+import ListYesterday from "ListYesterday";
 
 import theme from "AppTheme";
 import getIconAsset from "IconAssets";
@@ -41,8 +42,8 @@ class DailyTab extends Component {
 			title: "Scrum Daily Items",
 			right: () => {},
 			left: () => {},
-			style: {},
-			titleStyle: {},
+			style: {backgroundColor:theme.pink},
+			titleStyle: {color:theme.white},
 			tintColor: {},
 		},
 		tabBar: {
@@ -71,7 +72,7 @@ class DailyTab extends Component {
 				<BlockerModal />
 				<ScrollView>
 					<HeaderYesterday />
-					<DailyList />
+					<ListYesterday />
 					<HeaderToday />
 					<DailyList />
 					<HeaderBlocker />

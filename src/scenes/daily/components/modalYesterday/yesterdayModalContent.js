@@ -16,6 +16,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { closeYesterdayModal } from "YesterdayModalActions";
+import { addYesterdayItems } from "YesterdayListActions";
 
 import theme from "AppTheme";
 import getIconAsset from "IconAssets";
@@ -31,6 +32,7 @@ class YesterdayModalContent extends Component {
 	static propTypes = {
 
 		closeModal: React.PropTypes.func,
+		addYesterdayItems: React.PropTypes.func,
 	};
 
 	//	Default constructor
@@ -64,7 +66,8 @@ class YesterdayModalContent extends Component {
 						autoFocus={false}
 						maxLength={240}
 						onFocus={() => this._clearText ()}
-						returnKeyType={"done"}/>
+						returnKeyType={"done"}
+						onSubmitEditing={(event) => {this._addYesterdayItem ()}}/>
 				</View>
 			</View>
 		);
@@ -78,6 +81,28 @@ class YesterdayModalContent extends Component {
 
 				text: "",
 			});
+		}
+	}
+
+	/*
+	*	Add an item to the users yesterday items
+	*	This is passed to redux to handle the save
+	*/
+	_addYesterdayItem () {
+
+		if (this.state.text !== "" && this.state.text !== undefined && this.state.text !== null && this.state.text !== "What did you do yesterday?") {
+
+			/*
+			*	Do some validation on the string or something
+			*/
+			this.props.addYesterdayItems (this.state.text);
+			this.props.closeModal ();
+		} else {
+
+			/**
+			*	TODO - return some sort of error
+			*/
+			console.log ("Can't save");
 		}
 	}
 }
@@ -120,6 +145,7 @@ const styles = StyleSheet.create({
 const mapDispatchToProps = dispatch => ({
 
 	closeModal: () => dispatch (closeYesterdayModal ()),
+	addYesterdayItems: (itemText) => dispatch (addYesterdayItems (itemText)),
 });
 
 export default connect (null,mapDispatchToProps)(YesterdayModalContent);

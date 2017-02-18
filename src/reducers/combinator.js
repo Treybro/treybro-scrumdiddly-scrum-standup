@@ -10,6 +10,7 @@ import welcomeReducer from "./welcomeReducer";
 import yesterdayModalReducer from "YesterdayModalReducer";
 import todayModalReducer from "TodayModalReducer";
 import blockerModalReducer from "BlockerModalReducer";
+import yesterdayListReducer from "YesterdayListReducer";
 
 const appReducers = combineReducers ({
 
@@ -19,6 +20,7 @@ const appReducers = combineReducers ({
 	yesterdayModalReducer,
 	todayModalReducer,
 	blockerModalReducer,
+	yesterdayListReducer,
 });
 
 export default appReducers;
