@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
 	leftNavIcon: {
 
 		tintColor: theme.white,
+		marginLeft: 10,
 	},
 	tabBarIcon: {
 

@@ -27,11 +27,12 @@ export function addYesterdayItems (itemText) {
 }
 
 //	Remove an item from the users yesterday items
-export function removeYesterdayItems () {
-
+export function removeYesterdayItems (itemId) {
+	
 	return {
 
 		type: REMOVE_YESTERDAY_ITEM,
+		itemId,
 	};
 }
 

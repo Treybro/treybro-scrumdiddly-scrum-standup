@@ -9,6 +9,11 @@ import {
 	EDIT_YESTERDAY_ITEM,
 } from "YesterdayListActions";
 
+/*
+*	TODO - get this out of here when we have local storage
+*/
+import sampleItems from "../../../../testData/sampleYesterdayItems.json";
+
 //  Default state to prepare for null
 const yesterdayListState = {
 
@@ -23,7 +28,7 @@ const yesterdayListReducer = (state = yesterdayListState, action) => {
 		return {
 
 			...state,
-			yesterdaysItems: [{itemText:"Hello!"},{itemText:"Yo!"}],
+			yesterdaysItems: sampleItems,
 		};
 	case ADD_YESTERDAY_ITEM:
 		return {
@@ -35,11 +40,25 @@ const yesterdayListReducer = (state = yesterdayListState, action) => {
 				},
 			],
 		};
-	case REMOVE_YESTERDAY_ITEM:
+	case REMOVE_YESTERDAY_ITEM: {
+
+		let itemsList = [...state.yesterdaysItems];
+		for (let i = 0; i < itemsList.length; i++) {
+
+			console.log ("IN HERE");
+			let item = itemsList[i];
+			if (item.id === action.itemId) {
+
+				itemsList.splice(i,1);
+				console.log (itemsList);
+			}
+		}
 		return {
 
 			...state,
+			yesterdaysItems: itemsList,
 		};
+	}
 	case EDIT_YESTERDAY_ITEM:
 		return {
 

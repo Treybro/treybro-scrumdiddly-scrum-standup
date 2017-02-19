@@ -1,0 +1,30 @@
+[
+	{
+		id: "1",
+		itemText:"Hello! dwadawd awdaw awd aawd awdaw dawda wdaw dawd aw"
+	},
+	{
+		id: "2",
+		itemText:"Yo!"
+	},
+	{
+		id: "3",
+		itemText:"Hello! dwadawd awdaw awd aawd awdaw dawda wdaw dawd aw"
+	},
+	{
+		id: "4",
+		itemText:"Hello! awda wdaw dawd aw"
+	},
+	{
+		id: "5",
+		itemText:"Hello! dwadawd awdaw awd aawd awdaw dawda wdaw dawd aw"
+	},
+	{
+		id: "6",
+		itemText:"Hello! dwadawd awdaw awd aawd awdaw dawda wdaw dawd aw"
+	},
+	{
+		id: "7",
+		itemText:"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu"
+	},
+]
