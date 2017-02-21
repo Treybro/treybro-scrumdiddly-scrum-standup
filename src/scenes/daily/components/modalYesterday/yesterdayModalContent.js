@@ -67,7 +67,7 @@ class YesterdayModalContent extends Component {
 						maxLength={240}
 						onFocus={() => this._clearText ()}
 						returnKeyType={"done"}
-						onSubmitEditing={(event) => {this._addYesterdayItem ()}}/>
+						onSubmitEditing={(event) => {this._addYesterdayItem ()}} />
 				</View>
 			</View>
 		);

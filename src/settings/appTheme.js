@@ -12,6 +12,10 @@ const AppTheme = {
 	darkGrey: "#565A5C",
 	lightGrey: "#CED1CC",
 	black: "#000000",
+	green: "#DAFF8D",
+	lightGreen: "#BDFE34",
+	darkGreen: "#BDFE34",
+	red: "#FF3439",
 };
 
 module.exports = AppTheme;

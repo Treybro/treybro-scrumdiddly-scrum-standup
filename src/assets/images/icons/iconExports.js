@@ -10,6 +10,10 @@ import clipboardIcon from "./icon-clipboard.png";
 import pencilIcon from "./icon-pencil.png";
 import settingsIcon from "./icon-settings.png";
 import calendarIcon from "./icon-calendar.png";
+import checkIcon from "./icon-check.png";
+import uncheckedIcon from "./icon-unchecked.png";
+import tickIcon from "./icon-tick.png";
+import binIcon from "./icon-bin.png";
 
 export default function getIconAsset (assetName) {
 
@@ -31,5 +35,13 @@ export default function getIconAsset (assetName) {
 		return settingsIcon;
 	case "calendarIcon":
 		return calendarIcon;
+	case "checkIcon":
+		return checkIcon;
+	case "uncheckedIcon":
+		return uncheckedIcon;
+	case "tickIcon":
+		return tickIcon;
+	case "binIcon":
+		return binIcon;
 	}
 }

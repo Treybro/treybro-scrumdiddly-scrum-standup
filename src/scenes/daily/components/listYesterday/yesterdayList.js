@@ -15,7 +15,8 @@ import {
 	getYesterdayItems,
 	addYesterdayItems,
 	removeYesterdayItems,
-	editYesterdayItems,
+	beginEditYesterdayItem,
+	finishEditYesterdayItem,
 } from "YesterdayListActions";
 
 import ListItemYesterday from "ListItemYesterday";
@@ -48,25 +49,15 @@ export class ListYesterday extends Component {
 		return (
 
 			<View style={styles.card}>
-				{this._renderItems ()}
+				{/*this._renderItems ()*/}
+				{
+					this.props.yesterdaysItems.map((yesterDayItem) => (
+
+						<ListItemYesterday key={"list-item-yesterday-key-" + yesterDayItem.id} yesterdayItem={yesterDayItem} />
+					))
+				}
 			</View>
 		);
-	}
-
-	_renderItems () {
-
-		let itemsToRender = [];
-		if (this.props.yesterdaysItems !== null && this.props.yesterdaysItems !== undefined && this.props.yesterdaysItems.length > 0) {
-
-			for (let i = 0; i < this.props.yesterdaysItems.length; i++) {
-
-				let yesterdayItem = this.props.yesterdaysItems[i];
-				let listItemKey = 'list-item-yesterday-key-' + i;
-				itemsToRender.push (<ListItemYesterday key={listItemKey} yesterdayItem={yesterdayItem}/>);
-			}
-		}
-
-		return itemsToRender;
 	}
 }
 
@@ -106,7 +97,8 @@ const mapDispatchToProps = dispatch => ({
 	getYesterdayItems: () => dispatch (getYesterdayItems ()),
 	addYesterdayItems: () => dispatch (addYesterdayItems ()),
 	removeYesterdayItems: () => dispatch (removeYesterdayItems ()),
-	editYesterdayItems: () => dispatch (editYesterdayItems ()),
+	beginEditYesterdayItem: () => dispatch (beginEditYesterdayItem ()),
+	finishEditYesterdayItem: () => dispatch (finishEditYesterdayItem ()),
 });
 
 export default connect (mapStateToProps,mapDispatchToProps)(ListYesterday);

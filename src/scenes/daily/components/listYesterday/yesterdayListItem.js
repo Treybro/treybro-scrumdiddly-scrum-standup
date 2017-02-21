@@ -1,21 +1,26 @@
 /**
  * @providesModule ListItemYesterday
  */
+
 //  Import items from react
 import React, { Component } from "react";
 //  Import items from react-native
 import {
-
-	Image,
 	Text,
+	Image,
 	View,
 	StyleSheet,
 	TouchableOpacity,
 	Animated,
 	Easing,
+	TextInput,
 } from "react-native";
 import { connect } from "react-redux";
-import { removeYesterdayItems } from "YesterdayListActions";
+import { 
+	removeYesterdayItems, 
+	beginEditYesterdayItem,
+	finishEditYesterdayItem,
+} from "YesterdayListActions";
 
 import theme from "AppTheme";
 import getIconAsset from "IconAssets";
@@ -29,6 +34,8 @@ export class ListItemYesterday extends Component {
 
 		yesterdayItem: React.PropTypes.object.isRequired,
 		removeYesterdayItems: React.PropTypes.func,
+		beginEditYesterdayItem: React.PropTypes.func,
+		finishEditYesterdayItem: React.PropTypes.func,
 	};
 
 	constructor (props) {
@@ -38,6 +45,10 @@ export class ListItemYesterday extends Component {
 
 			fadeHeight: new Animated.Value (0),
 			showEditItems: false,
+			editItem: false,
+			text: this.props.yesterdayItem.itemText,
+			height: 0,
+			itemCompleted: false,
 		};
 	}
 
@@ -46,25 +57,41 @@ export class ListItemYesterday extends Component {
 		return (
 			
 			<View style={styles.containerView}>
-				<TouchableOpacity onPress={() => this._toggleEdit (!this.state.showEditItems)}>
+				<TouchableOpacity onPress={() => this._toggleEdit ()}>
 					<View style={styles.textContainer}>
-						<Text style={styles.listItemText}>
-							{this.props.yesterdayItem.itemText}
-						</Text>
+						<TextInput
+							editable={this.state.editItem}
+							value={this.state.text}
+							style={[styles.listItemText,{height: Math.max(35, this.state.height)}]}
+							onChangeText={(text) => this.setState({text:text})}
+							autoCapitalize={"sentences"}
+							autoCorrect={false}
+							autoFocus={false}
+							maxLength={240}
+							onFocus={() => {}}
+							returnKeyType={"done"}
+							onSubmitEditing={() => {}}
+							multiline={true}
+							underlineColorAndroid={(this.state.editItem === false) ? "transparent" : theme.lightGrey}
+							onContentSizeChange={(event) => {
+								this.setState({height: event.nativeEvent.contentSize.height});
+							}} />
 					</View>
 				</TouchableOpacity>
-				<Animated.View style={{
-					height: this.state.fadeHeight,
-					flex: 1,
-					alignItems: "flex-end",
-					justifyContent: "flex-end",
-					flexDirection: "row",
-				}}>
-					<TouchableOpacity onPress={() => this._deleteItem ()}>
-						<Image source={getIconAsset ("editIcon")} resizeMode={"stretch"} style={styles.editIcon} />
+				<Animated.View style={[styles.editContents,{ height: this.state.fadeHeight}]}>
+					<TouchableOpacity onPress={(this.state.editItem === false) ? () => this._editItem ()  : () => this._saveItem ()}>
+						<Image 
+							source={(this.state.editItem === false) ? getIconAsset ("editIcon") : getIconAsset ("tickIcon")} 
+							resizeMode={"stretch"} 
+							style={(this.state.editItem === false) ? styles.editIcon : styles.saveIcon} />
+					</TouchableOpacity>
+					<TouchableOpacity onPress={() => this._completeItem ()}>
+						<Image source={(this.state.itemCompleted === false) ? getIconAsset ("uncheckedIcon")  : getIconAsset ("checkIcon")} 
+								resizeMode={"stretch"} 
+								style={(this.state.itemCompleted === false) ? styles.uncheckedIcon  : styles.checkedIcon} />
 					</TouchableOpacity>
 					<TouchableOpacity onPress={() => this._deleteItem ()}>
-						<Image source={getIconAsset ("removeIcon")} resizeMode={"stretch"} style={styles.editIcon} />
+						<Image source={getIconAsset ("binIcon")} resizeMode={"stretch"} style={styles.deleteIcon} />
 					</TouchableOpacity>
 				</Animated.View>
 			</View>
@@ -77,45 +104,122 @@ export class ListItemYesterday extends Component {
 	*/
 	_deleteItem () {
 
-		this.props.removeYesterdayItems (this.props.yesterdayItem.id)
+		Animated.timing (
+
+			this.state.fadeHeight, {
+
+				toValue: 0,
+				duration: 50,
+				easing: Easing.inOut(Easing.ease),
+			}).start (() => {
+
+				this.setState ({
+
+					showEditItems: false,
+					editItem: false,
+				}, () => {
+
+					this.props.removeYesterdayItems (this.props.yesterdayItem.id);
+					this.props.finishEditYesterdayItem ();
+				});
+			}
+		);
+	}
+
+	/*
+	*	Allows the user to edit the item
+	*	gets dispatched to redux
+	*/
+	_editItem () {
+
+		this.setState ({
+
+			editItem: !this.state.editItem,
+		});
+	}
+
+	/*
+	*	Closes the edit bar and saves the item
+	*	TODO - add this to redux
+	*/
+	_saveItem () {
+
+		Animated.timing (
+
+			this.state.fadeHeight, {
+
+				toValue: 0,
+				duration: 50,
+				easing: Easing.inOut(Easing.ease),
+			}).start (() => {
+
+				this.setState ({
+
+					showEditItems: false,
+					editItem: false,
+				}, () => {
+
+					this.props.finishEditYesterdayItem ();
+				});
+			}
+		);
 	}
 
 	/*
 	*	Display the edit options for a list item
 	*/
-	_toggleEdit (toggle) {
+	_toggleEdit () {
 
-		if (toggle == true) {
+		if (this.state.showEditItems === false) {
 
 			Animated.timing (
 
 				this.state.fadeHeight, {
 
-				toValue: 40,
-				duration: 50,
-				easing: Easing.inOut (Easing.ease),
-			}).start ();
+					toValue: 40,
+					duration: 50,
+					easing: Easing.inOut (Easing.ease),
+				}).start (() => {
 
-			this.setState ({
+					this.setState ({
 
-				showEditItems: toggle,
-			});
+						showEditItems: true,
+					});
+
+					this.props.beginEditYesterdayItem ();
+				}
+			);
 		} else {
 
 			Animated.timing (
 
 				this.state.fadeHeight, {
 
-				toValue: 0,
-				duration: 50,
-				easing: Easing.inOut(Easing.ease),
-			}).start ();
+					toValue: 0,
+					duration: 50,
+					easing: Easing.inOut(Easing.ease),
+				}).start (() => {
 
-			this.setState ({
+					this.setState ({
 
-				showEditItems: toggle,
-			});
+						showEditItems: false,
+					});
+
+					this.props.finishEditYesterdayItem ();
+				}
+			);
 		}
+	}
+
+	/*
+	*	Mark an item that is completed
+	*/
+	_completeItem () {
+
+		this.setState ({
+
+			itemCompleted: !this.state.itemCompleted,
+		});
 	}
 }
 
@@ -129,6 +233,8 @@ const styles = StyleSheet.create({
 	},
 	textContainer: {
 
+		margin: 0,
+		padding: 0,
 	},
 	listItemText: {
 
@@ -136,7 +242,7 @@ const styles = StyleSheet.create({
 		fontFamily: "Roboto",
 		color: theme.black,
 	},
-	editContainer: {
+	editContents: {
 
 		flex: 1,
 		alignItems: "flex-end",
@@ -146,9 +252,37 @@ const styles = StyleSheet.create({
 	editIcon: {
 
 		margin: 10,
-		width: 18,
-		height: 17,
+		width: 24,
+		height: 21,
 		tintColor: theme.lightGrey,
+	},
+	saveIcon: {
+
+		margin: 10,
+		tintColor: theme.darkGreen,
+		width: 24,
+		height: 24,
+	},
+	checkedIcon: {
+
+		margin: 10,
+		tintColor: theme.lightGrey,
+		width: 25,
+		height: 21,
+	},
+	uncheckedIcon: {
+
+		margin: 10,
+		tintColor: theme.lightGrey,
+		width: 21,
+		height: 21,
+	},
+	deleteIcon: {
+
+		margin: 10,
+		tintColor: theme.lightGrey,
+		width: 14,
+		height: 22,
 	},
 });
 
@@ -158,6 +292,8 @@ const styles = StyleSheet.create({
 const mapDispatchToProps = dispatch => ({
 
 	removeYesterdayItems: (itemId) => dispatch (removeYesterdayItems (itemId)),
+	beginEditYesterdayItem: () => dispatch (beginEditYesterdayItem ()),
+	finishEditYesterdayItem: () => dispatch (finishEditYesterdayItem ()),
 });
 
 export default connect (null, mapDispatchToProps)(ListItemYesterday);

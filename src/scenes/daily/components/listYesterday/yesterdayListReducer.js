@@ -6,7 +6,8 @@ import {
 	GET_YESTERDAY_ITEMS,
 	ADD_YESTERDAY_ITEM,
 	REMOVE_YESTERDAY_ITEM,
-	EDIT_YESTERDAY_ITEM,
+	BEGIN_EDIT_YESTERDAY_ITEM,
+	FINISH_EDIT_YESTERDAY_ITEM,
 } from "YesterdayListActions";
 
 /*
@@ -18,7 +19,11 @@ import sampleItems from "../../../../testData/sampleYesterdayItems.json";
 const yesterdayListState = {
 
 	yesterdaysItems: [],
+	isEditingItem: false,
 };
+
+//	TODO - get this out of here and into the server side maybe?
+let nextId = 7;
 
 const yesterdayListReducer = (state = yesterdayListState, action) => {
 	
@@ -31,26 +36,27 @@ const yesterdayListReducer = (state = yesterdayListState, action) => {
 			yesterdaysItems: sampleItems,
 		};
 	case ADD_YESTERDAY_ITEM:
+		//	TODO - get this out of here
+		nextId++;
 		return {
 			...state,
 			yesterdaysItems: [
 				...state.yesterdaysItems, {
 
+					id: nextId,
 					itemText:action.itemText,
 				},
 			],
 		};
 	case REMOVE_YESTERDAY_ITEM: {
-
+		
 		let itemsList = [...state.yesterdaysItems];
 		for (let i = 0; i < itemsList.length; i++) {
-
-			console.log ("IN HERE");
+			
 			let item = itemsList[i];
 			if (item.id === action.itemId) {
 
 				itemsList.splice(i,1);
-				console.log (itemsList);
 			}
 		}
 		return {
@@ -59,10 +65,17 @@ const yesterdayListReducer = (state = yesterdayListState, action) => {
 			yesterdaysItems: itemsList,
 		};
 	}
-	case EDIT_YESTERDAY_ITEM:
+	case BEGIN_EDIT_YESTERDAY_ITEM:
 		return {
 
 			...state,
+			isEditingItem: true,
+		};
+	case FINISH_EDIT_YESTERDAY_ITEM:
+		return {
+
+			...state,
+			isEditingItem: false,
 		};
 	default:
 		return state;

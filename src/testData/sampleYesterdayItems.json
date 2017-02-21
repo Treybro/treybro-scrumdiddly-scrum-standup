@@ -1,30 +1,30 @@
 [
 	{
-		id: "1",
-		itemText:"Hello! dwadawd awdaw awd aawd awdaw dawda wdaw dawd aw"
+		id: 1,
+		itemText:"One"
 	},
 	{
-		id: "2",
-		itemText:"Yo!"
+		id: 2,
+		itemText:"Two"
 	},
 	{
-		id: "3",
-		itemText:"Hello! dwadawd awdaw awd aawd awdaw dawda wdaw dawd aw"
+		id: 3,
+		itemText:"Three"
 	},
 	{
-		id: "4",
-		itemText:"Hello! awda wdaw dawd aw"
+		id: 4,
+		itemText:"Four"
 	},
 	{
-		id: "5",
-		itemText:"Hello! dwadawd awdaw awd aawd awdaw dawda wdaw dawd aw"
+		id: 5,
+		itemText:"Five"
 	},
 	{
-		id: "6",
-		itemText:"Hello! dwadawd awdaw awd aawd awdaw dawda wdaw dawd aw"
+		id: 6,
+		itemText:"Six"
 	},
 	{
-		id: "7",
+		id: 7,
 		itemText:"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu"
 	},
 ]

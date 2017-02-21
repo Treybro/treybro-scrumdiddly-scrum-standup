@@ -5,7 +5,8 @@
 export const GET_YESTERDAY_ITEMS = "GET_YESTERDAY_ITEMS";
 export const ADD_YESTERDAY_ITEM = "ADD_YESTERDAY_ITEM";
 export const REMOVE_YESTERDAY_ITEM = "REMOVE_YESTERDAY_ITEM";
-export const EDIT_YESTERDAY_ITEM = "EDIT_YESTERDAY_ITEM";
+export const BEGIN_EDIT_YESTERDAY_ITEM = "BEGIN_EDIT_YESTERDAY_ITEM";
+export const FINISH_EDIT_YESTERDAY_ITEM = "FINISH_EDIT_YESTERDAY_ITEM";
 
 //	Get a list of all the users yesterday items
 export function getYesterdayItems () {
@@ -36,11 +37,20 @@ export function removeYesterdayItems (itemId) {
 	};
 }
 
-//	Edit an item from the users yesterday items
-export function editYesterdayItems () {
+//	Tell the app we are editing
+export function beginEditYesterdayItem () {
 
 	return {
 
-		type: EDIT_YESTERDAY_ITEM,
+		type: BEGIN_EDIT_YESTERDAY_ITEM,
+	};
+}
+
+//	Tell the app we are finished editing
+export function finishEditYesterdayItem () {
+
+	return {
+
+		type: FINISH_EDIT_YESTERDAY_ITEM,
 	};
 }
