@@ -16,7 +16,6 @@ import {
 } from "react-native";
 
 import { connect } from "react-redux";
-import { showBlockerModal } from "BlockerModalActions";
 
 import theme from "AppTheme";
 import getIconAsset from "IconAssets";
@@ -27,8 +26,7 @@ import getIconAsset from "IconAssets";
 export class HeaderBlocker extends Component {
 
 	static propTypes = {
-
-		showModal: React.PropTypes.func.isRequired,
+		
 	};
 
 	constructor (props) {
@@ -42,16 +40,11 @@ export class HeaderBlocker extends Component {
 
 			<View style={styles.viewContainer}>
 				<Text style={styles.yesterdayText}>Blockers...</Text>
-				<TouchableOpacity onPress={this._showModal} style={styles.addButton}>
+				<TouchableOpacity onPress={() => {}} style={styles.addButton}>
 					<Image source={getIconAsset ("pencilIcon")} style={styles.addButtonImage}/>
 				</TouchableOpacity>
 			</View>
 		);
-	}
-
-	_showModal = () => {
-
-		this.props.showModal ();
 	}
 }
 
@@ -90,7 +83,6 @@ const styles = StyleSheet.create({
 */
 const mapDispatchToProps = dispatch => ({
 
-	showModal: () => dispatch (showBlockerModal ()),
 });
 
 export default connect (null, mapDispatchToProps)(HeaderBlocker);

@@ -3,11 +3,12 @@
  */
 
 import {
+
 	GET_YESTERDAY_ITEMS,
 	ADD_YESTERDAY_ITEM,
 	REMOVE_YESTERDAY_ITEM,
-	BEGIN_EDIT_YESTERDAY_ITEM,
-	FINISH_EDIT_YESTERDAY_ITEM,
+	TOGGLE_COMPLETE_YESTERDAY_ITEM,
+	TOGGLE_CREATE_YESTERDAY_ITEM,
 } from "YesterdayListActions";
 
 /*
@@ -19,7 +20,7 @@ import sampleItems from "../../../../testData/sampleYesterdayItems.json";
 const yesterdayListState = {
 
 	yesterdaysItems: [],
-	isEditingItem: false,
+	toggleCreate: false,
 };
 
 //	TODO - get this out of here and into the server side maybe?
@@ -45,6 +46,7 @@ const yesterdayListReducer = (state = yesterdayListState, action) => {
 
 					id: nextId,
 					itemText:action.itemText,
+					completed: false,
 				},
 			],
 		};
@@ -65,18 +67,24 @@ const yesterdayListReducer = (state = yesterdayListState, action) => {
 			yesterdaysItems: itemsList,
 		};
 	}
-	case BEGIN_EDIT_YESTERDAY_ITEM:
+	case TOGGLE_COMPLETE_YESTERDAY_ITEM: {
+
+		console.log (action.itemId + " - " + action.completedState);
 		return {
 
 			...state,
-			isEditingItem: true,
 		};
-	case FINISH_EDIT_YESTERDAY_ITEM:
+	}
+	case TOGGLE_CREATE_YESTERDAY_ITEM: {
+
+		console.log ("Toggling create");
+		let toggle = !state.toggleCreate
 		return {
 
 			...state,
-			isEditingItem: false,
+			toggleCreate: toggle,
 		};
+	}
 	default:
 		return state;
 	}

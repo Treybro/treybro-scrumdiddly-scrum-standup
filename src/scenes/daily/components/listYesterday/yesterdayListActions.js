@@ -4,10 +4,9 @@
 
 export const GET_YESTERDAY_ITEMS = "GET_YESTERDAY_ITEMS";
 export const ADD_YESTERDAY_ITEM = "ADD_YESTERDAY_ITEM";
+export const TOGGLE_COMPLETE_YESTERDAY_ITEM = "TOGGLE_COMPLETE_YESTERDAY_ITEM";
 export const REMOVE_YESTERDAY_ITEM = "REMOVE_YESTERDAY_ITEM";
-export const BEGIN_EDIT_YESTERDAY_ITEM = "BEGIN_EDIT_YESTERDAY_ITEM";
-export const FINISH_EDIT_YESTERDAY_ITEM = "FINISH_EDIT_YESTERDAY_ITEM";
-
+export const TOGGLE_CREATE_YESTERDAY_ITEM = "TOGGLE_CREATE_YESTERDAY_ITEM";
 //	Get a list of all the users yesterday items
 export function getYesterdayItems () {
 
@@ -28,7 +27,7 @@ export function addYesterdayItems (itemText) {
 }
 
 //	Remove an item from the users yesterday items
-export function removeYesterdayItems (itemId) {
+export function removeYesterdayItem (itemId) {
 	
 	return {
 
@@ -37,20 +36,22 @@ export function removeYesterdayItems (itemId) {
 	};
 }
 
-//	Tell the app we are editing
-export function beginEditYesterdayItem () {
+//	Complete/Uncomplete an item on the list
+export function toggleCompleteYesterdayItem (itemId, completedState) {
 
 	return {
 
-		type: BEGIN_EDIT_YESTERDAY_ITEM,
+		type: TOGGLE_COMPLETE_YESTERDAY_ITEM,
+		itemId,
+		completedState,
 	};
 }
 
-//	Tell the app we are finished editing
-export function finishEditYesterdayItem () {
+//	Toggles the create yesterday item on/off
+export function toggleCreateYesterdayItem () {
 
 	return {
 
-		type: FINISH_EDIT_YESTERDAY_ITEM,
+		type: TOGGLE_CREATE_YESTERDAY_ITEM,
 	};
 }

@@ -12,13 +12,11 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import {
+
 	getYesterdayItems,
-	addYesterdayItems,
-	removeYesterdayItems,
-	beginEditYesterdayItem,
-	finishEditYesterdayItem,
 } from "YesterdayListActions";
 
+import CreateYesterdayItem from 'CreateYesterdayItem';
 import ListItemYesterday from "ListItemYesterday";
 
 import theme from "AppTheme";
@@ -31,6 +29,7 @@ export class ListYesterday extends Component {
 
 		yesterdaysItems: React.PropTypes.array,
 		getYesterdayItems: React.PropTypes.func,
+		displayCreateYesterdayItem: React.PropTypes.bool,
 	};
 
 	constructor (props) {
@@ -49,9 +48,9 @@ export class ListYesterday extends Component {
 		return (
 
 			<View style={styles.card}>
-				{/*this._renderItems ()*/}
+				<CreateYesterdayItem />
 				{
-					this.props.yesterdaysItems.map((yesterDayItem) => (
+					this.props.yesterdaysItems.map ((yesterDayItem) => (
 
 						<ListItemYesterday key={"list-item-yesterday-key-" + yesterDayItem.id} yesterdayItem={yesterDayItem} />
 					))
@@ -95,10 +94,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
 
 	getYesterdayItems: () => dispatch (getYesterdayItems ()),
-	addYesterdayItems: () => dispatch (addYesterdayItems ()),
-	removeYesterdayItems: () => dispatch (removeYesterdayItems ()),
-	beginEditYesterdayItem: () => dispatch (beginEditYesterdayItem ()),
-	finishEditYesterdayItem: () => dispatch (finishEditYesterdayItem ()),
 });
 
 export default connect (mapStateToProps,mapDispatchToProps)(ListYesterday);

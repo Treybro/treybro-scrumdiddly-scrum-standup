@@ -16,7 +16,7 @@ import {
 } from "react-native";
 
 import { connect } from "react-redux";
-import { showYesterdayModal } from "YesterdayModalActions";
+import { toggleCreateYesterdayItem } from "YesterdayListActions";
 
 import theme from "AppTheme";
 import getIconAsset from "IconAssets";
@@ -28,7 +28,7 @@ export class HeaderYesterday extends Component {
 
 	static propTypes = {
 
-		showModal: React.PropTypes.func.isRequired,
+		toggleCreateYesterdayItem: React.PropTypes.func.isRequired,
 	};
 
 	constructor (props) {
@@ -42,7 +42,7 @@ export class HeaderYesterday extends Component {
 
 			<View style={styles.viewContainer}>
 				<Text style={styles.yesterdayText}>Yesterday I...</Text>
-				<TouchableOpacity onPress={() => this.props.showModal ()} style={styles.addButton}>
+				<TouchableOpacity onPress={() => this.props.toggleCreateYesterdayItem ()} style={styles.addButton}>
 					<Image source={getIconAsset ("pencilIcon")} style={styles.addButtonImage}/>
 				</TouchableOpacity>
 			</View>
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
 */
 const mapDispatchToProps = dispatch => ({
 
-	showModal: () => dispatch (showYesterdayModal ()),
+	toggleCreateYesterdayItem: () => dispatch (toggleCreateYesterdayItem ()),
 });
 
 export default connect (null, mapDispatchToProps)(HeaderYesterday);

@@ -16,9 +16,6 @@ import HeaderYesterday from "HeaderYesterday";
 import HeaderToday from "HeaderToday";
 import HeaderBlocker from "HeaderBlocker";
 import DailyList from "DailyList";
-import YesterdayModal from "YesterdayModal";
-import TodayModal from "TodayModal";
-import BlockerModal from "BlockerModal";
 import ListYesterday from "ListYesterday";
 
 import theme from "AppTheme";
@@ -91,9 +88,6 @@ class DailyTab extends Component {
 		return (
 
 			<View style={styles.containerView}>
-				<YesterdayModal />
-				<TodayModal />
-				<BlockerModal />
 				<ScrollView>
 					<HeaderYesterday />
 					<ListYesterday />

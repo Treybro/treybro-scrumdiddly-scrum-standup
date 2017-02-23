@@ -14,6 +14,7 @@ import checkIcon from "./icon-check.png";
 import uncheckedIcon from "./icon-unchecked.png";
 import tickIcon from "./icon-tick.png";
 import binIcon from "./icon-bin.png";
+import cancelIcon from "./icon-cancel.png";
 
 export default function getIconAsset (assetName) {
 
@@ -43,5 +44,7 @@ export default function getIconAsset (assetName) {
 		return tickIcon;
 	case "binIcon":
 		return binIcon;
+	case "cancelIcon":
+		return cancelIcon;
 	}
 }

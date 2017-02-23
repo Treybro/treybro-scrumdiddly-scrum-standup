@@ -16,7 +16,6 @@ import {
 } from "react-native";
 
 import { connect } from "react-redux";
-import { showTodayModal } from "TodayModalActions";
 
 import theme from "AppTheme";
 import getIconAsset from "IconAssets";
@@ -28,7 +27,6 @@ export class HeaderToday extends Component {
 
 	static propTypes = {
 
-		showModal: React.PropTypes.func.isRequired,
 	};
 
 	constructor (props) {
@@ -42,16 +40,11 @@ export class HeaderToday extends Component {
 
 			<View style={styles.viewContainer}>
 				<Text style={styles.yesterdayText}>Today I...</Text>
-				<TouchableOpacity onPress={this._showModal} style={styles.addButton}>
+				<TouchableOpacity onPress={() => {}} style={styles.addButton}>
 					<Image source={getIconAsset ("pencilIcon")} style={styles.addButtonImage}/>
 				</TouchableOpacity>
 			</View>
 		);
-	}
-
-	_showModal = () => {
-
-		this.props.showModal ();
 	}
 }
 
@@ -90,7 +83,6 @@ const styles = StyleSheet.create({
 */
 const mapDispatchToProps = dispatch => ({
 
-	showModal: () => dispatch (showTodayModal ()),
 });
 
 export default connect (null, mapDispatchToProps)(HeaderToday);
