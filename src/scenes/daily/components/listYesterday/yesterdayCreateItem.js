@@ -63,27 +63,25 @@ export class CreateYesterdayItem extends Component {
 			
 			<View style={styles.containerView}>
 				<View style={styles.contentContainer}>
-					<TouchableOpacity onPress={() => {}}>
-						<View style={styles.textContainer}>
-							<TextInput
-								editable={this.props.showToggle}
-								value={this.state.text}
-								style={[styles.listItemText,{height: Math.max(35, this.state.height)}]}
-								onChangeText={(text) => this.setState({text:text})}
-								autoCapitalize={"sentences"}
-								autoCorrect={false}
-								autoFocus={false}
-								maxLength={240}
-								onFocus={() => {}}
-								returnKeyType={"done"}
-								onSubmitEditing={() => {}}
-								multiline={true}
-								underlineColorAndroid={theme.lightGrey}
-								onContentSizeChange={(event) => {
-									this.setState({height: event.nativeEvent.contentSize.height});
-								}} />
-						</View>
-					</TouchableOpacity>
+					<View style={styles.textContainer}>
+						<TextInput
+							editable={this.props.showToggle}
+							value={this.state.text}
+							style={[styles.listItemText,{height: Math.max(35, this.state.height)}]}
+							onChangeText={(text) => this.setState({text:text})}
+							autoCapitalize={"sentences"}
+							autoCorrect={false}
+							autoFocus={false}
+							maxLength={240}
+							onFocus={() => {}}
+							returnKeyType={(Platform.OS === "ios") ? "default" : "done"}
+							onSubmitEditing={() => {}}
+							multiline={true}
+							underlineColorAndroid={theme.lightGrey}
+							onContentSizeChange={(event) => {
+								this.setState({height: event.nativeEvent.contentSize.height});
+							}} />
+					</View>
 					<Animated.View style={[styles.editContents]}>
 						<TouchableOpacity onPress={() => this._saveItem ()}>
 							<Image 
@@ -160,8 +158,12 @@ const styles = StyleSheet.create({
 	},
 	listItemText: {
 
-		fontFamily: (Platform.OS === "Android") ? "Roboto" : "Helvetica",
+		fontFamily: (Platform.OS === "ios") ? "Helvetica" : "Roboto",
 		color: theme.black,
+		fontSize: (Platform.OS === "ios") ? 16 : 12,
+		marginLeft: (Platform.OS === "ios") ? 20 : 0,
+		marginRight: (Platform.OS === "ios") ? 20 : 0,
+		marginTop: (Platform.OS === "ios") ? 10 : 0,
 	},
 	editContents: {
 
@@ -172,17 +174,17 @@ const styles = StyleSheet.create({
 	},
 	saveIcon: {
 
-		margin: 10,
+		margin: (Platform.OS === "ios") ? 10 : 10,
 		tintColor: theme.lightGrey,
-		width: 24,
-		height: 24,
+		width: (Platform.OS === "ios") ? 30 : 24,
+		height: (Platform.OS === "ios") ? 30 : 24,
 	},
 	deleteIcon: {
 
-		margin: 10,
+		margin: (Platform.OS === "ios") ? 10 : 10,
 		tintColor: theme.lightGrey,
-		width: 24,
-		height: 24,
+		width: (Platform.OS === "ios") ? 30 : 24,
+		height: (Platform.OS === "ios") ? 30 : 24,
 	},
 });
 

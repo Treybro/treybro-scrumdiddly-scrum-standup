@@ -47,14 +47,14 @@ export class ListItemYesterday extends Component {
 			showEditItems: false,
 			editItem: false,
 			text: this.props.yesterdayItem.itemText,
-			height: 0,
+			height: (Platform.OS === "ios") ? 0 : 0,
 			itemCompleted: this.props.yesterdayItem.completed,
 		};
 	}
 
 	render () {
 
-		let textInputStyle = [this._determineStyle (), {height: Math.max(35, this.state.height)}];
+		let textInputStyle = [this._determineStyle (), {height: (Platform.OS === "ios") ? Math.max(35, this.state.height) : Math.max(35, this.state.height)}];
 		return (
 			
 			<View style={styles.containerView}>
@@ -253,8 +253,8 @@ const styles = StyleSheet.create({
 	},
 	completedContainer: {
 
-		height:50,
-		width:50,
+		height: 50,
+		width: 50,
 		alignSelf: "center",
 		alignItems: "center",
 		justifyContent: "center",
@@ -270,13 +270,21 @@ const styles = StyleSheet.create({
 	},
 	listItemText: {
 
-		fontFamily: (Platform.OS === "Android") ? "Roboto" : "Helvetica",
+		fontSize: (Platform.OS === "ios") ? 16 : 12,
+		fontFamily: (Platform.OS === "ios") ? "Helvetica" : "Roboto",
 		color: theme.black,
+		marginLeft: (Platform.OS === "ios") ? 0 : 0,
+		marginRight: (Platform.OS === "ios") ? 20 : 0,
+		marginTop: (Platform.OS === "ios") ? 10 : 0,
 	},
 	completedListItemText: {
 
-		fontFamily: (Platform.OS === "Android") ? "Roboto" : "Helvetica",
+		fontSize: (Platform.OS === "ios") ? 16 : 12,
+		fontFamily: (Platform.OS === "ios") ? "Helvetica" : "Roboto",
 		color: theme.lightGrey,
+		marginLeft: (Platform.OS === "ios") ? 0 : 0,
+		marginRight: (Platform.OS === "ios") ? 20 : 0,
+		marginTop: (Platform.OS === "ios") ? 10 : 0,
 	},
 	editContents: {
 
@@ -303,11 +311,15 @@ const styles = StyleSheet.create({
 
 		margin: 10,
 		tintColor: theme.lightGrey,
+		height: (Platform.OS === "ios") ? 25 : 25,
+		width: (Platform.OS === "ios") ? 25 : 25,
 	},
 	uncheckedIcon: {
 
 		margin: 10,
 		tintColor: theme.lightGrey,
+		height: (Platform.OS === "ios") ? 25 : 25,
+		width: (Platform.OS === "ios") ? 25 : 25,
 	},
 	deleteIcon: {
 

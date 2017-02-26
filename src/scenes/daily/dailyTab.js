@@ -13,6 +13,7 @@ import {
 	StyleSheet,
 	TouchableOpacity,
 	AsyncStorage,
+	Platform,
 } from "react-native";
 
 import HeaderYesterday from "HeaderYesterday";
@@ -77,7 +78,7 @@ const styles = StyleSheet.create({
 
 		height: 25,
 		width: 25,
-		marginLeft: 10,
+		marginLeft: (Platform.OS === "ios") ? 20 : 10,
 		alignItems: "center",
 		justifyContent: "center",
 	},
@@ -120,8 +121,12 @@ class DailyTab extends Component {
 			style: {
 
 				backgroundColor:theme.pink,
+				height: (Platform.OS === "ios") ? 75 : 75,
 			},
-			titleStyle: {color:theme.white},
+			titleStyle: {
+
+				color:theme.white
+			},
 			tintColor: {},
 		},
 		tabBar: {

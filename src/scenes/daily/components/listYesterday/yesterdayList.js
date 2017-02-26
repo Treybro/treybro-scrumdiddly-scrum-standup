@@ -10,6 +10,7 @@ import {
 	Text,
 	View,
 	StyleSheet,
+	Platform,
 } from "react-native";
 import { connect } from "react-redux";
 import {
@@ -76,8 +77,8 @@ const styles = StyleSheet.create({
 	card: {
 
 		backgroundColor: theme.white,
-		marginLeft: 10,
-		marginRight: 10,
+		marginLeft: (Platform.OS === "ios") ? 0 : 10,
+		marginRight: (Platform.OS === "ios") ? 0 : 10,
 		borderRadius: 1,
 		borderWidth: 0,
 		shadowColor: theme.black,
