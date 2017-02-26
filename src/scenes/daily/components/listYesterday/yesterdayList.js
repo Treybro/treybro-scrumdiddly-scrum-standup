@@ -21,6 +21,7 @@ import CreateYesterdayItem from "CreateYesterdayItem";
 import ListItemYesterday from "ListItemYesterday";
 
 import theme from "AppTheme";
+
 /*
 *	Displays the list of Yesterdays Items
 */
@@ -51,6 +52,7 @@ export class ListYesterday extends Component {
 
 			return (
 
+				//	TODO - put a loading icon here or something
 				<Text>Loading Items</Text>
 			);
 		}

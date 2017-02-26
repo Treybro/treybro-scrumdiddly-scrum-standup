@@ -25,7 +25,7 @@ import getIconAsset from "IconAssets";
 
 import {
 
-	addYesterdayItems,
+	saveYesterdayItem,
 } from "YesterdayListActions";
 
 /*
@@ -36,7 +36,7 @@ export class CreateYesterdayItem extends Component {
 	static propTypes = {
 
 		showToggle: React.PropTypes.bool,
-		addYesterdayItems: React.PropTypes.func.isRequired,
+		saveYesterdayItem: React.PropTypes.func.isRequired,
 		toggleCreateYesterdayItem: React.PropTypes.func.isRequired,
 	};
 
@@ -110,7 +110,7 @@ export class CreateYesterdayItem extends Component {
 		let itemText = this.state.text.trim ();
 		if (itemText !== undefined && itemText !== null && itemText.length > 0 && itemText.length <= 240) {
 
-			this.props.addYesterdayItems (itemText);
+			this.props.saveYesterdayItem (itemText);
 			this.setState ({
 
 				text: "",
@@ -198,7 +198,7 @@ const mapStateToProps = state => ({
 */
 const mapDispatchToProps = dispatch => ({
 
-	addYesterdayItems: (itemText) => dispatch (addYesterdayItems (itemText)),
+	saveYesterdayItem: (itemText) => dispatch (saveYesterdayItem (itemText)),
 	toggleCreateYesterdayItem: () => dispatch (toggleCreateYesterdayItem ()),
 });
 

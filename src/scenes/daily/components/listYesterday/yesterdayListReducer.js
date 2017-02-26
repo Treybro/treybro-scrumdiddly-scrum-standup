@@ -20,9 +20,6 @@ const yesterdayListState = {
 	toggleCreate: false,
 };
 
-//	TODO - get this out of here and into the server side maybe?
-let nextId = 7;
-
 const yesterdayListReducer = (state = yesterdayListState, action) => {
 	
 	switch (action.type) {
@@ -47,17 +44,11 @@ const yesterdayListReducer = (state = yesterdayListState, action) => {
 		};
 	}
 	case ADD_YESTERDAY_ITEM:
-		//	TODO - get this out of here
-		nextId++;
 		return {
 			...state,
 			yesterdaysItems: [
-				...state.yesterdaysItems, {
-
-					id: nextId,
-					itemText:action.itemText,
-					completed: false,
-				},
+				...state.yesterdaysItems,
+				action.newToDoItem,
 			],
 		};
 	case REMOVE_YESTERDAY_ITEM: {

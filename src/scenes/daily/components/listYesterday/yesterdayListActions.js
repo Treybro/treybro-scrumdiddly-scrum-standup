@@ -13,14 +13,16 @@ export const TOGGLE_COMPLETE_YESTERDAY_ITEM = "TOGGLE_COMPLETE_YESTERDAY_ITEM";
 export const REMOVE_YESTERDAY_ITEM = "REMOVE_YESTERDAY_ITEM";
 export const TOGGLE_CREATE_YESTERDAY_ITEM = "TOGGLE_CREATE_YESTERDAY_ITEM";
 
-//	Tell the app we are loading the yesterday items
+//	Tell the app we are getting the yesterday items
 export function getYesterdayItems () {
 
 	return function (dispatch) {
 
+		//	Tell the app to fetch from localstorage  
+		//	TODO - add API request
 		dispatch (fetchYesterdayItems ());
 		return AsyncStorage.getItem ("DailyTab").then (function (results) {
-			
+
 			dispatch (receiveYesterdayItems (results));
 		}, function (err) {
 
@@ -30,7 +32,7 @@ export function getYesterdayItems () {
 	};
 }
 
-//	Get the list of yesterday items
+//	Tell the app we are fetching the yesterday items
 export function fetchYesterdayItems () {
 
 	return {
@@ -39,7 +41,7 @@ export function fetchYesterdayItems () {
 	};
 }
 
-//	Receive the list of yesterday items
+//	Tell the app we have received a list of yesterday items
 export function receiveYesterdayItems (results) {
 
 	return {
@@ -49,13 +51,52 @@ export function receiveYesterdayItems (results) {
 	};
 }
 
+//	Tell the app we want to save something
+export function saveYesterdayItem (itemText) {
+
+	return function (dispatch) {
+
+		return AsyncStorage.getItem ("DailyTab").then (function (results) {
+
+			// Convert to JSON object and get current items
+			let resultsObject = JSON.parse(results);
+			let toDoItems = resultsObject.toDoItems;
+
+			//	TODO - do this on the network side (maybe use objectIds/dates)
+			let nextId = toDoItems.length + 1;
+			let newToDoItem = {
+
+				id: nextId,
+				itemText: itemText,
+				completed: false,
+			};
+			toDoItems.push (newToDoItem);
+
+			//	Setup for merge
+			resultsObject.toDoItems = toDoItems;
+
+			//	Add the item to the current list
+			//	TODO - add api save
+			dispatch (addYesterdayItem (newToDoItem));
+			return AsyncStorage.mergeItem ("DailyTab", JSON.stringify (resultsObject));
+		}).then (function (result) {
+
+			console.log ("Item Saved");
+		}, function (err) {
+
+			//	TODO - handle error message
+			console.log (err);
+		});
+	};
+}
+
 //	Add an item to the users yesterday items
-export function addYesterdayItems (itemText) {
+export function addYesterdayItem (newToDoItem) {
 	
 	return {
 
 		type: ADD_YESTERDAY_ITEM,
-		itemText,
+		newToDoItem,
 	};
 }
 
