@@ -54,7 +54,7 @@ export class ListItemYesterday extends Component {
 
 	render () {
 
-		let textInputStyle = [this._determineStyle (), {height: (Platform.OS === "ios") ? Math.max(35, this.state.height) : Math.max(35, this.state.height)}];
+		let textInputStyle = [this._determineStyle (), {height: (Platform.OS === "ios") ? Math.max(35, this.state.height) : Math.max(40, this.state.height)}];
 		return (
 			
 			<View style={styles.containerView}>
