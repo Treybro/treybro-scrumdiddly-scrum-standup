@@ -14,6 +14,7 @@ import {
 	Animated,
 	Easing,
 	TextInput,
+	Platform,
 } from "react-native";
 import { connect } from "react-redux";
 import {
@@ -269,12 +270,12 @@ const styles = StyleSheet.create({
 	},
 	listItemText: {
 
-		fontFamily: "Roboto",
+		fontFamily: (Platform.OS === "Android") ? "Roboto" : "Helvetica",
 		color: theme.black,
 	},
 	completedListItemText: {
 
-		fontFamily: "Roboto",
+		fontFamily: (Platform.OS === "Android") ? "Roboto" : "Helvetica",
 		color: theme.lightGrey,
 	},
 	editContents: {
