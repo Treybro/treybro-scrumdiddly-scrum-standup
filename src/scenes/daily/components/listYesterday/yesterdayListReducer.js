@@ -4,21 +4,18 @@
 
 import {
 
-	GET_YESTERDAY_ITEMS,
+	FETCH_YESTERDAY_ITEMS,
+	RECEIVE_YESTERDAY_ITEMS,
 	ADD_YESTERDAY_ITEM,
 	REMOVE_YESTERDAY_ITEM,
 	TOGGLE_COMPLETE_YESTERDAY_ITEM,
 	TOGGLE_CREATE_YESTERDAY_ITEM,
 } from "YesterdayListActions";
 
-/*
-*	TODO - get this out of here when we have local storage
-*/
-import sampleItems from "../../../../testData/sampleYesterdayItems.json";
-
 //  Default state to prepare for null
 const yesterdayListState = {
 
+	isFetchingYesterdayItems: false,
 	yesterdaysItems: [],
 	toggleCreate: false,
 };
@@ -30,12 +27,25 @@ const yesterdayListReducer = (state = yesterdayListState, action) => {
 	
 	switch (action.type) {
 
-	case GET_YESTERDAY_ITEMS:
+	case FETCH_YESTERDAY_ITEMS: {
+
 		return {
 
 			...state,
-			yesterdaysItems: sampleItems,
+			isFetchingYesterdayItems: true,
 		};
+	}
+	case RECEIVE_YESTERDAY_ITEMS: {
+
+		//	Convert to JSON object
+		let toDoItems = JSON.parse(action.results);
+		return {
+
+			...state,
+			isFetchingYesterdayItems: false,
+			yesterdaysItems: toDoItems.toDoItems,
+		};
+	}
 	case ADD_YESTERDAY_ITEM:
 		//	TODO - get this out of here
 		nextId++;
@@ -69,7 +79,6 @@ const yesterdayListReducer = (state = yesterdayListState, action) => {
 	}
 	case TOGGLE_COMPLETE_YESTERDAY_ITEM: {
 
-		console.log (action.itemId + " - " + action.completedState);
 		return {
 
 			...state,
@@ -77,8 +86,7 @@ const yesterdayListReducer = (state = yesterdayListState, action) => {
 	}
 	case TOGGLE_CREATE_YESTERDAY_ITEM: {
 
-		console.log ("Toggling create");
-		let toggle = !state.toggleCreate
+		let toggle = !state.toggleCreate;
 		return {
 
 			...state,

@@ -6,10 +6,13 @@
 import React, { Component } from "react";
 //	React native components
 import {
+
 	View,
 	Image,
 	ScrollView,
 	StyleSheet,
+	TouchableOpacity,
+	AsyncStorage,
 } from "react-native";
 
 import HeaderYesterday from "HeaderYesterday";
@@ -21,6 +24,48 @@ import ListYesterday from "ListYesterday";
 import theme from "AppTheme";
 import getIconAsset from "IconAssets";
 
+//	TODO - get rid of this crap
+let toDoItems = {
+	"toDoItems": [
+		{
+			"id": 1,
+			"completed": false,
+			"itemText": "One",
+		},
+		{
+			"id": 2,
+			"completed": true,
+			"itemText": "Two",
+		},
+		{
+			"id": 3,
+			"completed": false,
+			"itemText": "Three",
+		},
+		{
+			"id": 4,
+			"completed": true,
+			"itemText": "Four",
+		},
+		{
+			"id": 5,
+			"completed": false,
+			"itemText": "Five",
+		},
+		{
+			"id": 6,
+			"completed": false,
+			"itemText": "Six",
+		},
+		{
+			"id": 7,
+			"completed": false,
+			"itemText": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu",
+		},
+	],
+};
+
+//	Placed here so nav has access to it immediatly.
 const styles = StyleSheet.create({
 
 	containerView: {
@@ -28,10 +73,19 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: theme.white,
 	},
+	leftNavIconContainer: {
+
+		height: 25,
+		width: 25,
+		marginLeft: 10,
+		alignItems: "center",
+		justifyContent: "center",
+	},
 	leftNavIcon: {
 
 		tintColor: theme.white,
-		marginLeft: 10,
+		height: 15,
+		width: 25,
 	},
 	tabBarIcon: {
 
@@ -44,7 +98,6 @@ class DailyTab extends Component {
 	//	Validate proptypes
 	static propTypes = {
 
-		navigation: React.PropTypes.object,
 	};
 
 	//	Navigation bar options
@@ -58,7 +111,11 @@ class DailyTab extends Component {
 			right: () => {},
 			left: (
 
-				<Image source={getIconAsset ("menuIcon")} style={styles.leftNavIcon}/>
+				<View style={styles.leftNavIconContainer}>
+					<TouchableOpacity onPress={() => {}}>
+						<Image source={getIconAsset ("menuIcon")} style={styles.leftNavIcon} resizeMode={"stretch"}/>
+					</TouchableOpacity>
+				</View>
 			),
 			style: {
 
@@ -81,6 +138,7 @@ class DailyTab extends Component {
 	constructor (props) {
 
 		super (props);
+		//this._saveToDos ();
 	}
 
 	render () {
@@ -100,9 +158,9 @@ class DailyTab extends Component {
 		);
 	}
 
-	toggleModal (visible) {
-		
-		this.setState({showModal: visible});
+	_saveToDos () {
+
+		AsyncStorage.setItem("DailyTab", JSON.stringify(toDoItems));
 	}
 }
 

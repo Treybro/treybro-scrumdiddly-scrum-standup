@@ -13,7 +13,8 @@
     "react-native-swiper": "^1.5.4",
     "react-navigation": "^1.0.0-beta.5",
     "react-redux": "^5.0.2",
-    "redux": "^3.6.0"
+    "redux": "^3.6.0",
+    "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
     "eslint-plugin-react": "^6.9.0",

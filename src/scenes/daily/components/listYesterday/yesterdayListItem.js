@@ -147,22 +147,29 @@ export class ListItemYesterday extends Component {
 	*/
 	_saveItem () {
 
-		Animated.timing (
+		let itemText = this.state.text.trim ();
+		if (itemText !== undefined && itemText !== null && itemText.length > 0 && itemText.length <= 240) {
 
-			this.state.fadeHeight, {
+			Animated.timing (
 
-				toValue: 0,
-				duration: 50,
-				easing: Easing.inOut(Easing.ease),
-			}).start (() => {
+				this.state.fadeHeight, {
 
-				this.setState ({
+					toValue: 0,
+					duration: 50,
+					easing: Easing.inOut(Easing.ease),
+				}).start (() => {
 
-					showEditItems: false,
-					editItem: false,
-				});
-			}
-		);
+					this.setState ({
+
+						showEditItems: false,
+						editItem: false,
+					});
+				}
+			);
+		} else {
+
+			//	TODO - fancy animation and vibration or something
+		}
 	}
 
 	/*

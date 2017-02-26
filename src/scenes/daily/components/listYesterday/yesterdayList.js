@@ -7,6 +7,7 @@ import React, { Component } from "react";
 //  Import items from react-native
 import {
 
+	Text,
 	View,
 	StyleSheet,
 } from "react-native";
@@ -16,7 +17,7 @@ import {
 	getYesterdayItems,
 } from "YesterdayListActions";
 
-import CreateYesterdayItem from 'CreateYesterdayItem';
+import CreateYesterdayItem from "CreateYesterdayItem";
 import ListItemYesterday from "ListItemYesterday";
 
 import theme from "AppTheme";
@@ -30,6 +31,7 @@ export class ListYesterday extends Component {
 		yesterdaysItems: React.PropTypes.array,
 		getYesterdayItems: React.PropTypes.func,
 		displayCreateYesterdayItem: React.PropTypes.bool,
+		isFetchingYesterdayItems: React.PropTypes.bool,
 	};
 
 	constructor (props) {
@@ -45,6 +47,13 @@ export class ListYesterday extends Component {
 
 	render () {
 
+		if (this.props.isFetchingYesterdayItems === true) {
+
+			return (
+
+				<Text>Loading Items</Text>
+			);
+		}
 		return (
 
 			<View style={styles.card}>
@@ -86,6 +95,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => ({
 
 	yesterdaysItems: state.yesterdayListReducer.yesterdaysItems,
+	isFetchingYesterdayItems: state.yesterdayListReducer.isFetchingYesterdayItems,
 });
 
 /*

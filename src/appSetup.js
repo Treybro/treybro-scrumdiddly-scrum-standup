@@ -4,19 +4,15 @@
 
 import React, { Component } from "react";
 import { Provider } from "react-redux";
-import { createStore } from "redux";
-import appReducers from "AppReducers";
+import configureStore from "ConfigureStore";
 
 import App from "App";
 
-const store = createStore(appReducers);
+const reduxStore = configureStore ();
 
 /*
 * Responsible for configuring middleware
 * to be used by the entire app
-*
-* TODO - create different component to handle the store
-* creation process
 */
 class AppSetup extends Component {
 
@@ -30,7 +26,7 @@ class AppSetup extends Component {
 		return (
 
 			//  Redux provider for our app
-			<Provider store={store}>
+			<Provider store={reduxStore}>
 				{/* Our app root component */}
 				<App />
 			</Provider>

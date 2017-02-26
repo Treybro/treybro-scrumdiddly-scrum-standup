@@ -1,37 +1,37 @@
 [
-	{
-		id: 1,
-		completed: false,
-		itemText:"One"
-	},
-	{
-		id: 2,
-		completed: true,
-		itemText:"Two"
-	},
-	{
-		id: 3,
-		completed: false,
-		itemText:"Three"
-	},
-	{
-		id: 4,
-		completed: true,
-		itemText:"Four"
-	},
-	{
-		id: 5,
-		completed: false,
-		itemText:"Five"
-	},
-	{
-		id: 6,
-		completed: false,
-		itemText:"Six"
-	},
-	{
-		id: 7,
-		completed: false,
-		itemText:"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu"
-	},
+  {
+    "id": 1,
+    "completed": false,
+    "itemText": "One"
+  },
+  {
+    "id": 2,
+    "completed": true,
+    "itemText": "Two"
+  },
+  {
+    "id": 3,
+    "completed": false,
+    "itemText": "Three"
+  },
+  {
+    "id": 4,
+    "completed": true,
+    "itemText": "Four"
+  },
+  {
+    "id": 5,
+    "completed": false,
+    "itemText": "Five"
+  },
+  {
+    "id": 6,
+    "completed": false,
+    "itemText": "Six"
+  },
+  {
+    "id": 7,
+    "completed": false,
+    "itemText": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu"
+  }
 ]
