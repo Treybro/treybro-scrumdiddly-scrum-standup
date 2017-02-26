@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
 
 		height: 25,
 		width: 25,
-		marginLeft: (Platform.OS === "ios") ? 20 : 10,
+		marginLeft: (Platform.OS === "ios") ? 20 : 15,
 		alignItems: "center",
 		justifyContent: "center",
 	},
@@ -121,11 +121,12 @@ class DailyTab extends Component {
 			style: {
 
 				backgroundColor:theme.pink,
-				height: (Platform.OS === "ios") ? 75 : 75,
+				height: (Platform.OS === "ios") ? 75 : 55,
 			},
 			titleStyle: {
 
-				color:theme.white
+				color:theme.white,
+				marginLeft: (Platform.OS === "ios") ? 0 : 30,
 			},
 			tintColor: {},
 		},
