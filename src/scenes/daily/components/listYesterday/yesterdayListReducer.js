@@ -35,7 +35,17 @@ const yesterdayListReducer = (state = yesterdayListState, action) => {
 	case RECEIVE_YESTERDAY_ITEMS: {
 
 		//	Convert to JSON object
-		let toDoItems = JSON.parse(action.results);
+		let toDoItems = action.results;
+		if (toDoItems === undefined || toDoItems === null || toDoItems.length === 0) {
+
+			toDoItems = {
+
+				"toDoItems": []
+			};
+		} else {
+
+			toDoItems = JSON.parse(items);
+		}
 		return {
 
 			...state,
