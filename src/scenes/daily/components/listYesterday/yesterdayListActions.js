@@ -58,8 +58,19 @@ export function saveYesterdayItem (itemText) {
 
 		return AsyncStorage.getItem ("DailyTab").then (function (results) {
 
-			// Convert to JSON object and get current items
-			let resultsObject = JSON.parse(results);
+			let resultsObject = results;
+			if (resultsObject === undefined || resultsObject === null || resultsObject.length === 0) {
+
+				resultsObject = {
+
+					"toDoItems": [],
+				};
+			} else {
+
+				// Convert to JSON object and get current items
+				resultsObject = JSON.parse(results);
+			}
+
 			let toDoItems = resultsObject.toDoItems;
 
 			//	TODO - do this on the network side (maybe use objectIds/dates)

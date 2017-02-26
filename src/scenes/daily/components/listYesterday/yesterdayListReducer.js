@@ -44,7 +44,7 @@ const yesterdayListReducer = (state = yesterdayListState, action) => {
 			};
 		} else {
 
-			toDoItems = JSON.parse(items);
+			toDoItems = JSON.parse(toDoItems);
 		}
 		return {
 
