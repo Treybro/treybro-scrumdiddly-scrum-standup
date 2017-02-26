@@ -14,6 +14,7 @@ import {
 	Animated,
 	TextInput,
 	Platform,
+	Keyboard,
 } from "react-native";
 import { connect } from "react-redux";
 import {
@@ -65,6 +66,7 @@ export class CreateYesterdayItem extends Component {
 				<View style={styles.contentContainer}>
 					<View style={styles.textContainer}>
 						<TextInput
+							placeholder={"Yesterday I..."}
 							editable={this.props.showToggle}
 							value={this.state.text}
 							style={[styles.listItemText,{height: Math.max(35, this.state.height)}]}
@@ -74,13 +76,20 @@ export class CreateYesterdayItem extends Component {
 							autoFocus={false}
 							maxLength={240}
 							onFocus={() => {}}
-							returnKeyType={(Platform.OS === "ios") ? "default" : "done"}
-							onSubmitEditing={() => {}}
+							returnKeyType={(Platform.OS === "ios") ? "done" : "done"}
 							multiline={true}
 							underlineColorAndroid={theme.lightGrey}
 							onContentSizeChange={(event) => {
 								this.setState({height: event.nativeEvent.contentSize.height});
-							}} />
+							}}
+							enablesReturnKeyAutomatically={true}
+							onKeyPress={(event) => {
+
+								if (event.nativeEvent.key === 'Enter') {
+
+									Keyboard.dismiss ();
+								}
+							}}/>
 					</View>
 					<Animated.View style={[styles.editContents]}>
 						<TouchableOpacity onPress={() => this._saveItem ()}>

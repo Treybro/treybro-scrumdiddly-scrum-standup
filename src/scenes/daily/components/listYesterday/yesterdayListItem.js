@@ -15,6 +15,7 @@ import {
 	Easing,
 	TextInput,
 	Platform,
+	Keyboard,
 } from "react-native";
 import { connect } from "react-redux";
 import {
@@ -54,7 +55,7 @@ export class ListItemYesterday extends Component {
 
 	render () {
 
-		let textInputStyle = [this._determineStyle (), {height: (Platform.OS === "ios") ? Math.max(35, this.state.height) : Math.max(40, this.state.height)}];
+		let textInputStyle = [this._determineStyle (), {height: (Platform.OS === "ios") ? Math.max (40, this.state.height) : Math.max(40, this.state.height)}];
 		return (
 			
 			<View style={styles.containerView}>
@@ -78,13 +79,20 @@ export class ListItemYesterday extends Component {
 								autoFocus={false}
 								maxLength={240}
 								onFocus={() => {}}
-								returnKeyType={"done"}
-								onSubmitEditing={() => {}}
+								returnKeyType={(Platform.OS === "ios") ? "done" : "done"}
 								multiline={true}
 								underlineColorAndroid={(this.state.editItem === false) ? "transparent" : theme.lightGrey}
 								onContentSizeChange={(event) => {
 									this.setState({height: event.nativeEvent.contentSize.height});
-								}} />
+								}}
+								enablesReturnKeyAutomatically={true}
+								onKeyPress={(event) => {
+
+									if (event.nativeEvent.key === 'Enter') {
+
+										Keyboard.dismiss ();
+									}
+								}}/>
 						</View>
 					</TouchableOpacity>
 					<Animated.View style={[styles.editContents,{ height: this.state.fadeHeight}]}>
@@ -184,7 +192,7 @@ export class ListItemYesterday extends Component {
 
 				this.state.fadeHeight, {
 
-					toValue: 40,
+					toValue: 50,
 					duration: 50,
 					easing: Easing.inOut (Easing.ease),
 				}).start (() => {
@@ -267,6 +275,7 @@ const styles = StyleSheet.create({
 
 		margin: 0,
 		padding: 0,
+		backgroundColor: theme.white,
 	},
 	listItemText: {
 
@@ -276,6 +285,7 @@ const styles = StyleSheet.create({
 		marginLeft: (Platform.OS === "ios") ? 0 : 0,
 		marginRight: (Platform.OS === "ios") ? 20 : 0,
 		marginTop: (Platform.OS === "ios") ? 10 : 0,
+		marginBottom: (Platform.OS === "ios") ? 10 : 0,
 	},
 	completedListItemText: {
 
@@ -285,6 +295,7 @@ const styles = StyleSheet.create({
 		marginLeft: (Platform.OS === "ios") ? 0 : 0,
 		marginRight: (Platform.OS === "ios") ? 20 : 0,
 		marginTop: (Platform.OS === "ios") ? 10 : 0,
+		marginBottom: (Platform.OS === "ios") ? 10 : 0,
 	},
 	editContents: {
 
@@ -296,16 +307,16 @@ const styles = StyleSheet.create({
 	editIcon: {
 
 		margin: 10,
-		width: 24,
-		height: 21,
+		width: (Platform.OS === "ios") ? 28 : 24,
+		height: (Platform.OS === "ios") ? 25 : 21,
 		tintColor: theme.lightGrey,
 	},
 	saveIcon: {
 
 		margin: 10,
 		tintColor: theme.lightGrey,
-		width: 24,
-		height: 24,
+		width: (Platform.OS === "ios") ? 30 : 24,
+		height: (Platform.OS === "ios") ? 30 : 24,
 	},
 	checkedIcon: {
 
@@ -325,8 +336,8 @@ const styles = StyleSheet.create({
 
 		margin: 10,
 		tintColor: theme.lightGrey,
-		width: 14,
-		height: 22,
+		width: (Platform.OS === "ios") ? 24 : 14,
+		height: (Platform.OS === "ios") ? 32 : 22,
 	},
 });
 
