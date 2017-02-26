@@ -66,6 +66,8 @@ const styles = StyleSheet.create({
 		color: theme.lightBlue,
 		marginLeft: 10,
 		marginRight: 10,
+		fontSize: 18,
+		fontWeight: 'bold',
 	},
 	addButton: {
 
@@ -75,8 +77,8 @@ const styles = StyleSheet.create({
 	addButtonImage: {
 
 		tintColor: theme.lightBlue,
-		height: 15,
-		width: 15,
+		height: 25,
+		width: 25,
 	},
 });
 
