@@ -185,15 +185,15 @@ const styles = StyleSheet.create({
 
 		margin: (Platform.OS === "ios") ? 10 : 10,
 		tintColor: theme.lightGrey,
-		width: (Platform.OS === "ios") ? 30 : 24,
-		height: (Platform.OS === "ios") ? 30 : 24,
+		width: (Platform.OS === "ios") ? 30 : 30,
+		height: (Platform.OS === "ios") ? 30 : 30,
 	},
 	deleteIcon: {
 
 		margin: (Platform.OS === "ios") ? 10 : 10,
 		tintColor: theme.lightGrey,
-		width: (Platform.OS === "ios") ? 30 : 24,
-		height: (Platform.OS === "ios") ? 30 : 24,
+		width: (Platform.OS === "ios") ? 30 : 30,
+		height: (Platform.OS === "ios") ? 30 : 30,
 	},
 });
 

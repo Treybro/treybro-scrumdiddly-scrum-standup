@@ -11,8 +11,6 @@ import {
 	View,
 	StyleSheet,
 	TouchableOpacity,
-	Animated,
-	Easing,
 	TextInput,
 	Platform,
 	Keyboard,
@@ -26,6 +24,7 @@ import {
 
 import theme from "AppTheme";
 import getIconAsset from "IconAssets";
+import EditContentsYesterday from "EditContentsYesterday";
 
 /*
 *	Displays the list of Yesterdays Items
@@ -44,7 +43,6 @@ export class ListItemYesterday extends Component {
 		super (props);
 		this.state = {
 
-			fadeHeight: new Animated.Value (0),
 			showEditItems: false,
 			editItem: false,
 			text: this.props.yesterdayItem.itemText,
@@ -88,24 +86,20 @@ export class ListItemYesterday extends Component {
 								enablesReturnKeyAutomatically={true}
 								onKeyPress={(event) => {
 
-									if (event.nativeEvent.key === 'Enter') {
+									if (event.nativeEvent.key === "Enter") {
 
 										Keyboard.dismiss ();
 									}
 								}}/>
 						</View>
 					</TouchableOpacity>
-					<Animated.View style={[styles.editContents,{ height: this.state.fadeHeight}]}>
-						<TouchableOpacity onPress={(this.state.editItem === false) ? () => this._editItem ()  : () => this._saveItem ()}>
-							<Image 
-								source={(this.state.editItem === false) ? getIconAsset ("editIcon") : getIconAsset ("tickIcon")} 
-								resizeMode={"stretch"} 
-								style={(this.state.editItem === false) ? styles.editIcon : styles.saveIcon} />
-						</TouchableOpacity>
-						<TouchableOpacity onPress={() => this._deleteItem ()}>
-							<Image source={getIconAsset ("binIcon")} resizeMode={"stretch"} style={styles.deleteIcon} />
-						</TouchableOpacity>
-					</Animated.View>
+					{/* TODO - Refactor this garbage */}
+					<EditContentsYesterday 
+						toggle={this.state.showEditItems}
+						editingItem={this.state.editItem}
+						deleteItem={() => this._deleteItem ()}
+						editItem={() => this._editItem ()}
+						saveItem={() => this._saveItem ()}/>
 				</View>
 			</View>
 		);
@@ -117,25 +111,14 @@ export class ListItemYesterday extends Component {
 	*/
 	_deleteItem () {
 
-		Animated.timing (
+		this.setState ({
 
-			this.state.fadeHeight, {
+			showEditItems: false,
+			editItem: false,
+		}, () => {
 
-				toValue: 0,
-				duration: 50,
-				easing: Easing.inOut(Easing.ease),
-			}).start (() => {
-
-				this.setState ({
-
-					showEditItems: false,
-					editItem: false,
-				}, () => {
-
-					this.props.removeYesterdayItem (this.props.yesterdayItem.id);
-				});
-			}
-		);
+			this.props.removeYesterdayItem (this.props.yesterdayItem.id);
+		});
 	}
 
 	/*
@@ -159,22 +142,11 @@ export class ListItemYesterday extends Component {
 		let itemText = this.state.text.trim ();
 		if (itemText !== undefined && itemText !== null && itemText.length > 0 && itemText.length <= 240) {
 
-			Animated.timing (
+			this.setState ({
 
-				this.state.fadeHeight, {
-
-					toValue: 0,
-					duration: 50,
-					easing: Easing.inOut(Easing.ease),
-				}).start (() => {
-
-					this.setState ({
-
-						showEditItems: false,
-						editItem: false,
-					});
-				}
-			);
+				showEditItems: false,
+				editItem: false,
+			});
 		} else {
 
 			//	TODO - fancy animation and vibration or something
@@ -186,41 +158,11 @@ export class ListItemYesterday extends Component {
 	*/
 	_toggleEdit () {
 
-		if (this.state.showEditItems === false) {
+		let toggle = !this.state.showEditItems;
+		this.setState ({
 
-			Animated.timing (
-
-				this.state.fadeHeight, {
-
-					toValue: 50,
-					duration: 50,
-					easing: Easing.inOut (Easing.ease),
-				}).start (() => {
-
-					this.setState ({
-
-						showEditItems: true,
-					});
-				}
-			);
-		} else {
-
-			Animated.timing (
-
-				this.state.fadeHeight, {
-
-					toValue: 0,
-					duration: 50,
-					easing: Easing.inOut(Easing.ease),
-				}).start (() => {
-
-					this.setState ({
-
-						showEditItems: false,
-					});
-				}
-			);
-		}
+			showEditItems: toggle,
+		});
 	}
 
 	/*
@@ -228,13 +170,13 @@ export class ListItemYesterday extends Component {
 	*/
 	_toggleCompleteItem () {
 
-		let newState = !this.state.itemCompleted;
+		let toggle = !this.state.itemCompleted;
 		this.setState ({
 
-			itemCompleted: newState,
+			itemCompleted: toggle,
 		}, () => {
 
-			this.props.toggleCompleteYesterdayItem (this.props.yesterdayItem.id, newState);
+			this.props.toggleCompleteYesterdayItem (this.props.yesterdayItem.id, toggle);
 		});
 	}
 
@@ -297,27 +239,6 @@ const styles = StyleSheet.create({
 		marginTop: (Platform.OS === "ios") ? 10 : 0,
 		marginBottom: (Platform.OS === "ios") ? 10 : 0,
 	},
-	editContents: {
-
-		flex: 1,
-		alignItems: "flex-end",
-		justifyContent: "flex-end",
-		flexDirection: "row",
-	},
-	editIcon: {
-
-		margin: 10,
-		width: (Platform.OS === "ios") ? 28 : 24,
-		height: (Platform.OS === "ios") ? 25 : 21,
-		tintColor: theme.lightGrey,
-	},
-	saveIcon: {
-
-		margin: 10,
-		tintColor: theme.lightGrey,
-		width: (Platform.OS === "ios") ? 30 : 24,
-		height: (Platform.OS === "ios") ? 30 : 24,
-	},
 	checkedIcon: {
 
 		margin: 10,
@@ -331,13 +252,6 @@ const styles = StyleSheet.create({
 		tintColor: theme.lightGrey,
 		height: (Platform.OS === "ios") ? 25 : 25,
 		width: (Platform.OS === "ios") ? 25 : 25,
-	},
-	deleteIcon: {
-
-		margin: 10,
-		tintColor: theme.lightGrey,
-		width: (Platform.OS === "ios") ? 24 : 14,
-		height: (Platform.OS === "ios") ? 32 : 22,
 	},
 });
 

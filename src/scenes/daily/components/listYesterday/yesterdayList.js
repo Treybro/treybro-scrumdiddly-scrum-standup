@@ -77,8 +77,8 @@ const styles = StyleSheet.create({
 	card: {
 
 		backgroundColor: theme.white,
-		marginLeft: (Platform.OS === "ios") ? 0 : 10,
-		marginRight: (Platform.OS === "ios") ? 0 : 10,
+		marginLeft: (Platform.OS === "ios") ? 0 : 0,
+		marginRight: (Platform.OS === "ios") ? 0 : 0,
 		borderRadius: 1,
 		borderWidth: 0,
 		shadowColor: theme.black,
