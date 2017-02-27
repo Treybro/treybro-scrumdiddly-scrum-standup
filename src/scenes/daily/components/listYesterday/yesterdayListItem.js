@@ -68,6 +68,7 @@ export class ListItemYesterday extends Component {
 					<TouchableOpacity onPress={() => this._toggleEdit ()}>
 						<View style={styles.textContainer}>
 							<TextInput
+								pointerEvents={(this.state.editItem === false) ? "none": "auto"}
 								editable={this.state.editItem}
 								value={this.state.text}
 								style={textInputStyle}
