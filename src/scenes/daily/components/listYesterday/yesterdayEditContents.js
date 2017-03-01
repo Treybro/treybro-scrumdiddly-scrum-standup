@@ -58,7 +58,10 @@ export class EditContentsYesterday extends Component {
 						style={(this.props.editingItem === false) ? styles.editIcon : styles.saveIcon} />
 				</TouchableOpacity>
 				<TouchableOpacity onPress={() => this.props.deleteItem ()}>
-					<Image source={getIconAsset ("binIcon")} resizeMode={"stretch"} style={styles.deleteIcon} />
+					<Image 
+						source={(this.props.editingItem === false) ? getIconAsset ("binIcon") : getIconAsset ("cancelIcon")}
+						resizeMode={"stretch"} 
+						style={(this.props.editingItem === false) ? styles.deleteIcon : styles.cancelIcon} />
 				</TouchableOpacity>
 			</Animated.View>
 		);
@@ -94,6 +97,13 @@ const styles = StyleSheet.create({
 		margin: 10,
 		tintColor: theme.lightGrey,
 		width: (Platform.OS === "ios") ? 22 : 22,
+		height: (Platform.OS === "ios") ? 30 : 30,
+	},
+	cancelIcon: {
+
+		margin: 10,
+		tintColor: theme.lightGrey,
+		width: (Platform.OS === "ios") ? 30 : 30,
 		height: (Platform.OS === "ios") ? 30 : 30,
 	},
 });

@@ -85,7 +85,7 @@ export class CreateYesterdayItem extends Component {
 							enablesReturnKeyAutomatically={true}
 							onKeyPress={(event) => {
 
-								if (event.nativeEvent.key === 'Enter') {
+								if (event.nativeEvent.key === "Enter") {
 
 									Keyboard.dismiss ();
 								}

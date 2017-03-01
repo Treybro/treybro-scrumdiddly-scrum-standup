@@ -45,7 +45,8 @@ export class ListItemYesterday extends Component {
 
 			showEditItems: false,
 			editItem: false,
-			text: this.props.yesterdayItem.itemText,
+			originalText: this.props.yesterdayItem.itemText,
+			editedText: this.props.yesterdayItem.itemText,
 			height: (Platform.OS === "ios") ? 0 : 0,
 			itemCompleted: this.props.yesterdayItem.completed,
 		};
@@ -70,9 +71,9 @@ export class ListItemYesterday extends Component {
 							<TextInput
 								pointerEvents={(this.state.editItem === false) ? "none": "auto"}
 								editable={this.state.editItem}
-								value={this.state.text}
+								value={(this.state.editItem === false) ? this.state.originalText : this.state.editedText}
 								style={textInputStyle}
-								onChangeText={(text) => this.setState({text:text})}
+								onChangeText={(text) => this.setState({editedText:text})}
 								autoCapitalize={"sentences"}
 								autoCorrect={false}
 								autoFocus={false}
@@ -98,7 +99,7 @@ export class ListItemYesterday extends Component {
 					<EditContentsYesterday 
 						toggle={this.state.showEditItems}
 						editingItem={this.state.editItem}
-						deleteItem={() => this._deleteItem ()}
+						deleteItem={(this.state.editItem === false) ? () => this._deleteItem () : () => this._cancelEditItem ()}
 						editItem={() => this._editItem ()}
 						saveItem={() => this._saveItem ()}/>
 				</View>
@@ -128,8 +129,29 @@ export class ListItemYesterday extends Component {
 	*/
 	_editItem () {
 
+		let itemText = this.state.editedText.trim ();
+		if (itemText !== undefined && itemText !== null && itemText.length > 0 && itemText.length <= 240) {
+
+			this.setState ({
+
+				originalText: this.state.editedText,
+				editItem: !this.state.editItem,
+			});
+		} else {
+
+			//	TODO - fancy animation and vibration or something
+		}
+	}
+
+	/*
+	*	Cancels the editing of the item
+	*	Reset text back to original text
+	*/
+	_cancelEditItem () {
+	
 		this.setState ({
 
+			editedText: this.state.originalText,
 			editItem: !this.state.editItem,
 		});
 	}
