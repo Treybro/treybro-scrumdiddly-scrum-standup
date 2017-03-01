@@ -20,6 +20,7 @@ import {
 
 import CreateYesterdayItem from "CreateYesterdayItem";
 import ListItemYesterday from "ListItemYesterday";
+import EmptyYesterdayList from "EmptyYesterdayList";
 
 import theme from "AppTheme";
 
@@ -49,6 +50,8 @@ export class ListYesterday extends Component {
 
 	render () {
 
+		//	Are we loading items?
+		//	TODO - test this with a network request
 		if (this.props.isFetchingYesterdayItems === true) {
 
 			return (
@@ -57,6 +60,20 @@ export class ListYesterday extends Component {
 				<Text>Loading Items</Text>
 			);
 		}
+
+		// Do we have any items to display?
+		if (this.props.yesterdaysItems === undefined || this.props.yesterdaysItems === null || this.props.yesterdaysItems.length === 0) {
+
+			return (
+
+				<View style={styles.card}>
+					<CreateYesterdayItem />
+					<EmptyYesterdayList />
+				</View>
+			);
+		}
+
+		//	Standard view
 		return (
 
 			<View style={styles.card}>
