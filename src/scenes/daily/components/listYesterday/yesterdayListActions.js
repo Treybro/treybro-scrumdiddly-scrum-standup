@@ -91,7 +91,7 @@ export function saveYesterdayItem (itemText) {
 			//	TODO - add api save
 			dispatch (addYesterdayItem (newToDoItem));
 			return AsyncStorage.mergeItem ("DailyTab", JSON.stringify (resultsObject));
-		}).then (function (result) {
+		}).then (function () {
 
 			console.log ("Item Saved");
 		}, function (err) {
@@ -147,7 +147,7 @@ export function deleteYesterdayItem (itemId) {
 			resultsObject.toDoItems = toDoItems;
 
 			return AsyncStorage.mergeItem ("DailyTab", JSON.stringify (resultsObject));
-		}).then (function (result) {
+		}).then (function () {
 
 			console.log ("Item Removed");
 		}, function (err) {
