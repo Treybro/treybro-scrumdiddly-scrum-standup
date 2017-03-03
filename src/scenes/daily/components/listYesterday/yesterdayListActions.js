@@ -12,6 +12,7 @@ export const ADD_YESTERDAY_ITEM = "ADD_YESTERDAY_ITEM";
 export const TOGGLE_COMPLETE_YESTERDAY_ITEM = "TOGGLE_COMPLETE_YESTERDAY_ITEM";
 export const REMOVE_YESTERDAY_ITEM = "REMOVE_YESTERDAY_ITEM";
 export const TOGGLE_CREATE_YESTERDAY_ITEM = "TOGGLE_CREATE_YESTERDAY_ITEM";
+export const DELETE_YESTERDAY_ITEM = "DELETE_YESTERDAY_ITEM";
 
 //	Tell the app we are getting the yesterday items
 export function getYesterdayItems () {
@@ -118,6 +119,42 @@ export function removeYesterdayItem (itemId) {
 
 		type: REMOVE_YESTERDAY_ITEM,
 		itemId,
+	};
+}
+
+//	Deletes the item from local storage
+export function deleteYesterdayItem (itemId) {
+
+	return function (dispatch) {
+
+		dispatch (removeYesterdayItem (itemId));
+		return AsyncStorage.getItem ("DailyTab").then (function (results) {
+
+			let resultsObject = JSON.parse(results);
+			let toDoItems = resultsObject.toDoItems;
+
+			//	Iterate through the list
+			for (let i = 0; i < toDoItems.length; i++) {
+
+				//	Check if the ids match
+				let toDoID = toDoItems[i].id;
+				if (itemId === toDoID) {
+
+					toDoItems.splice(i, 1);
+				}
+			}
+			//	Setup for merge
+			resultsObject.toDoItems = toDoItems;
+
+			return AsyncStorage.mergeItem ("DailyTab", JSON.stringify (resultsObject));
+		}).then (function (result) {
+
+			console.log ("Item Removed");
+		}, function (err) {
+
+			//	TODO - handle error message
+			console.log (err);
+		});
 	};
 }
 

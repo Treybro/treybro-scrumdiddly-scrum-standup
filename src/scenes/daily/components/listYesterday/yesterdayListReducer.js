@@ -40,7 +40,7 @@ const yesterdayListReducer = (state = yesterdayListState, action) => {
 
 			toDoItems = {
 
-				"toDoItems": []
+				"toDoItems": [],
 			};
 		} else {
 

@@ -18,7 +18,7 @@ import {
 import { connect } from "react-redux";
 import {
 
-	removeYesterdayItem,
+	deleteYesterdayItem,
 	toggleCompleteYesterdayItem,
 } from "YesterdayListActions";
 
@@ -34,7 +34,7 @@ export class ListItemYesterday extends Component {
 	static propTypes = {
 
 		yesterdayItem: React.PropTypes.object.isRequired,
-		removeYesterdayItem: React.PropTypes.func,
+		deleteYesterdayItem: React.PropTypes.func,
 		toggleCompleteYesterdayItem: React.PropTypes.func,
 	};
 
@@ -119,7 +119,7 @@ export class ListItemYesterday extends Component {
 			editItem: false,
 		}, () => {
 
-			this.props.removeYesterdayItem (this.props.yesterdayItem.id);
+			this.props.deleteYesterdayItem (this.props.yesterdayItem.id);
 		});
 	}
 
@@ -153,7 +153,7 @@ export class ListItemYesterday extends Component {
 
 			editedText: this.state.originalText,
 			editItem: !this.state.editItem,
-		});
+		}, () => this._toggleEdit ());
 	}
 
 	/*
@@ -248,7 +248,7 @@ const styles = StyleSheet.create({
 		fontFamily: (Platform.OS === "ios") ? "Helvetica" : "Roboto",
 		color: theme.black,
 		marginLeft: (Platform.OS === "ios") ? 0 : 0,
-		marginRight: (Platform.OS === "ios") ? 20 : 0,
+		marginRight: (Platform.OS === "ios") ? 20 : 20,
 		marginTop: (Platform.OS === "ios") ? 10 : 0,
 		marginBottom: (Platform.OS === "ios") ? 10 : 0,
 	},
@@ -283,7 +283,7 @@ const styles = StyleSheet.create({
 */
 const mapDispatchToProps = dispatch => ({
 
-	removeYesterdayItem: (itemId) => dispatch (removeYesterdayItem (itemId)),
+	deleteYesterdayItem: (itemId) => dispatch (deleteYesterdayItem (itemId)),
 	toggleCompleteYesterdayItem: (itemId, completedState) => dispatch (toggleCompleteYesterdayItem (itemId, completedState)),
 });
 
