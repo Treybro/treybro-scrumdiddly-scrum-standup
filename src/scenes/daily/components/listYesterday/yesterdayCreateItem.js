@@ -66,7 +66,7 @@ export class CreateYesterdayItem extends Component {
 				<View style={styles.contentContainer}>
 					<View style={styles.textContainer}>
 						<TextInput
-							placeholder={"Yesterday I..."}
+							placeholder={"Fixed that bug that was bugging everyone..."}
 							editable={this.props.showToggle}
 							value={this.state.text}
 							style={[styles.listItemText,{height: Math.max(35, this.state.height)}]}
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
 
 		fontFamily: (Platform.OS === "ios") ? "Helvetica" : "Roboto",
 		color: theme.black,
-		fontSize: (Platform.OS === "ios") ? 16 : 12,
+		fontSize: (Platform.OS === "ios") ? 12 : 12,
 		marginLeft: (Platform.OS === "ios") ? 20 : 0,
 		marginRight: (Platform.OS === "ios") ? 20 : 0,
 		marginTop: (Platform.OS === "ios") ? 10 : 0,

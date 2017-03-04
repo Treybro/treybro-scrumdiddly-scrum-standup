@@ -26,7 +26,7 @@ const RootNavigation = TabNavigator ({
 	},
 }, {
 
-	animationEnabled: false,
+	animationEnabled: true,
 	swipeEnabled: true,
 	tabBarPosition: "bottom",
 	lazyLoad: false,

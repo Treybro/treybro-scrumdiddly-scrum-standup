@@ -29,6 +29,8 @@ export class EditContentsYesterday extends Component {
 		deleteItem: React.PropTypes.func.isRequired,
 		editItem: React.PropTypes.func.isRequired,
 		saveItem: React.PropTypes.func.isRequired,
+		itemCompleted: React.PropTypes.bool.isRequired,
+		completeItem: React.PropTypes.func.isRequired,
 	};
 
 	constructor (props) {
@@ -48,9 +50,16 @@ export class EditContentsYesterday extends Component {
 
 			return null;
 		}
+
+		//	Only display something when we want to edit an item
 		return (
 
 			<Animated.View style={styles.editContents}>
+				<TouchableOpacity onPress={() => this.props.completeItem ()}>
+					<Image source={(this.props.itemCompleted === false) ? getIconAsset ("okIcon")  : getIconAsset ("okIcon")} 
+							resizeMode={"stretch"} 
+							style={(this.props.itemCompleted === false) ? styles.uncheckedIcon  : styles.checkedIcon} />
+				</TouchableOpacity>
 				<TouchableOpacity onPress={(this.state.editItem === false) ? () => this.props.editItem ()  : () => this.props.saveItem ()}>
 					<Image 
 						source={(this.props.editingItem === false) ? getIconAsset ("editIcon") : getIconAsset ("tickIcon")} 
@@ -73,38 +82,49 @@ const styles = StyleSheet.create({
 	editContents: {
 
 		flex: 1,
-		alignItems: "flex-end",
-		justifyContent: "flex-end",
+		alignItems: "center",
+		justifyContent: "space-between",
 		flexDirection: "row",
-		height: 50,
+		height: (Platform.OS === "ios") ? 50 : 50,
+		backgroundColor: theme.veryLightGrey,
+		paddingLeft: 20,
+		paddingRight: 20,
 	},
 	editIcon: {
 
-		margin: 10,
 		width: (Platform.OS === "ios") ? 33 : 33,
 		height: (Platform.OS === "ios") ? 30 : 30,
 		tintColor: theme.lightGrey,
 	},
 	saveIcon: {
 
-		margin: 10,
 		tintColor: theme.lightGrey,
 		width: (Platform.OS === "ios") ? 30 : 30,
 		height: (Platform.OS === "ios") ? 30 : 30,
 	},
 	deleteIcon: {
 
-		margin: 10,
 		tintColor: theme.lightGrey,
 		width: (Platform.OS === "ios") ? 22 : 22,
 		height: (Platform.OS === "ios") ? 30 : 30,
 	},
 	cancelIcon: {
 
-		margin: 10,
 		tintColor: theme.lightGrey,
 		width: (Platform.OS === "ios") ? 30 : 30,
 		height: (Platform.OS === "ios") ? 30 : 30,
+	},
+	checkedIcon: {
+
+		tintColor: theme.lightGrey,
+		height: (Platform.OS === "ios") ? 30 : 30,
+		width: (Platform.OS === "ios") ? 30 : 30,
+	},
+	uncheckedIcon: {
+
+		tintColor: theme.lightGrey,
+		height: (Platform.OS === "ios") ? 30 : 30,
+		width: (Platform.OS === "ios") ? 30 : 30,
 	},
 });
 

@@ -7,7 +7,6 @@ import React, { Component } from "react";
 //  Import items from react-native
 import {
 
-	Image,
 	View,
 	StyleSheet,
 	TouchableOpacity,
@@ -23,7 +22,6 @@ import {
 } from "YesterdayListActions";
 
 import theme from "AppTheme";
-import getIconAsset from "IconAssets";
 import EditContentsYesterday from "EditContentsYesterday";
 
 /*
@@ -54,20 +52,13 @@ export class ListItemYesterday extends Component {
 
 	render () {
 
-		let textInputStyle = [this._determineStyle (), {height: (Platform.OS === "ios") ? Math.max (40, this.state.height) : Math.max(40, this.state.height)}];
+		let textInputStyle = [this._determineStyle (), {height: (Platform.OS === "ios") ? Math.max (40, this.state.height) : Math.max(50, this.state.height)}];
 		return (
 			
 			<View style={styles.containerView}>
-				<View style={styles.completedContainer}>
-					<TouchableOpacity onPress={() => this._toggleCompleteItem ()}>
-						<Image source={(this.state.itemCompleted === false) ? getIconAsset ("uncheckedIcon")  : getIconAsset ("checkIcon")} 
-								resizeMode={"stretch"} 
-								style={(this.state.itemCompleted === false) ? styles.uncheckedIcon  : styles.checkedIcon} />
-					</TouchableOpacity>
-				</View>
 				<View style={styles.contentContainer}>
-					<TouchableOpacity onPress={() => this._toggleEdit ()}>
-						<View style={styles.textContainer}>
+					<TouchableOpacity activeOpacity={1}onPress={() => this._toggleEdit ()}>
+						<View style={(this.state.itemCompleted === false) ? styles.textContainer : [styles.textContainer, {borderRightWidth: 5, borderRightColor: "green"}]}>
 							<TextInput
 								pointerEvents={(this.state.editItem === false) ? "none": "auto"}
 								editable={this.state.editItem}
@@ -100,6 +91,8 @@ export class ListItemYesterday extends Component {
 						toggle={this.state.showEditItems}
 						editingItem={this.state.editItem}
 						deleteItem={(this.state.editItem === false) ? () => this._deleteItem () : () => this._cancelEditItem ()}
+						itemCompleted={this.state.itemCompleted}
+						completeItem={() => this._toggleCompleteItem ()}
 						editItem={() => this._editItem ()}
 						saveItem={() => this._saveItem ()}/>
 				</View>
@@ -153,7 +146,7 @@ export class ListItemYesterday extends Component {
 
 			editedText: this.state.originalText,
 			editItem: !this.state.editItem,
-		}, () => this._toggleEdit ());
+		});
 	}
 
 	/*
@@ -224,14 +217,6 @@ const styles = StyleSheet.create({
 		flexWrap: "wrap",
 		flexDirection: "row",
 	},
-	completedContainer: {
-
-		height: 50,
-		width: 50,
-		alignSelf: "center",
-		alignItems: "center",
-		justifyContent: "center",
-	},
 	contentContainer: {
 
 		flex: 1,
@@ -247,7 +232,7 @@ const styles = StyleSheet.create({
 		fontSize: (Platform.OS === "ios") ? 16 : 12,
 		fontFamily: (Platform.OS === "ios") ? "Helvetica" : "Roboto",
 		color: theme.black,
-		marginLeft: (Platform.OS === "ios") ? 0 : 0,
+		marginLeft: (Platform.OS === "ios") ? 20 : 20,
 		marginRight: (Platform.OS === "ios") ? 20 : 20,
 		marginTop: (Platform.OS === "ios") ? 10 : 0,
 		marginBottom: (Platform.OS === "ios") ? 10 : 0,
@@ -257,24 +242,10 @@ const styles = StyleSheet.create({
 		fontSize: (Platform.OS === "ios") ? 16 : 12,
 		fontFamily: (Platform.OS === "ios") ? "Helvetica" : "Roboto",
 		color: theme.lightGrey,
-		marginLeft: (Platform.OS === "ios") ? 0 : 0,
-		marginRight: (Platform.OS === "ios") ? 20 : 0,
+		marginLeft: (Platform.OS === "ios") ? 20 : 20,
+		marginRight: (Platform.OS === "ios") ? 20 : 20,
 		marginTop: (Platform.OS === "ios") ? 10 : 0,
 		marginBottom: (Platform.OS === "ios") ? 10 : 0,
-	},
-	checkedIcon: {
-
-		margin: 10,
-		tintColor: theme.lightGrey,
-		height: (Platform.OS === "ios") ? 25 : 25,
-		width: (Platform.OS === "ios") ? 25 : 25,
-	},
-	uncheckedIcon: {
-
-		margin: 10,
-		tintColor: theme.lightGrey,
-		height: (Platform.OS === "ios") ? 25 : 25,
-		width: (Platform.OS === "ios") ? 25 : 25,
 	},
 });
 

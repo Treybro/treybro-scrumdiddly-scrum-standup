@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
 	viewContainer: {
 
 		flex: 1,
-		height: (Platform.OS === "ios") ? 50 : 50,
+		height: (Platform.OS === "ios") ? 70 : 70,
 		backgroundColor: theme.white,
 		flexDirection: "row",
 		justifyContent: "space-between",
@@ -62,19 +62,28 @@ const styles = StyleSheet.create({
 	yesterdayText: {
 
 		color: theme.lightBlue,
-		marginLeft: 10,
+		marginLeft: (Platform.OS === "ios") ? 20 : 20,
 		marginRight: 10,
+		fontSize: 18,
+		fontWeight: "bold",
 	},
 	addButton: {
 
-		marginLeft: 10,
-		marginRight: 10,
+		marginLeft: (Platform.OS === "ios") ? 10 : 10,
+		marginRight: (Platform.OS === "ios") ? 10 : 10,
+		height: (Platform.OS === "ios") ? 50 : 50,
+		width: (Platform.OS === "ios") ? 50 : 50,
+		backgroundColor: theme.white,
+		justifyContent: "center",
+		alignItems: "flex-end",
 	},
 	addButtonImage: {
 
 		tintColor: theme.lightBlue,
-		height: 15,
-		width: 15,
+		height: (Platform.OS === "ios") ? 20 : 20,
+		width: (Platform.OS === "ios") ? 20 : 20,
+		marginLeft: (Platform.OS === "ios") ? 10 : 10,
+		marginRight: (Platform.OS === "ios") ? 10 : 10,
 	},
 });
 

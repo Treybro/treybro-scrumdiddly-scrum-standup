@@ -12,59 +12,16 @@ import {
 	ScrollView,
 	StyleSheet,
 	TouchableOpacity,
-	AsyncStorage,
 	Platform,
 } from "react-native";
 
 import HeaderYesterday from "HeaderYesterday";
 import HeaderToday from "HeaderToday";
 import HeaderBlocker from "HeaderBlocker";
-import DailyList from "DailyList";
 import ListYesterday from "ListYesterday";
 
 import theme from "AppTheme";
 import getIconAsset from "IconAssets";
-
-//	TODO - get rid of this crap
-let toDoItems = {
-	"toDoItems": [
-		{
-			"id": 1,
-			"completed": false,
-			"itemText": "One",
-		},
-		{
-			"id": 2,
-			"completed": true,
-			"itemText": "Two",
-		},
-		{
-			"id": 3,
-			"completed": false,
-			"itemText": "Three",
-		},
-		{
-			"id": 4,
-			"completed": true,
-			"itemText": "Four",
-		},
-		{
-			"id": 5,
-			"completed": false,
-			"itemText": "Five",
-		},
-		{
-			"id": 6,
-			"completed": false,
-			"itemText": "Six",
-		},
-		{
-			"id": 7,
-			"completed": false,
-			"itemText": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu",
-		},
-	],
-};
 
 //	Placed here so nav has access to it immediatly.
 const styles = StyleSheet.create({
@@ -144,7 +101,6 @@ class DailyTab extends Component {
 	constructor (props) {
 
 		super (props);
-		//this._saveToDos ();
 	}
 
 	render () {
@@ -156,17 +112,12 @@ class DailyTab extends Component {
 					<HeaderYesterday />
 					<ListYesterday />
 					<HeaderToday />
-					<DailyList />
+					<ListYesterday />
 					<HeaderBlocker />
-					<DailyList />
+					<ListYesterday />
 				</ScrollView>
 			</View>
 		);
-	}
-
-	_saveToDos () {
-
-		AsyncStorage.setItem("DailyTab", JSON.stringify(toDoItems));
 	}
 }
 

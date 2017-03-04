@@ -6,11 +6,14 @@
 import React, { Component } from "react";
 //	React native components
 import {
-	Button,
+
+	Text,
+	View,
 	Image,
 } from "react-native";
 
 import getIconAsset from "IconAssets";
+import scrumHistory from "../testData/sampleScrumHistory";
 
 class TabTwo extends Component {
 
@@ -43,11 +46,21 @@ class TabTwo extends Component {
 
 		return (
 
-			<Button
-				title="Do Dah"
-				onPress={() => this.props.navigation.goBack ()}
-				label="Go to notifications"/>
+			<View>
+				{this._renderItems ()}
+			</View>
 		);
+	}
+
+	_renderItems () {
+
+		let dailyScrums = scrumHistory.dailyscrums;
+		let returnItems = [];
+		for (let i = 0; i < dailyScrums.length; i++) {
+
+			returnItems.push (<Text>{dailyScrums[i].scrumDate}</Text>);
+		}
+		return returnItems;
 	}
 }
 

@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
 		marginLeft: (Platform.OS === "ios") ? 20 : 20,
 		marginRight: 10,
 		fontSize: 18,
-		fontWeight: 'bold',
+		fontWeight: "bold",
 	},
 	addButton: {
 

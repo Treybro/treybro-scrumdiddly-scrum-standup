@@ -11,6 +11,7 @@ const AppTheme = {
 	white: "#FFFFFF",
 	darkGrey: "#565A5C",
 	lightGrey: "#CED1CC",
+	veryLightGrey: "#EEEEEE",
 	black: "#000000",
 	green: "#DAFF8D",
 	lightGreen: "#BDFE34",

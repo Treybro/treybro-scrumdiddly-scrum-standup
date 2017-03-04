@@ -1,0 +1,72 @@
+{
+  "dailyscrums": [
+    {
+      "scrumId": 32131231,
+      "scrumDate": "04-03-2017",
+      "scrumItems": [
+        {
+          "id": 1,
+          "createdAt": "04-03-2017",
+          "itemText": "this is some text",
+          "completed": false,
+          "itemType": "yesterday"
+        },
+        {
+          "id": 2,
+          "createdAt": "04-03-2017",
+          "itemText": "this is some text",
+          "completed": false,
+          "itemType": "yesterday"
+        },
+        {
+          "id": 3,
+          "createdAt": "04-03-2017",
+          "itemText": "this is some text",
+          "completed": false,
+          "itemType": "today"
+        },
+        {
+          "id": 4,
+          "createdAt": "04-03-2017",
+          "itemText": "this is some text",
+          "completed": false,
+          "itemType": "today"
+        }
+      ]
+    },
+    {
+      "scrumId": 321312312,
+      "scrumDate": "04-03-2017",
+      "scrumItems": [
+        {
+          "id": 1,
+          "createdAt": "04-03-2017",
+          "itemText": "this is some text",
+          "completed": false,
+          "itemType": "yesterday"
+        },
+        {
+          "id": 2,
+          "createdAt": "04-03-2017",
+          "itemText": "this is some text",
+          "completed": false,
+          "itemType": "yesterday"
+        },
+        {
+          "id": 3,
+          "createdAt": "04-03-2017",
+          "itemText": "this is some text",
+          "completed": false,
+          "itemType": "yesterday"
+        },
+        {
+          "id": 4,
+          "createdAt": "04-03-2017",
+          "itemText": "this is some text",
+          "completed": false,
+          "itemType": "today"
+        }
+      ]
+    }
+  ]
+}
