@@ -5,6 +5,7 @@ import {
 
 	AsyncStorage,
 } from "react-native";
+import moment from "moment";
 
 export const FETCH_YESTERDAY_ITEMS = "FETCH_YESTERDAY_ITEMS";
 export const RECEIVE_YESTERDAY_ITEMS = "RECEIVE_YESTERDAY_ITEMS";
@@ -22,8 +23,9 @@ export function getYesterdayItems () {
 		//	Tell the app to fetch from localstorage  
 		//	TODO - add API request
 		dispatch (fetchYesterdayItems ());
-		return AsyncStorage.getItem ("DailyTab").then (function (results) {
+		return AsyncStorage.getItem ("scrumdiddly").then (function (results) {
 
+			console.log (results);
 			dispatch (receiveYesterdayItems (results));
 		}, function (err) {
 
@@ -45,10 +47,58 @@ export function fetchYesterdayItems () {
 //	Tell the app we have received a list of yesterday items
 export function receiveYesterdayItems (results) {
 
+	//	Convert to JSON object
+	let savedScrums = results;
+	if (savedScrums === undefined || savedScrums === null || savedScrums.length === 0) {
+
+		savedScrums = {
+
+			"dailyscrums": [],
+		};
+	} else {
+
+		savedScrums = JSON.parse (savedScrums);
+	}
+
+	//	Get todays date
+	let today = moment ().format ("DD-MM-YYYY");
+	let dailyScrums = savedScrums.dailyscrums;
+
+	//	Return a list of items marked as yesterday
+	let yesterdayScrumItems = [];
+
+	// Do we have any saved scrums?
+	if (dailyScrums !== undefined && dailyScrums !== null && dailyScrums.length > 0) {
+
+		//	Iterate over all saved scrums
+		for (let i = 0; i < dailyScrums.length; i++) {
+
+			let scrum = dailyScrums[i];
+			if (scrum.scrumDate === today) {
+
+				//	Does the scrum have any items to display?
+				if (scrum.scrumItems !== null && scrum.scrumItems !== undefined && scrum.scrumItems.length > 0) {
+
+					let scrumItems = scrum.scrumItems;
+					// Find scrum items marked as yesterday items
+					for (let j = 0; j < scrumItems.length; j++) {
+
+						let scrumItem = scrumItems[j];
+						if (scrumItem.itemType === "yesterday") {
+
+							//	Add this item to be diplayed within the yesterday section
+							yesterdayScrumItems.push (scrumItem);
+						}
+					}
+				}
+			}
+		}
+	}
+
 	return {
 
 		type: RECEIVE_YESTERDAY_ITEMS,
-		results,
+		yesterdayScrumItems,
 	};
 }
 
@@ -57,40 +107,76 @@ export function saveYesterdayItem (itemText) {
 
 	return function (dispatch) {
 
-		return AsyncStorage.getItem ("DailyTab").then (function (results) {
+		return AsyncStorage.getItem ("scrumdiddly").then (function (results) {
 
-			let resultsObject = results;
-			if (resultsObject === undefined || resultsObject === null || resultsObject.length === 0) {
+			//	Convert to JSON object
+			let savedScrums = results;
+			if (savedScrums === undefined || savedScrums === null) {
 
-				resultsObject = {
+				savedScrums = {
 
-					"toDoItems": [],
+					"dailyscrums": [],
 				};
 			} else {
 
-				// Convert to JSON object and get current items
-				resultsObject = JSON.parse(results);
+				savedScrums = JSON.parse(savedScrums);
+			}
+			let dailyScrums = savedScrums.dailyscrums;
+
+			if (dailyScrums === undefined || dailyScrums === null) {
+
+				//	Create empty array to store new scrum
+				dailyScrums = [];
 			}
 
-			let toDoItems = resultsObject.toDoItems;
+			let timestampId = moment ().valueOf ();
+			let createdDate = moment ().format ("DD-MM-YYYY");
 
-			//	TODO - do this on the network side (maybe use objectIds/dates)
-			let nextId = toDoItems.length + 1;
-			let newToDoItem = {
+			//	Create a new scrum item
+			let newScrumItem = {
 
-				id: nextId,
-				itemText: itemText,
-				completed: false,
+				"id": timestampId,
+				"createdAt": createdDate,
+				"itemText": itemText,
+				"completed": false,
+				"itemType": "yesterday",
 			};
-			toDoItems.push (newToDoItem);
+			//	Add the new item to the current displayed items
+			dispatch (addYesterdayItem (newScrumItem));
 
-			//	Setup for merge
-			resultsObject.toDoItems = toDoItems;
+			//	Is this our first scrum?
+			if (dailyScrums.length > 0) {
 
-			//	Add the item to the current list
-			//	TODO - add api save
-			dispatch (addYesterdayItem (newToDoItem));
-			return AsyncStorage.mergeItem ("DailyTab", JSON.stringify (resultsObject));
+				//	Iterate over all the saved scrums
+				for (let i = 0; i < dailyScrums.length; i++) {
+
+					let scrum = dailyScrums[i];
+					//	Are we saving to the correct scrum?
+					if (scrum.scrumDate === createdDate) {
+
+						let scrumItems = dailyScrums[i].scrumItems;
+						scrumItems.push (newScrumItem);
+					}
+				}
+			} else {
+
+				let scrumItems = [];
+				//	Add the scrum item to the scrum items list
+				scrumItems.push (newScrumItem);
+
+				//	Create our first new scrum
+				let newScrum = {
+
+					"scrumId": timestampId,
+					"scrumDate": createdDate,
+					"scrumItems": scrumItems,
+				};
+				//	Add the scrum to the list of users scrums
+				dailyScrums.push (newScrum);
+			}
+
+			savedScrums.dailyscrums = dailyScrums;
+			return AsyncStorage.mergeItem ("scrumdiddly", JSON.stringify (savedScrums));
 		}).then (function () {
 
 			console.log ("Item Saved");
@@ -103,12 +189,12 @@ export function saveYesterdayItem (itemText) {
 }
 
 //	Add an item to the users yesterday items
-export function addYesterdayItem (newToDoItem) {
+export function addYesterdayItem (newScrumItem) {
 	
 	return {
 
 		type: ADD_YESTERDAY_ITEM,
-		newToDoItem,
+		newScrumItem,
 	};
 }
 
@@ -128,25 +214,32 @@ export function deleteYesterdayItem (itemId) {
 	return function (dispatch) {
 
 		dispatch (removeYesterdayItem (itemId));
-		return AsyncStorage.getItem ("DailyTab").then (function (results) {
+		return AsyncStorage.getItem ("scrumdiddly").then (function (results) {
 
 			let resultsObject = JSON.parse(results);
-			let toDoItems = resultsObject.toDoItems;
+			let savedScrums = resultsObject.dailyscrums;
+			let today = moment ().format ("DD-MM-YYYY");
 
-			//	Iterate through the list
-			for (let i = 0; i < toDoItems.length; i++) {
+			//	Iterate through the saved scrums
+			for (let i = 0; i < savedScrums.length; i++) {
 
-				//	Check if the ids match
-				let toDoID = toDoItems[i].id;
-				if (itemId === toDoID) {
+				let scrum = savedScrums[i];
+				//	Remove the scrum from todays scrum
+				if (scrum.scrumDate === today) {
 
-					toDoItems.splice(i, 1);
+					let scrumItems = scrum.scrumItems;
+					for (let j = 0; j < scrumItems.length; j++) {
+
+						let scrumItem = scrumItems[j];
+						if (scrumItem.id === itemId) {
+
+							scrumItems.splice(j, 1);
+						}
+					}
 				}
 			}
-			//	Setup for merge
-			resultsObject.toDoItems = toDoItems;
-
-			return AsyncStorage.mergeItem ("DailyTab", JSON.stringify (resultsObject));
+			resultsObject.dailyscrums = savedScrums;
+			return AsyncStorage.mergeItem ("scrumdiddly", JSON.stringify (resultsObject));
 		}).then (function () {
 
 			console.log ("Item Removed");

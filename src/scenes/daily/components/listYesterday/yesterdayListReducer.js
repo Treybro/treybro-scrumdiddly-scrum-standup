@@ -34,23 +34,12 @@ const yesterdayListReducer = (state = yesterdayListState, action) => {
 	}
 	case RECEIVE_YESTERDAY_ITEMS: {
 
-		//	Convert to JSON object
-		let toDoItems = action.results;
-		if (toDoItems === undefined || toDoItems === null || toDoItems.length === 0) {
-
-			toDoItems = {
-
-				"toDoItems": [],
-			};
-		} else {
-
-			toDoItems = JSON.parse(toDoItems);
-		}
+		let toDoItems = action.yesterdayScrumItems;
 		return {
 
 			...state,
 			isFetchingYesterdayItems: false,
-			yesterdaysItems: toDoItems.toDoItems,
+			yesterdaysItems: toDoItems,
 		};
 	}
 	case ADD_YESTERDAY_ITEM:
@@ -58,7 +47,7 @@ const yesterdayListReducer = (state = yesterdayListState, action) => {
 			...state,
 			yesterdaysItems: [
 				...state.yesterdaysItems,
-				action.newToDoItem,
+				action.newScrumItem,
 			],
 		};
 	case REMOVE_YESTERDAY_ITEM: {

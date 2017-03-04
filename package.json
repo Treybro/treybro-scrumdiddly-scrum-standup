@@ -8,6 +8,7 @@
     "lint": "node node_modules/eslint/bin/eslint.js -c .eslintrc.js . **/*.jsx **/*.js"
   },
   "dependencies": {
+    "moment": "^2.17.1",
     "react": "15.4.2",
     "react-native": "^0.42.0",
     "react-native-swiper": "^1.5.4",
