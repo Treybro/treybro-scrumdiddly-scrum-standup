@@ -19,6 +19,7 @@ import {
 
 	deleteYesterdayItem,
 	toggleCompleteYesterdayItem,
+	updateYesterdayItem,
 } from "YesterdayListActions";
 
 import theme from "AppTheme";
@@ -34,6 +35,8 @@ export class ListItemYesterday extends Component {
 		yesterdayItem: React.PropTypes.object.isRequired,
 		deleteYesterdayItem: React.PropTypes.func,
 		toggleCompleteYesterdayItem: React.PropTypes.func,
+		editYesterdayItem: React.PropTypes.func,
+		updateYesterdayItem: React.PropTypes.func,
 	};
 
 	constructor (props) {
@@ -58,7 +61,7 @@ export class ListItemYesterday extends Component {
 			<View style={styles.containerView}>
 				<View style={styles.contentContainer}>
 					<TouchableOpacity activeOpacity={1}onPress={() => this._toggleEdit ()}>
-						<View style={(this.state.itemCompleted === false) ? styles.textContainer : [styles.textContainer, {borderRightWidth: 5, borderRightColor: "green"}]}>
+						<View style={(this.state.itemCompleted === false) ? styles.textContainer : [styles.textContainer, {borderRightWidth: 5, borderRightColor: theme.darkGreen}]}>
 							<TextInput
 								pointerEvents={(this.state.editItem === false) ? "none": "auto"}
 								editable={this.state.editItem}
@@ -122,18 +125,10 @@ export class ListItemYesterday extends Component {
 	*/
 	_editItem () {
 
-		let itemText = this.state.editedText.trim ();
-		if (itemText !== undefined && itemText !== null && itemText.length > 0 && itemText.length <= 240) {
+		this.setState ({
 
-			this.setState ({
-
-				originalText: this.state.editedText,
-				editItem: !this.state.editItem,
-			});
-		} else {
-
-			//	TODO - fancy animation and vibration or something
-		}
+			editItem: !this.state.editItem,
+		});
 	}
 
 	/*
@@ -155,13 +150,20 @@ export class ListItemYesterday extends Component {
 	*/
 	_saveItem () {
 
-		let itemText = this.state.text.trim ();
+		let itemText = this.state.editedText.trim ();
 		if (itemText !== undefined && itemText !== null && itemText.length > 0 && itemText.length <= 240) {
 
 			this.setState ({
 
-				showEditItems: false,
-				editItem: false,
+				originalText: itemText,
+				editItem: !this.state.editItem,
+			}, () => {
+
+				//	Do we need to save the item?
+				if (itemText !== this.props.yesterdayItem.itemText) {
+
+					this.props.updateYesterdayItem (this.props.yesterdayItem.id, itemText, this.props.yesterdayItem.completed);
+				}
 			});
 		} else {
 
@@ -231,7 +233,7 @@ const styles = StyleSheet.create({
 
 		fontSize: (Platform.OS === "ios") ? 16 : 12,
 		fontFamily: (Platform.OS === "ios") ? "Helvetica" : "Roboto",
-		color: theme.black,
+		color: theme.darkerGrey,
 		marginLeft: (Platform.OS === "ios") ? 20 : 20,
 		marginRight: (Platform.OS === "ios") ? 20 : 20,
 		marginTop: (Platform.OS === "ios") ? 10 : 0,
@@ -256,6 +258,7 @@ const mapDispatchToProps = dispatch => ({
 
 	deleteYesterdayItem: (itemId) => dispatch (deleteYesterdayItem (itemId)),
 	toggleCompleteYesterdayItem: (itemId, completedState) => dispatch (toggleCompleteYesterdayItem (itemId, completedState)),
+	updateYesterdayItem: (originalItemId, updatedText, updatedCompletedState) => dispatch (updateYesterdayItem (originalItemId, updatedText, updatedCompletedState)),
 });
 
 export default connect (null, mapDispatchToProps)(ListItemYesterday);

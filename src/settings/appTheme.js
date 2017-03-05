@@ -9,14 +9,16 @@ const AppTheme = {
 	pink: "#FF5A5F",
 	lightPink: "#FF8D90",
 	white: "#FFFFFF",
-	darkGrey: "#565A5C",
+	darkGrey: "#616161",
+	darkerGrey: "#424242",
 	lightGrey: "#CED1CC",
 	veryLightGrey: "#EEEEEE",
 	black: "#000000",
 	green: "#DAFF8D",
 	lightGreen: "#BDFE34",
-	darkGreen: "#BDFE34",
+	darkGreen: "#33691E",
 	red: "#FF3439",
+	darkRed: "#B71C1C",
 };
 
 module.exports = AppTheme;

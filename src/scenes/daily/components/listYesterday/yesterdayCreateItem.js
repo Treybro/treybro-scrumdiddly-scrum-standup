@@ -162,36 +162,41 @@ const styles = StyleSheet.create({
 	},
 	textContainer: {
 
-		margin: 10,
 		padding: 0,
 	},
 	listItemText: {
 
 		fontFamily: (Platform.OS === "ios") ? "Helvetica" : "Roboto",
 		color: theme.black,
-		fontSize: (Platform.OS === "ios") ? 12 : 12,
-		marginLeft: (Platform.OS === "ios") ? 20 : 0,
-		marginRight: (Platform.OS === "ios") ? 20 : 0,
+		fontSize: (Platform.OS === "ios") ? 14 : 12,
+		marginLeft: (Platform.OS === "ios") ? 20 : 20,
+		marginRight: (Platform.OS === "ios") ? 20 : 20,
 		marginTop: (Platform.OS === "ios") ? 10 : 0,
 	},
 	editContents: {
 
 		flex: 1,
-		alignItems: "flex-end",
+		alignItems: "center",
 		justifyContent: "flex-end",
 		flexDirection: "row",
 	},
 	saveIcon: {
 
-		margin: (Platform.OS === "ios") ? 10 : 10,
-		tintColor: theme.lightGrey,
+		marginLeft: (Platform.OS === "ios") ? 20 : 20,
+		marginRight: (Platform.OS === "ios") ? 20 : 20,
+		marginTop: (Platform.OS === "ios") ? 10 : 10,
+		marginBottom: (Platform.OS === "ios") ? 5 : 5,
+		tintColor: theme.darkGrey,
 		width: (Platform.OS === "ios") ? 30 : 30,
 		height: (Platform.OS === "ios") ? 30 : 30,
 	},
 	deleteIcon: {
 
-		margin: (Platform.OS === "ios") ? 10 : 10,
-		tintColor: theme.lightGrey,
+		marginLeft: (Platform.OS === "ios") ? 20 : 20,
+		marginRight: (Platform.OS === "ios") ? 20 : 20,
+		marginTop: (Platform.OS === "ios") ? 10 : 10,
+		marginBottom: (Platform.OS === "ios") ? 5 : 5,
+		tintColor: theme.darkGrey,
 		width: (Platform.OS === "ios") ? 30 : 30,
 		height: (Platform.OS === "ios") ? 30 : 30,
 	},

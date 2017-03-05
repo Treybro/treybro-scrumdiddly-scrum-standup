@@ -7,7 +7,7 @@ import React, { Component } from "react";
 //  Import items from react-native
 import {
 
-	Animated,
+	View,
 	TouchableOpacity,
 	StyleSheet,
 	Image,
@@ -36,12 +36,6 @@ export class EditContentsYesterday extends Component {
 	constructor (props) {
 
 		super (props);
-		this.state = {
-
-			fadeHeight: new Animated.Value (0),
-			editItem: false,
-			height: (Platform.OS === "ios") ? 0 : 0,
-		};
 	}
 
 	render () {
@@ -54,13 +48,13 @@ export class EditContentsYesterday extends Component {
 		//	Only display something when we want to edit an item
 		return (
 
-			<Animated.View style={styles.editContents}>
+			<View style={styles.editContents}>
 				<TouchableOpacity onPress={() => this.props.completeItem ()}>
 					<Image source={(this.props.itemCompleted === false) ? getIconAsset ("okIcon")  : getIconAsset ("okIcon")} 
 							resizeMode={"stretch"} 
-							style={(this.props.itemCompleted === false) ? styles.uncheckedIcon  : styles.checkedIcon} />
+							style={(this.props.itemCompleted === false) ? styles.checkedIcon  : [styles.checkedIcon,{tintColor : theme.darkGreen}]} />
 				</TouchableOpacity>
-				<TouchableOpacity onPress={(this.state.editItem === false) ? () => this.props.editItem ()  : () => this.props.saveItem ()}>
+				<TouchableOpacity onPress={(this.props.editingItem === false) ? () => this.props.editItem ()  : () => this.props.saveItem ()}>
 					<Image 
 						source={(this.props.editingItem === false) ? getIconAsset ("editIcon") : getIconAsset ("tickIcon")} 
 						resizeMode={"stretch"} 
@@ -72,7 +66,7 @@ export class EditContentsYesterday extends Component {
 						resizeMode={"stretch"} 
 						style={(this.props.editingItem === false) ? styles.deleteIcon : styles.cancelIcon} />
 				</TouchableOpacity>
-			</Animated.View>
+			</View>
 		);
 	}
 }
@@ -94,35 +88,29 @@ const styles = StyleSheet.create({
 
 		width: (Platform.OS === "ios") ? 33 : 33,
 		height: (Platform.OS === "ios") ? 30 : 30,
-		tintColor: theme.lightGrey,
+		tintColor: theme.darkGrey,
 	},
 	saveIcon: {
 
-		tintColor: theme.lightGrey,
+		tintColor: theme.darkGrey,
 		width: (Platform.OS === "ios") ? 30 : 30,
 		height: (Platform.OS === "ios") ? 30 : 30,
 	},
 	deleteIcon: {
 
-		tintColor: theme.lightGrey,
+		tintColor: theme.darkGrey,
 		width: (Platform.OS === "ios") ? 22 : 22,
 		height: (Platform.OS === "ios") ? 30 : 30,
 	},
 	cancelIcon: {
 
-		tintColor: theme.lightGrey,
+		tintColor: theme.darkGrey,
 		width: (Platform.OS === "ios") ? 30 : 30,
 		height: (Platform.OS === "ios") ? 30 : 30,
 	},
 	checkedIcon: {
 
-		tintColor: theme.lightGrey,
-		height: (Platform.OS === "ios") ? 30 : 30,
-		width: (Platform.OS === "ios") ? 30 : 30,
-	},
-	uncheckedIcon: {
-
-		tintColor: theme.lightGrey,
+		tintColor: theme.darkGrey,
 		height: (Platform.OS === "ios") ? 30 : 30,
 		width: (Platform.OS === "ios") ? 30 : 30,
 	},

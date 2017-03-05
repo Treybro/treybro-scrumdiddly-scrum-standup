@@ -7,10 +7,10 @@ import { connect } from "react-redux";
 
 import appSettings from "AppSettings";
 
+import AppDrawer from "AppDrawer";
 import LoadingScreen from "LoadingScreen";
 import WelcomeScreen from "WelcomeScreen";
 import TutorialScreen from "TutorialScreen";
-import RootNavigation from "RootNavigation";
 
 /*
 * App Root
@@ -65,7 +65,7 @@ class App extends Component {
 		}
 
 		//	Last option - show the app
-		return <RootNavigation />;
+		return <AppDrawer />;
 	}
 
 	//  Tell the component to stop loading

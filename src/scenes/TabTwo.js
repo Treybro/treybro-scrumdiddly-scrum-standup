@@ -58,7 +58,7 @@ class TabTwo extends Component {
 		let returnItems = [];
 		for (let i = 0; i < dailyScrums.length; i++) {
 
-			returnItems.push (<Text>{dailyScrums[i].scrumDate}</Text>);
+			returnItems.push (<Text key={i}>{dailyScrums[i].scrumDate}</Text>);
 		}
 		return returnItems;
 	}

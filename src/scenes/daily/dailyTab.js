@@ -19,6 +19,7 @@ import HeaderYesterday from "HeaderYesterday";
 import HeaderToday from "HeaderToday";
 import HeaderBlocker from "HeaderBlocker";
 import ListYesterday from "ListYesterday";
+import HeaderDate from "HeaderDate";
 
 import theme from "AppTheme";
 import getIconAsset from "IconAssets";
@@ -61,11 +62,10 @@ class DailyTab extends Component {
 	//	Navigation bar options
 	static navigationOptions = {
 
-		title: "Scrum Daily Items",
+		title: "Daily Scrum",
 		header: {
 
 			visible: true,
-			title: "Scrum Daily Items",
 			right: () => {},
 			left: (
 
@@ -108,13 +108,12 @@ class DailyTab extends Component {
 		return (
 
 			<View style={styles.containerView}>
+				<HeaderDate />
 				<ScrollView>
 					<HeaderYesterday />
 					<ListYesterday />
 					<HeaderToday />
-					<ListYesterday />
 					<HeaderBlocker />
-					<ListYesterday />
 				</ScrollView>
 			</View>
 		);

@@ -1,5 +1,5 @@
 /**
- * @providesModule RootNavigation
+ * @providesModule AppTabs
  */
 
 //	Import drawer from react-navigation package
@@ -14,7 +14,7 @@ import theme from "AppTheme";
 *	Main navigation root.
 *	Responsible for handling the tab nav
 */
-const RootNavigation = TabNavigator ({
+const AppTabs = TabNavigator ({
 
 	DailyTab: {
 
@@ -58,4 +58,4 @@ const RootNavigation = TabNavigator ({
 	},
 });
 
-export default RootNavigation;
+export default AppTabs;
