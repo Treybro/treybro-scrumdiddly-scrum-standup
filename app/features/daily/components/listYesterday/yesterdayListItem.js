@@ -50,6 +50,7 @@ export class ListItemYesterday extends Component {
 			editedText: this.props.yesterdayItem.itemText,
 			height: (Platform.OS === "ios") ? 0 : 0,
 			itemCompleted: this.props.yesterdayItem.completed,
+			canSave: false,
 		};
 	}
 
@@ -61,13 +62,14 @@ export class ListItemYesterday extends Component {
 			<View style={styles.containerView}>
 				<View style={styles.contentContainer}>
 					<TouchableOpacity activeOpacity={1}onPress={() => this._toggleEdit ()}>
-						<View style={(this.state.itemCompleted === false) ? styles.textContainer : [styles.textContainer, {borderRightWidth: 5, borderRightColor: theme.darkGreen}]}>
+						<View style={(this.state.itemCompleted === false) ? styles.textContainer : [styles.textContainer, {borderRightWidth: 5, borderRightColor: theme.lightGreen}]}>
 							<TextInput
+								ref='editItemTextInput'
 								pointerEvents={(this.state.editItem === false) ? "none": "auto"}
 								editable={this.state.editItem}
 								value={(this.state.editItem === false) ? this.state.originalText : this.state.editedText}
 								style={textInputStyle}
-								onChangeText={(text) => this.setState({editedText:text})}
+								onChangeText={(text) => this._determineSaveState (text)}
 								autoCapitalize={"sentences"}
 								autoCorrect={false}
 								autoFocus={false}
@@ -97,10 +99,42 @@ export class ListItemYesterday extends Component {
 						itemCompleted={this.state.itemCompleted}
 						completeItem={() => this._toggleCompleteItem ()}
 						editItem={() => this._editItem ()}
-						saveItem={() => this._saveItem ()}/>
+						saveItem={() => this._saveItem ()}
+						canSaveItem={this.state.canSave} />
 				</View>
 			</View>
 		);
+	}
+
+	/*
+	*	Determines if we can save the item or not
+	*/
+	_determineSaveState (text) {
+
+		/*
+		*	Set the text regardless of it being valid or not
+		*	Display purposes only
+		*/
+		this.setState ({
+
+			editedText: text,
+		}, ()=> {
+
+			let itemText = text.trim ();
+			if (itemText !== undefined && itemText !== null && itemText.length > 0 && itemText.length <= 240) {
+
+				this.setState ({
+
+					canSave: true,
+				});
+			} else {
+
+				this.setState ({
+
+					canSave: false,
+				});
+			}
+		});
 	}
 
 	/*
@@ -113,6 +147,7 @@ export class ListItemYesterday extends Component {
 
 			showEditItems: false,
 			editItem: false,
+			canSave: false,
 		}, () => {
 
 			this.props.deleteYesterdayItem (this.props.yesterdayItem.id);
@@ -125,6 +160,14 @@ export class ListItemYesterday extends Component {
 	*/
 	_editItem () {
 
+		//	Only focus when we want to edit the item
+		/*
+		*	TODO - fix this for ios
+		*/
+		if (this.state.editItem === false && Platform.OS !== "ios") {
+
+			this.refs.editItemTextInput.focus ();
+		}
 		this.setState ({
 
 			editItem: !this.state.editItem,
@@ -141,6 +184,7 @@ export class ListItemYesterday extends Component {
 
 			editedText: this.state.originalText,
 			editItem: !this.state.editItem,
+			canSave: false,
 		});
 	}
 
@@ -157,6 +201,8 @@ export class ListItemYesterday extends Component {
 
 				originalText: itemText,
 				editItem: !this.state.editItem,
+				editedText: itemText,
+				canSave: false,
 			}, () => {
 
 				//	Do we need to save the item?

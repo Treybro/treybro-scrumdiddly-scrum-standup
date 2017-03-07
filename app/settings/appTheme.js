@@ -15,10 +15,11 @@ const AppTheme = {
 	veryLightGrey: "#EEEEEE",
 	black: "#000000",
 	green: "#DAFF8D",
-	lightGreen: "#BDFE34",
+	lightGreen: "#64DD17",
 	darkGreen: "#33691E",
 	red: "#FF3439",
 	darkRed: "#B71C1C",
+	lightRed: "#D50000",
 };
 
 module.exports = AppTheme;

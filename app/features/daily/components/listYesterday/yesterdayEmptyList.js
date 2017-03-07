@@ -11,9 +11,13 @@ import {
 	View,
 	StyleSheet,
 	Platform,
+	TouchableOpacity,
 } from "react-native";
-
 import { connect } from "react-redux";
+import {
+
+	toggleCreateYesterdayItem,
+} from "YesterdayListActions";
 
 import theme from "AppTheme";
 
@@ -26,6 +30,7 @@ export class EmptyYesterdayList extends Component {
 	static propTypes = {
 
 		showToggle: React.PropTypes.bool.isRequired,
+		toggleCreateYesterdayItem: React.PropTypes.func.isRequired,
 	};
 
 	constructor (props) {
@@ -44,9 +49,11 @@ export class EmptyYesterdayList extends Component {
 		//	Standard view
 		return (
 
-			<View style={styles.containerView}>
-				<Text style={styles.emptyText}>Add some items that you have completed since your last standup!</Text>
-			</View>
+			<TouchableOpacity onPress={() => this.props.toggleCreateYesterdayItem ()}>
+				<View style={styles.containerView}>
+					<Text style={styles.emptyText}>Add some items that you have completed since your last standup!</Text>
+				</View>
+			</TouchableOpacity>
 		);
 	}
 }
@@ -80,4 +87,12 @@ const mapStateToProps = state => ({
 	showToggle: state.yesterdayListReducer.toggleCreate,
 });
 
-export default connect (mapStateToProps, null)(EmptyYesterdayList);
+/*
+* Mapping for redux dispatch functions.
+*/
+const mapDispatchToProps = dispatch => ({
+
+	toggleCreateYesterdayItem: () => dispatch (toggleCreateYesterdayItem ()),
+});
+
+export default connect (mapStateToProps, mapDispatchToProps)(EmptyYesterdayList);

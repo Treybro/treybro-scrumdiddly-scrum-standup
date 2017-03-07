@@ -31,6 +31,7 @@ export class EditContentsYesterday extends Component {
 		saveItem: React.PropTypes.func.isRequired,
 		itemCompleted: React.PropTypes.bool.isRequired,
 		completeItem: React.PropTypes.func.isRequired,
+		canSaveItem: React.PropTypes.bool.isRequired,
 	};
 
 	constructor (props) {
@@ -45,6 +46,30 @@ export class EditContentsYesterday extends Component {
 			return null;
 		}
 
+		//	If we are editing the item, don't show the complete button
+		if (this.props.editingItem === true) {
+
+			return (
+
+				<View style={styles.editContents}>
+					<View style={styles.blankView}>
+					</View>
+					<TouchableOpacity onPress={() => this.props.saveItem ()}>
+						<Image 
+							source={getIconAsset ("tickIcon")} 
+							resizeMode={"stretch"} 
+							style={(this.props.canSaveItem === false) ? styles.saveIcon : [styles.saveIcon, {tintColor: theme.lightGreen}]} />
+					</TouchableOpacity>
+					<TouchableOpacity onPress={() => this.props.deleteItem ()}>
+						<Image 
+							source={getIconAsset ("cancelIcon")}
+							resizeMode={"stretch"} 
+							style={styles.cancelIcon} />
+					</TouchableOpacity>
+				</View>
+			);
+		}
+
 		//	Only display something when we want to edit an item
 		return (
 
@@ -52,19 +77,19 @@ export class EditContentsYesterday extends Component {
 				<TouchableOpacity onPress={() => this.props.completeItem ()}>
 					<Image source={(this.props.itemCompleted === false) ? getIconAsset ("okIcon")  : getIconAsset ("okIcon")} 
 							resizeMode={"stretch"} 
-							style={(this.props.itemCompleted === false) ? styles.checkedIcon  : [styles.checkedIcon,{tintColor : theme.darkGreen}]} />
+							style={(this.props.itemCompleted === false) ? styles.checkedIcon  : [styles.checkedIcon,{tintColor : theme.lightGreen}]} />
 				</TouchableOpacity>
-				<TouchableOpacity onPress={(this.props.editingItem === false) ? () => this.props.editItem ()  : () => this.props.saveItem ()}>
+				<TouchableOpacity onPress={() => this.props.editItem ()}>
 					<Image 
-						source={(this.props.editingItem === false) ? getIconAsset ("editIcon") : getIconAsset ("tickIcon")} 
+						source={getIconAsset ("editIcon")} 
 						resizeMode={"stretch"} 
-						style={(this.props.editingItem === false) ? styles.editIcon : styles.saveIcon} />
+						style={styles.editIcon} />
 				</TouchableOpacity>
 				<TouchableOpacity onPress={() => this.props.deleteItem ()}>
 					<Image 
-						source={(this.props.editingItem === false) ? getIconAsset ("binIcon") : getIconAsset ("cancelIcon")}
+						source={getIconAsset ("binIcon")}
 						resizeMode={"stretch"} 
-						style={(this.props.editingItem === false) ? styles.deleteIcon : styles.cancelIcon} />
+						style={styles.deleteIcon} />
 				</TouchableOpacity>
 			</View>
 		);
@@ -104,7 +129,7 @@ const styles = StyleSheet.create({
 	},
 	cancelIcon: {
 
-		tintColor: theme.darkGrey,
+		tintColor: theme.lightRed,
 		width: (Platform.OS === "ios") ? 30 : 30,
 		height: (Platform.OS === "ios") ? 30 : 30,
 	},
@@ -113,6 +138,11 @@ const styles = StyleSheet.create({
 		tintColor: theme.darkGrey,
 		height: (Platform.OS === "ios") ? 30 : 30,
 		width: (Platform.OS === "ios") ? 30 : 30,
+	},
+	blankView: {
+
+		width: (Platform.OS === "ios") ? 30 : 30,
+		height: (Platform.OS === "ios") ? 30 : 30,
 	},
 });
 

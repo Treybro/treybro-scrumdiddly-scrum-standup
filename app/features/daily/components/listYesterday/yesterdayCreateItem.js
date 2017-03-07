@@ -49,6 +49,7 @@ export class CreateYesterdayItem extends Component {
 
 			text: "",
 			height: 0,
+			canSave: false,
 		};
 	}
 
@@ -70,10 +71,10 @@ export class CreateYesterdayItem extends Component {
 							editable={this.props.showToggle}
 							value={this.state.text}
 							style={[styles.listItemText,{height: Math.max(35, this.state.height)}]}
-							onChangeText={(text) => this.setState({text:text})}
+							onChangeText={(text) => this._determineSaveState (text)}
 							autoCapitalize={"sentences"}
 							autoCorrect={false}
-							autoFocus={false}
+							autoFocus={true}
 							maxLength={240}
 							onFocus={() => {}}
 							returnKeyType={(Platform.OS === "ios") ? "done" : "done"}
@@ -96,7 +97,7 @@ export class CreateYesterdayItem extends Component {
 							<Image 
 								source={getIconAsset ("tickIcon")} 
 								resizeMode={"stretch"} 
-								style={styles.saveIcon} />
+								style={(this.state.canSave === false) ? styles.saveIcon : [styles.saveIcon, {tintColor: theme.lightGreen}]} />
 						</TouchableOpacity>
 						<TouchableOpacity onPress={() => this._cancelItem ()}>
 							<Image 
@@ -111,6 +112,37 @@ export class CreateYesterdayItem extends Component {
 	}
 
 	/*
+	*	Determines if we can save or not
+	*/
+	_determineSaveState (text) {
+
+		/*
+		*	Set the text regardless of it being valid or not
+		*	Display purposes only
+		*/
+		this.setState ({
+
+			text: text,
+		}, ()=> {
+
+			let itemText = text.trim ();
+			if (itemText !== undefined && itemText !== null && itemText.length > 0 && itemText.length <= 240) {
+
+				this.setState ({
+
+					canSave: true,
+				});
+			} else {
+
+				this.setState ({
+
+					canSave: false,
+				});
+			}
+		});
+	}
+
+	/*
 	*	Save a new yesterday item
 	*/
 	_saveItem () {
@@ -122,6 +154,7 @@ export class CreateYesterdayItem extends Component {
 			this.setState ({
 
 				text: "",
+				canSave: false,
 			}, () => {
 
 				this.props.toggleCreateYesterdayItem ();
@@ -140,6 +173,7 @@ export class CreateYesterdayItem extends Component {
 		this.setState ({
 
 			text: "",
+			canSave: false,
 		}, () => {
 
 			this.props.toggleCreateYesterdayItem ();
@@ -196,7 +230,7 @@ const styles = StyleSheet.create({
 		marginRight: (Platform.OS === "ios") ? 20 : 20,
 		marginTop: (Platform.OS === "ios") ? 10 : 10,
 		marginBottom: (Platform.OS === "ios") ? 5 : 5,
-		tintColor: theme.darkGrey,
+		tintColor: theme.lightRed,
 		width: (Platform.OS === "ios") ? 30 : 30,
 		height: (Platform.OS === "ios") ? 30 : 30,
 	},
