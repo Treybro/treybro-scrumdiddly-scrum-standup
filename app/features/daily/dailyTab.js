@@ -11,10 +11,16 @@ import {
 	Image,
 	ScrollView,
 	StyleSheet,
-	TouchableOpacity,
 	Platform,
 } from "react-native";
 
+import { connect } from "react-redux";
+import {
+
+	setDrawerNav,
+} from "DrawerActions";
+
+import MenuButton from "MenuButton";
 import HeaderYesterday from "HeaderYesterday";
 import HeaderToday from "HeaderToday";
 import HeaderBlocker from "HeaderBlocker";
@@ -24,39 +30,13 @@ import HeaderDate from "HeaderDate";
 import theme from "AppTheme";
 import getIconAsset from "IconAssets";
 
-//	Placed here so nav has access to it immediatly.
-const styles = StyleSheet.create({
-
-	containerView: {
-
-		flex: 1,
-		backgroundColor: theme.white,
-	},
-	leftNavIconContainer: {
-
-		height: 25,
-		width: 25,
-		marginLeft: (Platform.OS === "ios") ? 20 : 15,
-		alignItems: "center",
-		justifyContent: "center",
-	},
-	leftNavIcon: {
-
-		tintColor: theme.white,
-		height: 15,
-		width: 25,
-	},
-	tabBarIcon: {
-
-		tintColor: theme.white,
-	},
-});
-
 class DailyTab extends Component {
 
 	//	Validate proptypes
 	static propTypes = {
 
+		setDrawerNav: React.PropTypes.func.isRequired,
+		navigation: React.PropTypes.object.isRequired,
 	};
 
 	//	Navigation bar options
@@ -69,11 +49,7 @@ class DailyTab extends Component {
 			right: () => {},
 			left: (
 
-				<View style={styles.leftNavIconContainer}>
-					<TouchableOpacity onPress={() => {}}>
-						<Image source={getIconAsset ("menuIcon")} style={styles.leftNavIcon} resizeMode={"stretch"}/>
-					</TouchableOpacity>
-				</View>
+				<MenuButton />
 			),
 			style: {
 
@@ -101,6 +77,7 @@ class DailyTab extends Component {
 	constructor (props) {
 
 		super (props);
+		this.props.setDrawerNav (this.props.navigation);
 	}
 
 	render () {
@@ -120,4 +97,25 @@ class DailyTab extends Component {
 	}
 }
 
-export default DailyTab;
+const styles = StyleSheet.create({
+
+	containerView: {
+
+		flex: 1,
+		backgroundColor: theme.white,
+	},
+	tabBarIcon: {
+
+		tintColor: theme.white,
+	},
+});
+
+/*
+* Mapping for redux dispatch functions.
+*/
+const mapDispatchToProps = dispatch => ({
+
+	setDrawerNav: (navItem) => dispatch (setDrawerNav (navItem)),
+});
+
+export default connect (null, mapDispatchToProps)(DailyTab);

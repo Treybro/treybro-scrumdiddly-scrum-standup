@@ -13,6 +13,7 @@ import {
 	TextInput,
 	Platform,
 	Keyboard,
+	Alert,
 } from "react-native";
 import { connect } from "react-redux";
 import {
@@ -95,7 +96,7 @@ export class ListItemYesterday extends Component {
 					<EditContentsYesterday 
 						toggle={this.state.showEditItems}
 						editingItem={this.state.editItem}
-						deleteItem={(this.state.editItem === false) ? () => this._deleteItem () : () => this._cancelEditItem ()}
+						deleteItem={(this.state.editItem === false) ? () => this._deleteAlert () : () => this._cancelEditItem ()}
 						itemCompleted={this.state.itemCompleted}
 						completeItem={() => this._toggleCompleteItem ()}
 						editItem={() => this._editItem ()}
@@ -138,11 +139,32 @@ export class ListItemYesterday extends Component {
 	}
 
 	/*
+	*	Asks the user to delete or not
+	*/
+	_deleteAlert () {
+
+		Alert.alert (
+
+			"Delete Scrum Item?",
+			"Are you sure you would like to delete this scrum item?",
+			[{
+
+				text: "Cancel", onPress: () => {},
+			}, {
+
+				text: "OK", onPress: () => this._deleteItem ()},
+			], { 
+
+				cancelable: false,
+			});
+	}
+
+	/*
 	*	Deletes the selected item
 	*	gets dispatched to redux
 	*/
 	_deleteItem () {
-
+		
 		this.setState ({
 
 			showEditItems: false,
