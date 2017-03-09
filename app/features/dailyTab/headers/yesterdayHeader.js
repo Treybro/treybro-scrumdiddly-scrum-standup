@@ -1,5 +1,5 @@
 /**
- * @providesModule HeaderToday
+ * @providesModule YesterdayHeader
  */
 
 //  Import items from react
@@ -9,24 +9,26 @@ import {
 
 	View,
 	Text,
-	StyleSheet,
-	Platform,
 	TouchableOpacity,
 	Image,
+	StyleSheet,
+	Platform,
 } from "react-native";
 
 import { connect } from "react-redux";
+import { toggleCreateYesterdayItem } from "YesterdayListActions";
 
 import theme from "AppTheme";
 import getIconAsset from "IconAssets";
 
 /*
-*	Displays the HeaderToday heading
+*	Displays the Yesterday Header
 */
-export class HeaderToday extends Component {
+export class YesterdayHeader extends Component {
 
 	static propTypes = {
 
+		toggleCreateYesterdayItem: React.PropTypes.func.isRequired,
 	};
 
 	constructor (props) {
@@ -39,8 +41,8 @@ export class HeaderToday extends Component {
 		return (
 
 			<View style={styles.viewContainer}>
-				<Text style={styles.yesterdayText}>Today I...</Text>
-				<TouchableOpacity onPress={() => {}} style={styles.addButton}>
+				<Text style={styles.yesterdayText}>Yesterday I...</Text>
+				<TouchableOpacity onPress={() => this.props.toggleCreateYesterdayItem ()} style={styles.addButton}>
 					<Image source={getIconAsset ("pencilIcon")} style={styles.addButtonImage}/>
 				</TouchableOpacity>
 			</View>
@@ -92,6 +94,7 @@ const styles = StyleSheet.create({
 */
 const mapDispatchToProps = dispatch => ({
 
+	toggleCreateYesterdayItem: () => dispatch (toggleCreateYesterdayItem ()),
 });
 
-export default connect (null, mapDispatchToProps)(HeaderToday);
+export default connect (null, mapDispatchToProps)(YesterdayHeader);

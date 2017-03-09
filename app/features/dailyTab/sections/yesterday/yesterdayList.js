@@ -1,5 +1,5 @@
 /**
- * @providesModule ListYesterday
+ * @providesModule YesterdayList
  */
 
 //  Import items from react
@@ -19,7 +19,7 @@ import {
 } from "YesterdayListActions";
 
 import CreateYesterdayItem from "CreateYesterdayItem";
-import ListItemYesterday from "ListItemYesterday";
+import YesterdayListItem from "YesterdayListItem";
 import EmptyYesterdayList from "EmptyYesterdayList";
 
 import theme from "AppTheme";
@@ -27,7 +27,7 @@ import theme from "AppTheme";
 /*
 *	Displays the list of Yesterdays Items
 */
-export class ListYesterday extends Component {
+export class YesterdayList extends Component {
 
 	static propTypes = {
 
@@ -81,7 +81,7 @@ export class ListYesterday extends Component {
 				{
 					this.props.yesterdaysItems.map ((yesterDayItem) => (
 
-						<ListItemYesterday key={"list-item-yesterday-key-" + yesterDayItem.id} yesterdayItem={yesterDayItem} />
+						<YesterdayListItem key={"list-item-yesterday-key-" + yesterDayItem.id} yesterdayItem={yesterDayItem} />
 					))
 				}
 			</View>
@@ -126,4 +126,4 @@ const mapDispatchToProps = dispatch => ({
 	getYesterdayItems: () => dispatch (getYesterdayItems ()),
 });
 
-export default connect (mapStateToProps,mapDispatchToProps)(ListYesterday);
+export default connect (mapStateToProps,mapDispatchToProps)(YesterdayList);

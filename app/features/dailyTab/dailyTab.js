@@ -21,11 +21,12 @@ import {
 } from "DrawerActions";
 
 import MenuButton from "MenuButton";
-import HeaderYesterday from "HeaderYesterday";
-import HeaderToday from "HeaderToday";
-import HeaderBlocker from "HeaderBlocker";
-import ListYesterday from "ListYesterday";
-import HeaderDate from "HeaderDate";
+import DateHeader from "DateHeader";
+import YesterdayHeader from "YesterdayHeader";
+import TodayHeader from "TodayHeader";
+import BlockerHeader from "BlockerHeader";
+import YesterdayList from "YesterdayList";
+import TodayList from "TodayList";
 
 import theme from "AppTheme";
 import getIconAsset from "IconAssets";
@@ -85,12 +86,13 @@ class DailyTab extends Component {
 		return (
 
 			<View style={styles.containerView}>
-				<HeaderDate />
+				<DateHeader />
 				<ScrollView>
-					<HeaderYesterday />
-					<ListYesterday />
-					<HeaderToday />
-					<HeaderBlocker />
+					<YesterdayHeader />
+					<YesterdayList />
+					<TodayHeader />
+					<TodayList />
+					<BlockerHeader />
 				</ScrollView>
 			</View>
 		);

@@ -1,5 +1,5 @@
 /**
- * @providesModule HeaderDate
+ * @providesModule DateHeader
  */
 
 //  Import items from react
@@ -15,9 +15,9 @@ import {
 import theme from "AppTheme";
 
 /*
-*	Displays the HeaderDate heading
+*	Displays the Date header
 */
-export class HeaderDate extends Component {
+export class DateHeader extends Component {
 
 	static propTypes = {
 
@@ -55,4 +55,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default HeaderDate;
+export default DateHeader;

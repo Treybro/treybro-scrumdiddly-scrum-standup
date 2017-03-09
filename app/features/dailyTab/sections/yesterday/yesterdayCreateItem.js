@@ -20,15 +20,11 @@ import { connect } from "react-redux";
 import {
 
 	toggleCreateYesterdayItem,
+	saveYesterdayItem,
 } from "YesterdayListActions";
 
 import theme from "AppTheme";
 import getIconAsset from "IconAssets";
-
-import {
-
-	saveYesterdayItem,
-} from "YesterdayListActions";
 
 /*
 *	Allows the user to add a Yesterday Item

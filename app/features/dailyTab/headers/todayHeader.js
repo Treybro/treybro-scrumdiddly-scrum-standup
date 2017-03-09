@@ -1,5 +1,5 @@
 /**
- * @providesModule HeaderBlocker
+ * @providesModule TodayHeader
  */
 
 //  Import items from react
@@ -9,24 +9,26 @@ import {
 
 	View,
 	Text,
-	StyleSheet,
-	Platform,
 	TouchableOpacity,
 	Image,
+	StyleSheet,
+	Platform,
 } from "react-native";
 
 import { connect } from "react-redux";
+import { toggleCreateTodayItem } from "TodayListActions";
 
 import theme from "AppTheme";
 import getIconAsset from "IconAssets";
 
 /*
-*	Displays the Blocker heading
+*	Displays the Today Header
 */
-export class HeaderBlocker extends Component {
+export class TodayHeader extends Component {
 
 	static propTypes = {
-		
+
+		toggleCreateTodayItem: React.PropTypes.func.isRequired,
 	};
 
 	constructor (props) {
@@ -39,8 +41,8 @@ export class HeaderBlocker extends Component {
 		return (
 
 			<View style={styles.viewContainer}>
-				<Text style={styles.yesterdayText}>Blockers...</Text>
-				<TouchableOpacity onPress={() => {}} style={styles.addButton}>
+				<Text style={styles.todayText}>Today I...</Text>
+				<TouchableOpacity onPress={() => this.props.toggleCreateTodayItem ()} style={styles.addButton}>
 					<Image source={getIconAsset ("pencilIcon")} style={styles.addButtonImage}/>
 				</TouchableOpacity>
 			</View>
@@ -59,7 +61,7 @@ const styles = StyleSheet.create({
 		justifyContent: "space-between",
 		alignItems: "center",
 	},
-	yesterdayText: {
+	todayText: {
 
 		color: theme.lightBlue,
 		marginLeft: (Platform.OS === "ios") ? 20 : 20,
@@ -92,6 +94,7 @@ const styles = StyleSheet.create({
 */
 const mapDispatchToProps = dispatch => ({
 
+	toggleCreateTodayItem: () => dispatch (toggleCreateTodayItem ()),
 });
 
-export default connect (null, mapDispatchToProps)(HeaderBlocker);
+export default connect (null, mapDispatchToProps)(TodayHeader);

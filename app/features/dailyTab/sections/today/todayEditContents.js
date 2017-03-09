@@ -1,5 +1,5 @@
 /**
- * @providesModule EditContentsYesterday
+ * @providesModule EditTodayContents
  */
 
 //  Import items from react
@@ -20,7 +20,7 @@ import getIconAsset from "IconAssets";
 /*
 *	Displays the Today heading
 */
-export class EditContentsYesterday extends Component {
+export class EditTodayContents extends Component {
 
 	static propTypes = {
 
@@ -146,4 +146,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default EditContentsYesterday;
+export default EditTodayContents;
