@@ -51,7 +51,7 @@ export class EmptyTodayList extends Component {
 
 			<TouchableOpacity onPress={() => this.props.toggleCreateTodayItem ()}>
 				<View style={styles.containerView}>
-					<Text style={styles.emptyText}>Add some items that you have completed since your last standup!</Text>
+					<Text style={styles.emptyText}>What will you achieve before your next standup?</Text>
 				</View>
 			</TouchableOpacity>
 		);
