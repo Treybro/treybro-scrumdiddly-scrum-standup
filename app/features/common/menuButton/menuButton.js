@@ -14,6 +14,10 @@ import {
 	Platform,
 } from "react-native";
 import { connect } from "react-redux";
+import {
+
+	openDrawer,
+} from "DrawerActions";
 
 import theme from "AppTheme";
 import getIconAsset from "IconAssets";
@@ -26,6 +30,7 @@ export class MenuButton extends Component {
 	static propTypes = {
 
 		navDrawer: React.PropTypes.object.isRequired,
+		openDrawer: React.PropTypes.func.isRequired,
 	};
 
 	constructor (props) {
@@ -37,17 +42,17 @@ export class MenuButton extends Component {
 
 		return (
 
-			<View style={styles.leftNavIconContainer}>
-				<TouchableOpacity onPress={() => this._openDrawer ()}>
+			<TouchableOpacity onPress={() => this._openDrawer ()}>
+				<View style={styles.leftNavIconContainer}>
 					<Image source={getIconAsset ("menuIcon")} style={styles.leftNavIcon} resizeMode={"stretch"}/>
-				</TouchableOpacity>
-			</View>
+				</View>
+			</TouchableOpacity>
 		);
 	}
 
 	_openDrawer () {
 
-		this.props.navDrawer.navigate ("DrawerOpen");
+		this.props.openDrawer ();
 	}
 }
 
@@ -55,9 +60,9 @@ const styles = StyleSheet.create({
 
 	leftNavIconContainer: {
 
-		height: 25,
-		width: 25,
-		marginLeft: (Platform.OS === "ios") ? 20 : 15,
+		height: 50,
+		width: 50,
+		marginLeft: (Platform.OS === "ios") ? 10 : 5,
 		alignItems: "center",
 		justifyContent: "center",
 	},
@@ -74,4 +79,12 @@ const mapStateToProps = state => ({
 	navDrawer: state.drawerReducer.drawer,
 });
 
-export default connect (mapStateToProps, null)(MenuButton);
+/*
+* Mapping for redux dispatch functions.
+*/
+const mapDispatchToProps = dispatch => ({
+
+	openDrawer: () => dispatch (openDrawer ()),
+});
+
+export default connect (mapStateToProps, mapDispatchToProps)(MenuButton);

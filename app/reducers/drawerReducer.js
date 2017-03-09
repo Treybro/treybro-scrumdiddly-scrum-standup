@@ -24,15 +24,21 @@ const tutorialReducer = (state = drawerState, action) => {
 		};
 	}
 	case OPEN_DRAWER: {
+
+		state.drawer.navigate ("DrawerOpen");
 		return {
 
 			...state,
+			drawer: state.drawer,
 		};
 	}
 	case CLOSE_DRAWER: {
 
+		state.drawer.navigate ("DrawerClose");
 		return {
+
 			...state,
+			drawer: state.drawer,
 		};
 	}
 	default:
