@@ -8,7 +8,6 @@ import {
 	RECEIVE_YESTERDAY_ITEMS,
 	ADD_YESTERDAY_ITEM,
 	REMOVE_YESTERDAY_ITEM,
-	TOGGLE_COMPLETE_YESTERDAY_ITEM,
 	TOGGLE_CREATE_YESTERDAY_ITEM,
 } from "YesterdayListActions";
 
@@ -65,13 +64,6 @@ const yesterdayListReducer = (state = yesterdayListState, action) => {
 
 			...state,
 			yesterdaysItems: itemsList,
-		};
-	}
-	case TOGGLE_COMPLETE_YESTERDAY_ITEM: {
-
-		return {
-
-			...state,
 		};
 	}
 	case TOGGLE_CREATE_YESTERDAY_ITEM: {

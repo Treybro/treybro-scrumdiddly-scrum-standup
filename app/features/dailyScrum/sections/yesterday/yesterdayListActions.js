@@ -10,7 +10,6 @@ import moment from "moment";
 export const FETCH_YESTERDAY_ITEMS = "FETCH_YESTERDAY_ITEMS";
 export const RECEIVE_YESTERDAY_ITEMS = "RECEIVE_YESTERDAY_ITEMS";
 export const ADD_YESTERDAY_ITEM = "ADD_YESTERDAY_ITEM";
-export const TOGGLE_COMPLETE_YESTERDAY_ITEM = "TOGGLE_COMPLETE_YESTERDAY_ITEM";
 export const REMOVE_YESTERDAY_ITEM = "REMOVE_YESTERDAY_ITEM";
 export const TOGGLE_CREATE_YESTERDAY_ITEM = "TOGGLE_CREATE_YESTERDAY_ITEM";
 export const DELETE_YESTERDAY_ITEM = "DELETE_YESTERDAY_ITEM";
@@ -272,17 +271,6 @@ export function deleteYesterdayItem (itemId) {
 			//	TODO - handle error message
 			console.log (err);
 		});
-	};
-}
-
-//	Complete/Uncomplete an item on the list
-export function toggleCompleteYesterdayItem (itemId, completedState) {
-
-	return {
-
-		type: TOGGLE_COMPLETE_YESTERDAY_ITEM,
-		itemId,
-		completedState,
 	};
 }
 
