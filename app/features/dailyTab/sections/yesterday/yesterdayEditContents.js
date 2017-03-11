@@ -54,17 +54,17 @@ export class EditYesterdayContents extends Component {
 				<View style={styles.editContents}>
 					<View style={styles.blankView}>
 					</View>
-					<TouchableOpacity onPress={() => this.props.saveItem ()}>
-						<Image 
-							source={getIconAsset ("tickIcon")} 
-							resizeMode={"stretch"} 
-							style={(this.props.canSaveItem === false) ? styles.saveIcon : [styles.saveIcon, {tintColor: theme.lightGreen}]} />
-					</TouchableOpacity>
 					<TouchableOpacity onPress={() => this.props.deleteItem ()}>
 						<Image 
 							source={getIconAsset ("cancelIcon")}
 							resizeMode={"stretch"} 
 							style={styles.cancelIcon} />
+					</TouchableOpacity>
+					<TouchableOpacity onPress={() => this.props.saveItem ()}>
+						<Image 
+							source={getIconAsset ("tickIcon")} 
+							resizeMode={"stretch"} 
+							style={(this.props.canSaveItem === false) ? styles.saveIcon : [styles.saveIcon, {tintColor: theme.lightGreen}]} />
 					</TouchableOpacity>
 				</View>
 			);

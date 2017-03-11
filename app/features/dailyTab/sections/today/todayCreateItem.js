@@ -89,17 +89,17 @@ export class CreateTodayItem extends Component {
 							}}/>
 					</View>
 					<Animated.View style={[styles.editContents]}>
-						<TouchableOpacity onPress={() => this._saveItem ()}>
-							<Image 
-								source={getIconAsset ("tickIcon")} 
-								resizeMode={"stretch"} 
-								style={(this.state.canSave === false) ? styles.saveIcon : [styles.saveIcon, {tintColor: theme.lightGreen}]} />
-						</TouchableOpacity>
 						<TouchableOpacity onPress={() => this._cancelItem ()}>
 							<Image 
 								source={getIconAsset ("cancelIcon")} 
 								resizeMode={"stretch"} 
 								style={styles.deleteIcon} />
+						</TouchableOpacity>
+						<TouchableOpacity onPress={() => this._saveItem ()}>
+							<Image 
+								source={getIconAsset ("tickIcon")} 
+								resizeMode={"stretch"} 
+								style={(this.state.canSave === false) ? styles.saveIcon : [styles.saveIcon, {tintColor: theme.lightGreen}]} />
 						</TouchableOpacity>
 					</Animated.View>
 				</View>

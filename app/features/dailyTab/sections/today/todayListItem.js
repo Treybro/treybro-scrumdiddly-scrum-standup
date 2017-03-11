@@ -181,18 +181,17 @@ export class TodayListItem extends Component {
 	*	gets dispatched to redux
 	*/
 	_editItem () {
-
-		//	Only focus when we want to edit the item
-		/*
-		*	TODO - fix this for ios
-		*/
-		if (this.state.editItem === false && Platform.OS !== "ios") {
-
-			this.refs.editItemTextInput.focus ();
-		}
+		
 		this.setState ({
 
 			editItem: !this.state.editItem,
+		}, () => {
+
+			//	Only focus when we want to edit the item
+			if (this.state.editItem === true) {
+
+				this.refs.editItemTextInput.focus ();
+			}
 		});
 	}
 
