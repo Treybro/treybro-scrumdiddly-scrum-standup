@@ -16,6 +16,7 @@ import tickIcon from "./icon-tick.png";
 import binIcon from "./icon-bin.png";
 import cancelIcon from "./icon-cancel.png";
 import okIcon from "./icon-ok.png";
+import warningIcon from "./icon-warning.png";
 
 export default function getIconAsset (assetName) {
 
@@ -49,5 +50,7 @@ export default function getIconAsset (assetName) {
 		return cancelIcon;
 	case "okIcon":
 		return okIcon;
+	case "warningIcon":
+		return warningIcon;
 	}
 }

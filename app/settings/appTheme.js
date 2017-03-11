@@ -20,6 +20,7 @@ const AppTheme = {
 	red: "#FF3439",
 	darkRed: "#B71C1C",
 	lightRed: "#D50000",
+	lightOrange: "#FF6D00",
 };
 
 module.exports = AppTheme;

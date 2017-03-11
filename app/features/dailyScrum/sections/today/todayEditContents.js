@@ -1,5 +1,5 @@
 /**
- * @providesModule EditYesterdayContents
+ * @providesModule EditTodayContents
  */
 
 //  Import items from react
@@ -20,7 +20,7 @@ import getIconAsset from "IconAssets";
 /*
 *	Displays the Today heading
 */
-export class EditYesterdayContents extends Component {
+export class EditTodayContents extends Component {
 
 	static propTypes = {
 
@@ -30,7 +30,9 @@ export class EditYesterdayContents extends Component {
 		editItem: React.PropTypes.func.isRequired,
 		saveItem: React.PropTypes.func.isRequired,
 		itemCompleted: React.PropTypes.bool.isRequired,
+		itemBlocked: React.PropTypes.bool.isRequired,
 		completeItem: React.PropTypes.func.isRequired,
+		blockItem: React.PropTypes.func.isRequired,
 		canSaveItem: React.PropTypes.bool.isRequired,
 	};
 
@@ -75,9 +77,15 @@ export class EditYesterdayContents extends Component {
 
 			<View style={styles.editContents}>
 				<TouchableOpacity onPress={() => this.props.completeItem ()}>
-					<Image source={(this.props.itemCompleted === false) ? getIconAsset ("okIcon")  : getIconAsset ("okIcon")} 
+					<Image source={getIconAsset ("okIcon")} 
 							resizeMode={"stretch"} 
 							style={(this.props.itemCompleted === false) ? styles.checkedIcon  : [styles.checkedIcon,{tintColor : theme.lightGreen}]} />
+				</TouchableOpacity>
+				<TouchableOpacity onPress={() => this.props.blockItem ()}>
+					<Image 
+						source={getIconAsset ("warningIcon")} 
+						resizeMode={"stretch"} 
+						style={(this.props.itemBlocked === false) ? styles.warningIcon  : [styles.warningIcon,{tintColor : theme.lightOrange}]} />
 				</TouchableOpacity>
 				<TouchableOpacity onPress={() => this.props.editItem ()}>
 					<Image 
@@ -115,6 +123,12 @@ const styles = StyleSheet.create({
 		height: (Platform.OS === "ios") ? 30 : 30,
 		tintColor: theme.darkGrey,
 	},
+	warningIcon: {
+
+		width: (Platform.OS === "ios") ? 33 : 33,
+		height: (Platform.OS === "ios") ? 30 : 30,
+		tintColor: theme.darkGrey,
+	},
 	saveIcon: {
 
 		tintColor: theme.darkGrey,
@@ -146,4 +160,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default EditYesterdayContents;
+export default EditTodayContents;

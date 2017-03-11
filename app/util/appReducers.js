@@ -4,8 +4,8 @@
 
 import { combineReducers } from "redux";
 
-import tutorialReducer from "./tutorialReducer";
-import welcomeReducer from "./welcomeReducer";
+import tutorialReducer from "TutorialReducer";
+import welcomeReducer from "WelcomeReducer";
 import yesterdayListReducer from "YesterdayListReducer";
 import drawerReducer from "DrawerReducer";
 import todayListReducer from "TodayListReducer";

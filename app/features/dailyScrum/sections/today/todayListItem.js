@@ -1,5 +1,5 @@
 /**
- * @providesModule YesterdayListItem
+ * @providesModule TodayListItem
  */
 
 //  Import items from react
@@ -18,26 +18,26 @@ import {
 import { connect } from "react-redux";
 import {
 
-	deleteYesterdayItem,
-	toggleCompleteYesterdayItem,
-	updateYesterdayItem,
-} from "YesterdayListActions";
+	deleteTodayItem,
+	toggleCompleteTodayItem,
+	updateTodayItem,
+} from "TodayListActions";
 
 import theme from "AppTheme";
-import EditYesterdayContents from "EditYesterdayContents";
+import EditTodayContents from "EditTodayContents";
 
 /*
-*	Displays the list of Yesterdays Items
+*	Displays the list of Todays Items
 */
-export class YesterdayListItem extends Component {
+export class TodayListItem extends Component {
 
 	static propTypes = {
 
-		yesterdayItem: React.PropTypes.object.isRequired,
-		deleteYesterdayItem: React.PropTypes.func,
-		toggleCompleteYesterdayItem: React.PropTypes.func,
-		editYesterdayItem: React.PropTypes.func,
-		updateYesterdayItem: React.PropTypes.func,
+		todayItem: React.PropTypes.object.isRequired,
+		deleteTodayItem: React.PropTypes.func,
+		toggleCompleteTodayItem: React.PropTypes.func,
+		editTodayItem: React.PropTypes.func,
+		updateTodayItem: React.PropTypes.func,
 	};
 
 	constructor (props) {
@@ -47,10 +47,11 @@ export class YesterdayListItem extends Component {
 
 			showEditItems: false,
 			editItem: false,
-			originalText: this.props.yesterdayItem.itemText,
-			editedText: this.props.yesterdayItem.itemText,
+			originalText: this.props.todayItem.itemText,
+			editedText: this.props.todayItem.itemText,
 			height: (Platform.OS === "ios") ? 0 : 0,
-			itemCompleted: this.props.yesterdayItem.completed,
+			itemCompleted: this.props.todayItem.completed,
+			itemBlocked: false,
 			canSave: false,
 		};
 	}
@@ -58,12 +59,13 @@ export class YesterdayListItem extends Component {
 	render () {
 
 		let textInputStyle = [this._determineStyle (), {height: (Platform.OS === "ios") ? Math.max (40, this.state.height) : Math.max(50, this.state.height)}];
+		let borderStyle = this._determineBorderStyle ();
 		return (
 			
 			<View style={styles.containerView}>
 				<View style={styles.contentContainer}>
 					<TouchableOpacity activeOpacity={1}onPress={() => this._toggleEdit ()}>
-						<View style={(this.state.itemCompleted === false) ? styles.textContainer : [styles.textContainer, {borderRightWidth: 5, borderRightColor: theme.lightGreen}]}>
+						<View style={borderStyle}>
 							<TextInput
 								ref='editItemTextInput'
 								pointerEvents={(this.state.editItem === false) ? "none": "auto"}
@@ -93,12 +95,14 @@ export class YesterdayListItem extends Component {
 						</View>
 					</TouchableOpacity>
 					{/* TODO - Refactor this garbage */}
-					<EditYesterdayContents 
+					<EditTodayContents 
 						toggle={this.state.showEditItems}
 						editingItem={this.state.editItem}
 						deleteItem={(this.state.editItem === false) ? () => this._deleteAlert () : () => this._cancelEditItem ()}
 						itemCompleted={this.state.itemCompleted}
+						itemBlocked={this.state.itemBlocked}
 						completeItem={() => this._toggleCompleteItem ()}
+						blockItem={() => this._toggleBlockItem ()}
 						editItem={() => this._editItem ()}
 						saveItem={() => this._saveItem ()}
 						canSaveItem={this.state.canSave} />
@@ -172,7 +176,7 @@ export class YesterdayListItem extends Component {
 			canSave: false,
 		}, () => {
 
-			this.props.deleteYesterdayItem (this.props.yesterdayItem.id);
+			this.props.deleteTodayItem (this.props.todayItem.id);
 		});
 	}
 
@@ -181,7 +185,7 @@ export class YesterdayListItem extends Component {
 	*	gets dispatched to redux
 	*/
 	_editItem () {
-
+		
 		this.setState ({
 
 			editItem: !this.state.editItem,
@@ -227,9 +231,9 @@ export class YesterdayListItem extends Component {
 			}, () => {
 
 				//	Do we need to save the item?
-				if (itemText !== this.props.yesterdayItem.itemText) {
+				if (itemText !== this.props.todayItem.itemText) {
 
-					this.props.updateYesterdayItem (this.props.yesterdayItem.id, itemText, this.props.yesterdayItem.completed);
+					this.props.updateTodayItem (this.props.todayItem.id, itemText, this.props.todayItem.completed);
 				}
 			});
 		} else {
@@ -261,8 +265,51 @@ export class YesterdayListItem extends Component {
 			itemCompleted: toggle,
 		}, () => {
 
-			this.props.toggleCompleteYesterdayItem (this.props.yesterdayItem.id, toggle);
+			this.props.toggleCompleteTodayItem (this.props.todayItem.id, toggle);
 		});
+	}
+
+	/*
+	* Toggle blocked on/off
+	*/
+	_toggleBlockItem () {
+
+		let toggle = !this.state.itemBlocked;
+		this.setState ({
+
+			itemBlocked: toggle,
+		}, () => {
+
+			// TODO - tell redux
+		});
+	}
+
+	/*
+	*	Detects the correct border style based on priority
+	*/
+	_determineBorderStyle () {
+
+		let style;
+
+		//	When the item not completed or blocked
+		if (this.state.itemCompleted === false && this.state.itemBlocked === false) {
+
+			style = styles.textContainer;
+		}
+
+		//	Blocked items take precedence
+		if (this.state.itemBlocked === true) {
+
+			style = [styles.textContainer, {borderRightWidth: 5, borderRightColor: theme.lightOrange}];
+		}
+
+		//	Display item completed only if the item isn't blocked
+		if (this.state.itemCompleted === true && this.state.itemBlocked === false) {
+
+			style = [styles.textContainer, {borderRightWidth: 5, borderRightColor: theme.lightGreen}];
+		}
+
+		return style;
 	}
 
 	_determineStyle () {
@@ -323,9 +370,9 @@ const styles = StyleSheet.create({
 */
 const mapDispatchToProps = dispatch => ({
 
-	deleteYesterdayItem: (itemId) => dispatch (deleteYesterdayItem (itemId)),
-	toggleCompleteYesterdayItem: (itemId, completedState) => dispatch (toggleCompleteYesterdayItem (itemId, completedState)),
-	updateYesterdayItem: (originalItemId, updatedText, updatedCompletedState) => dispatch (updateYesterdayItem (originalItemId, updatedText, updatedCompletedState)),
+	deleteTodayItem: (itemId) => dispatch (deleteTodayItem (itemId)),
+	toggleCompleteTodayItem: (itemId, completedState) => dispatch (toggleCompleteTodayItem (itemId, completedState)),
+	updateTodayItem: (originalItemId, updatedText, updatedCompletedState) => dispatch (updateTodayItem (originalItemId, updatedText, updatedCompletedState)),
 });
 
-export default connect (null, mapDispatchToProps)(YesterdayListItem);
+export default connect (null, mapDispatchToProps)(TodayListItem);
