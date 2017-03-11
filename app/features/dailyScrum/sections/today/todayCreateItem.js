@@ -63,7 +63,7 @@ export class CreateTodayItem extends Component {
 				<View style={styles.contentContainer}>
 					<View style={styles.textContainer}>
 						<TextInput
-							placeholder={"Fixed that bug that was bugging everyone..."}
+							placeholder={"Will fix all the things!!"}
 							editable={this.props.showToggle}
 							value={this.state.text}
 							style={[styles.listItemText,{height: Math.max(35, this.state.height)}]}
