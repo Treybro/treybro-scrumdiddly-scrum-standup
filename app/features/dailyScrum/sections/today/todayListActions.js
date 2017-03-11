@@ -141,6 +141,7 @@ export function saveTodayItem (itemText) {
 				"createdAt": createdDate,
 				"itemText": itemText,
 				"completed": false,
+				"blocked": false,
 				"itemType": "today",
 			};
 			//	Add the new item to the current displayed items
@@ -284,7 +285,7 @@ export function toggleCreateTodayItem () {
 }
 
 //	Edit the current item
-export function updateTodayItem (originalItemId, updatedText, updatedCompletedState) {
+export function updateTodayItem (originalItemId, updatedText, updatedCompletedState, updatedBlockedState) {
 
 	return function (dispatch) {
 
@@ -312,6 +313,7 @@ export function updateTodayItem (originalItemId, updatedText, updatedCompletedSt
 							//	Update the item
 							scrumItem.itemText = updatedText;
 							scrumItem.completed = updatedCompletedState;
+							scrumItem.blocked = updatedBlockedState;
 						}
 					}
 				}

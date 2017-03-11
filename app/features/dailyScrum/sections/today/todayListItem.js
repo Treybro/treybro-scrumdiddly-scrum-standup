@@ -48,7 +48,7 @@ export class TodayListItem extends Component {
 			editedText: this.props.todayItem.itemText,
 			height: (Platform.OS === "ios") ? 0 : 0,
 			itemCompleted: this.props.todayItem.completed,
-			itemBlocked: false,
+			itemBlocked: this.props.todayItem.blocked,
 			canSave: false,
 		};
 	}
@@ -230,7 +230,8 @@ export class TodayListItem extends Component {
 				//	Do we need to save the item?
 				if (itemText !== this.props.todayItem.itemText) {
 
-					this.props.updateTodayItem (this.props.todayItem.id, itemText, this.props.todayItem.completed);
+					let item = this.props.todayItem;
+					this.props.updateTodayItem (item.id, itemText, item.completed, item.todayItem.blocked);
 				}
 			});
 		} else {
@@ -263,7 +264,7 @@ export class TodayListItem extends Component {
 		}, () => {
 
 			let item = this.props.todayItem;
-			this.props.updateTodayItem (item.id, item.itemText, toggle);
+			this.props.updateTodayItem (item.id, item.itemText, toggle, item.blocked);
 		});
 	}
 
@@ -278,7 +279,8 @@ export class TodayListItem extends Component {
 			itemBlocked: toggle,
 		}, () => {
 
-			// TODO - tell redux
+			let item = this.props.todayItem;
+			this.props.updateTodayItem (item.id, item.itemText, item.completed, toggle);
 		});
 	}
 
@@ -369,7 +371,7 @@ const styles = StyleSheet.create({
 const mapDispatchToProps = dispatch => ({
 
 	deleteTodayItem: (itemId) => dispatch (deleteTodayItem (itemId)),
-	updateTodayItem: (originalItemId, updatedText, updatedCompletedState) => dispatch (updateTodayItem (originalItemId, updatedText, updatedCompletedState)),
+	updateTodayItem: (originalItemId, updatedText, updatedCompletedState, updatedBlockedState) => dispatch (updateTodayItem (originalItemId, updatedText, updatedCompletedState, updatedBlockedState)),
 });
 
 export default connect (null, mapDispatchToProps)(TodayListItem);
