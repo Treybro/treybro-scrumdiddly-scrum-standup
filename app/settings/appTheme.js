@@ -32,6 +32,14 @@ export const customCalandarStyle = {
 	calendarControls: {
 
 		backgroundColor: AppTheme.white,
+		height: 40,
+		justifyContent: "center",
+		alignItems: "center",
+	},
+	controlButtonText: {
+
+		color: AppTheme.lightGrey,
+		fontSize: 14,
 	},
 	calendarHeading: {
 
@@ -91,6 +99,12 @@ export const customCalandarStyle = {
 	weekendHeading: {
 
 		color: AppTheme.darkGrey,
+	},
+	title: {
+
+		color: AppTheme.lightBlue,
+		fontSize: 16,
+		fontWeight: "bold",
 	},
 };
 
