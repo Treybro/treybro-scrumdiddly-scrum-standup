@@ -1,6 +1,7 @@
 /**
  * @providesModule TodayListActions
  */
+ 
 import {
 
 	AsyncStorage,
@@ -26,8 +27,7 @@ export function getTodayItems () {
 		//	TODO - add API request
 		dispatch (fetchTodayItems ());
 		return AsyncStorage.getItem ("scrumdiddly").then (function (results) {
-
-			console.log (results);
+			
 			dispatch (receiveTodayItems (results));
 		}, function (err) {
 

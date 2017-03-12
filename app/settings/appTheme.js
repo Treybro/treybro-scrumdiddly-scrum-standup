@@ -2,7 +2,7 @@
  * @providesModule AppTheme
  */
 
-const AppTheme = {
+export const AppTheme = {
 
 	blue: "#007A87",
 	lightBlue: "#00A2B1",
@@ -23,4 +23,75 @@ const AppTheme = {
 	lightOrange: "#F9A825",
 };
 
-module.exports = AppTheme;
+export const customCalandarStyle = {
+
+	calendarContainer: {
+
+		backgroundColor: AppTheme.white,
+	},
+	calendarControls: {
+
+		backgroundColor: AppTheme.white,
+	},
+	calendarHeading: {
+
+		backgroundColor: AppTheme.white,
+		borderTopWidth: 0,
+		borderLeftWidth: 0,
+		borderRightWidth: 0,
+		borderBottomWidth: 0,
+	},
+	currentDayCircle: {
+
+		backgroundColor: AppTheme.lightBlue,
+	},
+	currentDayText: {
+
+		color: AppTheme.lightBlue,
+	},
+	eventIndicator: {
+
+		backgroundColor: AppTheme.lightBlue,
+	},
+	selectedDayCircle: {
+
+		backgroundColor: AppTheme.lightGrey,
+	},
+	selectedDayText: {
+
+		color: AppTheme.white,
+	},
+	weekRow: {
+
+		backgroundColor: AppTheme.white,
+	},
+	dayButton: {
+
+		backgroundColor: AppTheme.white,
+		borderTopWidth: 0,
+		borderLeftWidth: 0,
+		borderRightWidth: 0,
+		borderBottomWidth: 0,
+	},
+	day: {
+
+		color: AppTheme.darkGrey,
+		fontWeight: "bold",
+	},
+	dayHeading: {
+
+		color: AppTheme.darkGrey,
+		borderWidth: 0,
+	},
+	weekendDayText: {
+
+		color: AppTheme.darkGrey,
+		fontWeight: "bold",
+	},
+	weekendHeading: {
+
+		color: AppTheme.darkGrey,
+	},
+};
+
+export default AppTheme;

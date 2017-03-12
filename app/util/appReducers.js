@@ -9,6 +9,7 @@ import welcomeReducer from "WelcomeReducer";
 import yesterdayListReducer from "YesterdayListReducer";
 import drawerReducer from "DrawerReducer";
 import todayListReducer from "TodayListReducer";
+import scrumHistoryReducer from "ScrumHistoryReducer";
 
 const appReducers = combineReducers ({
 
@@ -17,6 +18,7 @@ const appReducers = combineReducers ({
 	yesterdayListReducer,
 	todayListReducer,
 	drawerReducer,
+	scrumHistoryReducer,
 });
 
 export default appReducers;

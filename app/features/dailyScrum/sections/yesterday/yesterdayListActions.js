@@ -26,8 +26,7 @@ export function getYesterdayItems () {
 		//	TODO - add API request
 		dispatch (fetchYesterdayItems ());
 		return AsyncStorage.getItem ("scrumdiddly").then (function (results) {
-
-			console.log (results);
+			
 			dispatch (receiveYesterdayItems (results));
 		}, function (err) {
 
