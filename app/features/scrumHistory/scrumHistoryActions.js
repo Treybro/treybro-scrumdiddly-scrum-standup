@@ -10,6 +10,9 @@ import moment from "moment";
 
 export const FETCH_SCRUM_HISTORY = "FETCH_SCRUM_HISTORY";
 export const RECEIVE_SCRUM_HISTORY = "RECEIVE_SCRUM_HISTORY";
+export const FINDING_SCRUM_ITEM = "FINDING_SCRUM_ITEM";
+export const FOUND_SCRUM_ITEM = "FOUND_SCRUM_ITEM";
+export const TOGGLE_CALENDAR = "TOGGLE_CALENDAR";
 
 //	Tell the app we are getting the scrum history
 export function getScrumHistory () {
@@ -44,36 +47,87 @@ export function receiveScrumHistory (results) {
 	let dailyScrums = scrumHistory.dailyscrums;
 
 	let eventDates = [];
-	let scrumData = {};
 
 	//	Get a list of all the dates in which we created a scrum
 	for (let i = 0; i < dailyScrums.length; i++) {
 
 		let dailyScrum = dailyScrums[i];
 
-		//	Keep a list of sections in Month format (eg. January, February etc...)
-		let date = moment (dailyScrum.scrumDate, "DD-MM-YYYY");
-		let month = date.format ("MMMM");
-
-		// Only add it if we don't already have it
-		if (!scrumData[month]) {
-
-			scrumData[month] = [];
-		}
-
-		let displayDate = date.format ("MMMM Do");
-		scrumData[month].push (displayDate);
-
 		//	Used to dipsplay dates on the calandar
 		let calandarDate = moment (dailyScrum.scrumDate, "DD-MM-YYYY");
-		let displayDate2 = calandarDate.format ("YYYY-MM-DD");
-		eventDates.push (displayDate2);
+		let displayDate = calandarDate.format ("YYYY-MM-DD");
+		eventDates.push (displayDate);
 	}
 
 	return {
 
 		type: RECEIVE_SCRUM_HISTORY,
-		scrumData,
 		eventDates,
+	};
+}
+
+//	Get a scrum for a specified date
+export function getScrumForDate (date) {
+
+	return function (dispatch) {
+
+		dispatch (findingScrum ());
+		return AsyncStorage.getItem ("scrumdiddly").then (function (results) {
+
+			let scrumHistory = JSON.parse (results);
+			let dailyScrums = scrumHistory.dailyscrums;
+			let foundScrum;
+
+			//	Iterate through the results
+			for (let i = 0; i < dailyScrums.length; i++) {
+
+				let scrum = dailyScrums[i];
+				let originalDate = moment (scrum.scrumDate, "DD-MM-YYYY");
+				let suppliedDate = moment (date, "YYYY-MM-DD");
+
+				let date1 = originalDate.format ("YYYY-MM-DD");
+				let date2 = suppliedDate.format ("YYYY-MM-DD");
+
+				//	Compare dates
+				if (date1 === date2) {
+
+					foundScrum = scrum;
+				}
+			}
+
+			dispatch (foundScrumItem (foundScrum));
+		}, function (err) {
+
+			//	TODO - handle error message
+			console.log (err);
+		});
+	};
+}
+
+//	Tell the app we are trying to find a scrum item
+export function findingScrum () {
+
+	return {
+
+		type: FINDING_SCRUM_ITEM,
+	};
+}
+
+//	Tell the app we have found the scrum item
+export function foundScrumItem (scrumItem) {
+	
+	return {
+
+		type: FOUND_SCRUM_ITEM,
+		scrumItem,
+	};
+}
+
+//	Toggle the display of the calendar
+export function toggleCalendar () {
+
+	return {
+
+		type: TOGGLE_CALENDAR,
 	};
 }

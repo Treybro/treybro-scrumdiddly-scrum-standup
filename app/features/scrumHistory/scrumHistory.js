@@ -9,21 +9,19 @@ import {
 	Text,
 	StyleSheet,
 	Platform,
-	ListView,
 } from "react-native";
 
 import { connect } from "react-redux";
 import {
 
 	getScrumHistory,
+	getScrumForDate,
 } from "ScrumHistoryActions";
 
 import MenuButton from "MenuButton";
+import CalendarButton from "CalendarButton";
 import theme from "AppTheme";
 import { customCalandarStyle } from "AppTheme";
-
-import HistoryListItem from "HistoryListItem";
-import HistorySectionHeader from "HistorySectionHeader";
 
 import Calendar from "react-native-calendar";
 
@@ -35,9 +33,12 @@ class ScrumHistory extends Component {
 	static propTypes = {
 
 		isLoadingHistory: React.PropTypes.bool.isRequired,
-		scrumData: React.PropTypes.object.isRequired,
 		eventDates: React.PropTypes.array.isRequired,
 		getScrumHistory: React.PropTypes.func.isRequired,
+		getScrumForDate: React.PropTypes.func.isRequired,
+		selectedScrumItem: React.PropTypes.object.isRequired,
+		isSearchingForScrum: React.PropTypes.bool.isRequired,
+		displayCalendar: React.PropTypes.bool.isRequired,
 	};
 
 	//	Navigation bar options
@@ -47,7 +48,10 @@ class ScrumHistory extends Component {
 		header: {
 
 			visible: true,
-			right: () => {},
+			right: (
+
+				<CalendarButton />
+			),
 			left: (
 
 				<MenuButton />
@@ -69,17 +73,6 @@ class ScrumHistory extends Component {
 	constructor (props) {
 
 		super (props);
-		const ds = new ListView.DataSource ({
-
-			rowHasChanged: (r1, r2) => r1 !== r2,
-			sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
-		});
-
-		this.state = {
-
-			ds: ds,
-			dataSource: ds.cloneWithRowsAndSections (this.props.scrumData),
-		};
 	}
 
 	componentDidMount () {
@@ -87,14 +80,6 @@ class ScrumHistory extends Component {
 		//	Get the scrum history
 		//	TODO - get this into app setup or something
 		this.props.getScrumHistory ();
-	}
-
-	componentWillReceiveProps (nextProps) {
-
-		this.setState ({
-
-			dataSource: this.state.ds.cloneWithRowsAndSections (nextProps.scrumData),
-		});
 	}
 
 	render () {
@@ -110,31 +95,36 @@ class ScrumHistory extends Component {
 			);
 		}
 
-		return (
+		if (this.props.displayCalendar === true) {
 
-			<View style={styles.containerView}>
-				<View style={styles.calandarContainer}>
-					<Calendar
-						ref="calendar"
-						eventDates={this.props.eventDates}
-						showControls={true}
-						showEventIndicators={true}
-						titleFormat={"MMMM YYYY"}
-						onDateSelect={(date) => console.log (date)}
-						customStyle={customCalandarStyle} />
+			return (
+
+				<View style={styles.containerView}>
+					<View style={styles.calandarContainer}>
+						<Calendar
+							ref="calendar"
+							eventDates={this.props.eventDates}
+							showControls={true}
+							showEventIndicators={true}
+							titleFormat={"MMMM YYYY"}
+							onDateSelect={(date) => this._collapseCalendar (date)}
+							customStyle={customCalandarStyle} />
+					</View>
 				</View>
-			</View>
-		);
+			);
+		}
 
 		return (
 
 			<View style={styles.containerView}>
-				<ListView
-					dataSource={this.state.dataSource}
-					renderRow={(rowData) => <HistoryListItem historyDetails={rowData} />}
-					renderSectionHeader={(sectionData, sectionID) => <HistorySectionHeader headerText={sectionID} />} />
+				<Text>Hello!</Text>
 			</View>
 		);
+	}
+
+	_collapseCalendar (date) {
+
+		this.props.getScrumForDate (date);
 	}
 }
 
@@ -157,8 +147,10 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => ({
 
 	isLoadingHistory: state.scrumHistoryReducer.isLoadingHistory,
-	scrumData: state.scrumHistoryReducer.scrumData,
 	eventDates: state.scrumHistoryReducer.eventDates,
+	selectedScrumItem: state.scrumHistoryReducer.selectedScrumItem,
+	isSearchingForScrum: state.scrumHistoryReducer.isSearchingForScrum,
+	displayCalendar: state.scrumHistoryReducer.displayCalendar,
 });
 
 /*
@@ -167,6 +159,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
 
 	getScrumHistory: () => dispatch (getScrumHistory ()),
+	getScrumForDate: (date) => dispatch (getScrumForDate (date)),
 });
 
 export default connect (mapStateToProps,mapDispatchToProps)(ScrumHistory);
