@@ -18,6 +18,7 @@ const scrumHistoryState = {
 	eventDates: [],
 	isLoadingHistory: true,
 	selectedScrumItem: {},
+	selectedScrumDate: {},
 	isSearchingForScrum: true,
 	displayCalendar: true,
 };
@@ -48,26 +49,29 @@ const scrumHistoryReducer = (state = scrumHistoryState, action) => {
 		};
 	}
 	case FINDING_SCRUM_ITEM: {
-
+		
 		return {
 
 			...state,
-			isSearchingForScrum: false,
+			isSearchingForScrum: true,
 		};
 	}
 	case FOUND_SCRUM_ITEM: {
 
 		let foundScrumItem = action.scrumItem;
+		let suppliedDate = action.suppliedDate;
 		if (foundScrumItem === undefined || foundScrumItem === null) {
 
 			foundScrumItem = {};
 		}
 
+		console.log (foundScrumItem);
 		return {
 
 			...state,
 			isSearchingForScrum: false,
 			selectedScrumItem: foundScrumItem,
+			selectedScrumDate: suppliedDate,
 		};
 	}
 	case TOGGLE_CALENDAR: {

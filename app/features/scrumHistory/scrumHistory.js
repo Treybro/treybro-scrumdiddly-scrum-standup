@@ -16,8 +16,10 @@ import {
 
 	getScrumHistory,
 	getScrumForDate,
+	toggleCalendar,
 } from "ScrumHistoryActions";
 
+import ScrumHistoryItem from "ScrumHistoryItem";
 import MenuButton from "MenuButton";
 import CalendarButton from "CalendarButton";
 import theme from "AppTheme";
@@ -39,6 +41,7 @@ class ScrumHistory extends Component {
 		selectedScrumItem: React.PropTypes.object.isRequired,
 		isSearchingForScrum: React.PropTypes.bool.isRequired,
 		displayCalendar: React.PropTypes.bool.isRequired,
+		toggleCalendar: React.PropTypes.func.isRequired,
 	};
 
 	//	Navigation bar options
@@ -87,6 +90,9 @@ class ScrumHistory extends Component {
 		//	Display loading view while we are loading the users history
 		if (this.props.isLoadingHistory === true) {
 
+			/*
+			*	TODO - make a loading thingie
+			*/
 			return (
 
 				<View stlye={styles.containerView}>
@@ -95,30 +101,26 @@ class ScrumHistory extends Component {
 			);
 		}
 
-		if (this.props.displayCalendar === true) {
+		if (this.props.displayCalendar) {
 
 			return (
 
 				<View style={styles.containerView}>
-					<View style={styles.calandarContainer}>
-						<Calendar
-							ref="calendar"
-							eventDates={this.props.eventDates}
-							showControls={true}
-							showEventIndicators={true}
-							titleFormat={"MMMM YYYY"}
-							onDateSelect={(date) => this._collapseCalendar (date)}
-							customStyle={customCalandarStyle} />
-					</View>
+					<Calendar
+						ref="calendar"
+						eventDates={this.props.eventDates}
+						showControls={true}
+						showEventIndicators={true}
+						titleFormat={"MMMM YYYY"}
+						onDateSelect={(date) => this._collapseCalendar (date)}
+						customStyle={customCalandarStyle} />
 				</View>
 			);
 		}
 
 		return (
 
-			<View style={styles.containerView}>
-				<Text>Hello!</Text>
-			</View>
+			<ScrumHistoryItem scrumItem={this.props.selectedScrumItem}/>
 		);
 	}
 
@@ -134,10 +136,6 @@ const styles = StyleSheet.create({
 
 		flex: 1,
 		backgroundColor: theme.white,
-	},
-	calandarContainer: {
-
-		flex: 1,
 	},
 });
 
@@ -160,6 +158,7 @@ const mapDispatchToProps = dispatch => ({
 
 	getScrumHistory: () => dispatch (getScrumHistory ()),
 	getScrumForDate: (date) => dispatch (getScrumForDate (date)),
+	toggleCalendar: () => dispatch (toggleCalendar ()),
 });
 
 export default connect (mapStateToProps,mapDispatchToProps)(ScrumHistory);

@@ -29,6 +29,8 @@ export class TodayHeader extends Component {
 	static propTypes = {
 
 		toggleCreateTodayItem: React.PropTypes.func.isRequired,
+		isEditable: React.PropTypes.bool.isRequired,
+		headerType: React.PropTypes.string.isRequired,
 	};
 
 	constructor (props) {
@@ -38,11 +40,23 @@ export class TodayHeader extends Component {
 
 	render () {
 
+		if (this.props.isEditable === false) {
+
+			return (
+
+				<View style={styles.viewContainer}>
+					<Text style={styles.todayText}>Today I...</Text>
+				</View>
+			);
+		}
+
 		return (
 
 			<View style={styles.viewContainer}>
 				<Text style={styles.todayText}>Today I...</Text>
-				<TouchableOpacity onPress={() => this.props.toggleCreateTodayItem ()} style={styles.addButton}>
+				<TouchableOpacity 
+					onPress={(this.props.headerType === "daily") ? () => this.props.toggleCreateTodayItem () : () => console.log ("History")} 
+					style={styles.addButton}>
 					<Image source={getIconAsset ("pencilIcon")} style={styles.addButtonImage}/>
 				</TouchableOpacity>
 			</View>

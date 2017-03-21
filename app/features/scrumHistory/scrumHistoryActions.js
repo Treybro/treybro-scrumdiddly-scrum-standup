@@ -43,7 +43,17 @@ export function fetchScrumHistory () {
 //	Tell the app we have received the scrum history
 export function receiveScrumHistory (results) {
 
-	let scrumHistory = JSON.parse (results);
+	let scrumHistory = results;
+	if (scrumHistory === undefined || scrumHistory === null || scrumHistory.length === 0) {
+
+		scrumHistory = {
+
+			"dailyscrums": [],
+		};
+	} else {
+
+		scrumHistory = JSON.parse (scrumHistory);
+	}
 	let dailyScrums = scrumHistory.dailyscrums;
 
 	let eventDates = [];
@@ -74,16 +84,26 @@ export function getScrumForDate (date) {
 		dispatch (findingScrum ());
 		return AsyncStorage.getItem ("scrumdiddly").then (function (results) {
 
-			let scrumHistory = JSON.parse (results);
+			let scrumHistory = results;
+			if (scrumHistory === undefined || scrumHistory === null || scrumHistory.length === 0) {
+
+				scrumHistory = {
+
+					"dailyscrums": [],
+				};
+			} else {
+
+				scrumHistory = JSON.parse (scrumHistory);
+			}
 			let dailyScrums = scrumHistory.dailyscrums;
-			let foundScrum;
+			let suppliedDate = moment (date, "YYYY-MM-DD");
+			let foundScrum = {};
 
 			//	Iterate through the results
 			for (let i = 0; i < dailyScrums.length; i++) {
 
 				let scrum = dailyScrums[i];
 				let originalDate = moment (scrum.scrumDate, "DD-MM-YYYY");
-				let suppliedDate = moment (date, "YYYY-MM-DD");
 
 				let date1 = originalDate.format ("YYYY-MM-DD");
 				let date2 = suppliedDate.format ("YYYY-MM-DD");
@@ -95,7 +115,11 @@ export function getScrumForDate (date) {
 				}
 			}
 
-			dispatch (foundScrumItem (foundScrum));
+			return dispatch (foundScrumItem (foundScrum, suppliedDate));
+		}).then (function () {
+
+			//	Tell the calandar to collapse after an item is selected
+			dispatch (toggleCalendar ());
 		}, function (err) {
 
 			//	TODO - handle error message
@@ -114,12 +138,13 @@ export function findingScrum () {
 }
 
 //	Tell the app we have found the scrum item
-export function foundScrumItem (scrumItem) {
+export function foundScrumItem (scrumItem, suppliedDate) {
 	
 	return {
 
 		type: FOUND_SCRUM_ITEM,
 		scrumItem,
+		suppliedDate,
 	};
 }
 

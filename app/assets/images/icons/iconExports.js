@@ -17,6 +17,7 @@ import binIcon from "./icon-bin.png";
 import cancelIcon from "./icon-cancel.png";
 import okIcon from "./icon-ok.png";
 import warningIcon from "./icon-warning.png";
+import blockerIcon from "./icon-blocker.png";
 
 export default function getIconAsset (assetName) {
 
@@ -52,5 +53,7 @@ export default function getIconAsset (assetName) {
 		return okIcon;
 	case "warningIcon":
 		return warningIcon;
+	case "blockerIcon":
+		return blockerIcon;
 	}
 }

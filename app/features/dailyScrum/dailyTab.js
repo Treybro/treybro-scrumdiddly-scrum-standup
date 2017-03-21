@@ -86,13 +86,19 @@ class DailyTab extends Component {
 		return (
 
 			<View style={styles.containerView}>
-				<DateHeader />
+				<DateHeader displayTitle={"Todays Items"}/>
 				<ScrollView>
-					<YesterdayHeader />
+					<YesterdayHeader 
+						headerType={"daily"}
+						isEditable={true}/>
 					<YesterdayList />
-					<TodayHeader />
+					<TodayHeader 
+						headerType={"daily"}
+						isEditable={true}/>
 					<TodayList />
-					<BlockerHeader />
+					<BlockerHeader
+						headerType={"daily"}
+						isEditable={true}/>
 				</ScrollView>
 			</View>
 		);

@@ -21,6 +21,7 @@ export class DateHeader extends Component {
 
 	static propTypes = {
 
+		displayTitle: React.PropTypes.string.isRequired,
 	};
 
 	constructor (props) {
@@ -33,7 +34,7 @@ export class DateHeader extends Component {
 		return (
 
 			<View style={styles.viewContainer}>
-				<Text style={styles.yesterdayText}>Todays Items</Text>
+				<Text style={styles.yesterdayText}>{this.props.displayTitle}</Text>
 			</View>
 		);
 	}

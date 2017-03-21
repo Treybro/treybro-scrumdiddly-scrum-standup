@@ -83,9 +83,9 @@ export class EditTodayContents extends Component {
 				</TouchableOpacity>
 				<TouchableOpacity onPress={() => this.props.blockItem ()}>
 					<Image 
-						source={getIconAsset ("warningIcon")} 
+						source={getIconAsset ("blockerIcon")} 
 						resizeMode={"stretch"} 
-						style={(this.props.itemBlocked === false) ? styles.warningIcon  : [styles.warningIcon,{tintColor : theme.lightOrange}]} />
+						style={(this.props.itemBlocked === false) ? styles.blockerIcon  : [styles.blockerIcon,{tintColor : theme.lightOrange}]} />
 				</TouchableOpacity>
 				<TouchableOpacity onPress={() => this.props.editItem ()}>
 					<Image 
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
 		height: (Platform.OS === "ios") ? 30 : 30,
 		tintColor: theme.darkGrey,
 	},
-	warningIcon: {
+	blockerIcon: {
 
 		width: (Platform.OS === "ios") ? 33 : 33,
 		height: (Platform.OS === "ios") ? 30 : 30,

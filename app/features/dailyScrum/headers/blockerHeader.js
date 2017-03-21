@@ -25,6 +25,8 @@ export class BlockerHeader extends Component {
 
 	static propTypes = {
 		
+		isEditable: React.PropTypes.bool.isRequired,
+		headerType: React.PropTypes.string.isRequired,
 	};
 
 	constructor (props) {
@@ -34,11 +36,23 @@ export class BlockerHeader extends Component {
 
 	render () {
 
+		if (this.props.isEditable === false) {
+
+			return (
+
+				<View style={styles.viewContainer}>
+					<Text style={styles.yesterdayText}>Blockers...</Text>
+				</View>
+			);
+		}
+
 		return (
 
 			<View style={styles.viewContainer}>
 				<Text style={styles.yesterdayText}>Blockers...</Text>
-				<TouchableOpacity onPress={() => {}} style={styles.addButton}>
+				<TouchableOpacity 
+					onPress={(this.props.headerType === "daily") ? () => {} : () => console.log ("History")} 
+					style={styles.addButton}>
 					<Image source={getIconAsset ("pencilIcon")} style={styles.addButtonImage}/>
 				</TouchableOpacity>
 			</View>
