@@ -20,7 +20,7 @@ export function getScrumHistory () {
 	return function (dispatch) {
 
 		dispatch (fetchScrumHistory ());
-		return AsyncStorage.getItem ("scrumdiddly").then (function (results) {
+		AsyncStorage.getItem ("scrumdiddly").then (function (results) {
 
 			dispatch (receiveScrumHistory (results));
 		}, function (err) {
@@ -82,7 +82,7 @@ export function getScrumForDate (date) {
 	return function (dispatch) {
 
 		dispatch (findingScrum ());
-		return AsyncStorage.getItem ("scrumdiddly").then (function (results) {
+		AsyncStorage.getItem ("scrumdiddly").then (function (results) {
 
 			let scrumHistory = results;
 			if (scrumHistory === undefined || scrumHistory === null || scrumHistory.length === 0) {
@@ -131,6 +131,7 @@ export function getScrumForDate (date) {
 //	Tell the app we are trying to find a scrum item
 export function findingScrum () {
 
+	// TODO - add this to reducer somewhere
 	return {
 
 		type: FINDING_SCRUM_ITEM,

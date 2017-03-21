@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
 	},
 	blockerIcon: {
 
-		width: (Platform.OS === "ios") ? 33 : 33,
+		width: (Platform.OS === "ios") ? 30 : 30,
 		height: (Platform.OS === "ios") ? 30 : 30,
 		tintColor: theme.darkGrey,
 	},
