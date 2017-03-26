@@ -21,6 +21,7 @@ import DateHeader from "DateHeader";
 import YesterdayHeader from "YesterdayHeader";
 import TodayHeader from "TodayHeader";
 import BlockerHeader from "BlockerHeader";
+import ScrumHistoryList from "ScrumHistoryList";
 
 class ScrumHistoryItem extends Component {
 
@@ -69,6 +70,7 @@ class ScrumHistoryItem extends Component {
 
 			return (
 
+				//	TODO add animation or something to show loading
 				<View style={styles.containerView}>
 					<Text>Loading scrum information</Text>
 				</View>
@@ -100,9 +102,17 @@ class ScrumHistoryItem extends Component {
 					<YesterdayHeader 
 						headerType={"history"}
 						isEditable={true}/>
+					<ScrumHistoryList 
+						scrumItemID={this.props.scrumItem.scrumId} 
+						itemType={"yesterday"}
+						displayDate={this.props.displayDate}/>
 					<TodayHeader 
 						headerType={"history"}
 						isEditable={true}/>
+					<ScrumHistoryList 
+						scrumItemID={this.props.scrumItem.scrumId} 
+						itemType={"today"}
+						displayDate={this.props.displayDate}/>
 					<BlockerHeader 
 						headerType={"history"}
 						isEditable={true}/>

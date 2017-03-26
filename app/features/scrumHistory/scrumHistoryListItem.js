@@ -1,5 +1,5 @@
 /**
- * @providesModule TodayListItem
+ * @providesModule ScrumHistoryListItem
  */
 
 //  Import items from react
@@ -18,23 +18,24 @@ import {
 import { connect } from "react-redux";
 import {
 
-	deleteTodayItem,
-	updateTodayItem,
-} from "TodayListActions";
+	updateScrumItem,
+	deleteScrumItem,
+} from "ScrumHistoryActions";
 
 import theme from "AppTheme";
-import EditTodayContents from "EditTodayContents";
+import EditYesterdayContents from "EditYesterdayContents";
 
 /*
-*	Displays the list of Todays Items
+*	Displays the Scrum Items for the dailyScrum
 */
-export class TodayListItem extends Component {
+export class YesterdayListItem extends Component {
 
 	static propTypes = {
 
-		todayItem: React.PropTypes.object.isRequired,
-		deleteTodayItem: React.PropTypes.func.isRequired,
-		updateTodayItem: React.PropTypes.func.isRequired,
+		scrumId: React.PropTypes.number.isRequired,
+		listItem: React.PropTypes.object.isRequired,
+		deleteScrumItem: React.PropTypes.func.isRequired,
+		updateScrumItem: React.PropTypes.func.isRequired,
 	};
 
 	constructor (props) {
@@ -44,11 +45,11 @@ export class TodayListItem extends Component {
 
 			showEditItems: false,
 			editItem: false,
-			originalText: this.props.todayItem.itemText,
-			editedText: this.props.todayItem.itemText,
+			originalText: this.props.listItem.itemText,
+			editedText: this.props.listItem.itemText,
 			height: (Platform.OS === "ios") ? 0 : 0,
-			itemCompleted: this.props.todayItem.completed,
-			itemBlocked: this.props.todayItem.blocked,
+			itemCompleted: this.props.listItem.completed,
+			itemBlocked: this.props.listItem.blocked,
 			canSave: false,
 		};
 	}
@@ -92,7 +93,7 @@ export class TodayListItem extends Component {
 						</View>
 					</TouchableOpacity>
 					{/* TODO - Refactor this garbage */}
-					<EditTodayContents 
+					<EditYesterdayContents 
 						toggle={this.state.showEditItems}
 						editingItem={this.state.editItem}
 						deleteItem={(this.state.editItem === false) ? () => this._deleteAlert () : () => this._cancelEditItem ()}
@@ -173,7 +174,7 @@ export class TodayListItem extends Component {
 			canSave: false,
 		}, () => {
 
-			this.props.deleteTodayItem (this.props.todayItem.id);
+			this.props.deleteScrumItem (this.props.listItem.id);
 		});
 	}
 
@@ -182,7 +183,7 @@ export class TodayListItem extends Component {
 	*	gets dispatched to redux
 	*/
 	_editItem () {
-		
+
 		this.setState ({
 
 			editItem: !this.state.editItem,
@@ -228,10 +229,10 @@ export class TodayListItem extends Component {
 			}, () => {
 
 				//	Do we need to save the item?
-				if (itemText !== this.props.todayItem.itemText) {
+				if (itemText !== this.props.listItem.itemText) {
 
-					let item = this.props.todayItem;
-					this.props.updateTodayItem (item.id, itemText, item.completed, item.blocked);
+					let item = this.props.listItem;
+					this.props.updateScrumItem (this.props.scrumId, item.id, item.itemType, itemText, item.completed, item.blocked);
 				}
 			});
 		} else {
@@ -263,8 +264,8 @@ export class TodayListItem extends Component {
 			itemCompleted: toggle,
 		}, () => {
 
-			let item = this.props.todayItem;
-			this.props.updateTodayItem (item.id, item.itemText, toggle, item.blocked);
+			let item = this.props.listItem;
+			this.props.updateScrumItem (this.props.scrumId, item.id, item.itemType, item.itemText, toggle, item.blocked);
 		});
 	}
 
@@ -279,8 +280,8 @@ export class TodayListItem extends Component {
 			itemBlocked: toggle,
 		}, () => {
 
-			let item = this.props.todayItem;
-			this.props.updateTodayItem (item.id, item.itemText, item.completed, toggle);
+			let item = this.props.listItem;
+			this.props.updateScrumItem (this.props.scrumId, item.id, item.itemType, item.itemText, item.completed, toggle);
 		});
 	}
 
@@ -370,8 +371,8 @@ const styles = StyleSheet.create({
 */
 const mapDispatchToProps = dispatch => ({
 
-	deleteTodayItem: (itemId) => dispatch (deleteTodayItem (itemId)),
-	updateTodayItem: (originalItemId, updatedText, updatedCompletedState, updatedBlockedState) => dispatch (updateTodayItem (originalItemId, updatedText, updatedCompletedState, updatedBlockedState)),
+	deleteScrumItem: (scrumId, itemId) => dispatch (deleteScrumItem (scrumId, itemId)),
+	updateScrumItem: (scrumID, itemId, itemType, updatedText, updatedCompletedState, updatedBlockedState) => dispatch (updateScrumItem (scrumID, itemId, itemType, updatedText, updatedCompletedState, updatedBlockedState)),
 });
 
-export default connect (null, mapDispatchToProps)(TodayListItem);
+export default connect (null, mapDispatchToProps)(YesterdayListItem);

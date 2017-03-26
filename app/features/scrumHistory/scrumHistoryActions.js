@@ -13,6 +13,13 @@ export const RECEIVE_SCRUM_HISTORY = "RECEIVE_SCRUM_HISTORY";
 export const FINDING_SCRUM_ITEM = "FINDING_SCRUM_ITEM";
 export const FOUND_SCRUM_ITEM = "FOUND_SCRUM_ITEM";
 export const TOGGLE_CALENDAR = "TOGGLE_CALENDAR";
+export const FETCH_SCRUM_ITEMS = "FETCH_SCRUM_ITEMS";
+export const RECEIVE_SCRUM_ITEMS = "RECEIVE_SCRUM_ITEMS";
+export const UPDATE_SCRUM_ITEM = "UPDATE_SCRUM_ITEM";	//	TODO - add this to reducer
+export const UPDATING_SCRUM_ITEM = "UPDATING_SCRUM_ITEM";	// TODO - add this to reducer
+export const UPDATED_SCRUM_ITEM = "UPDATED_SCRUM_ITEM"; // TODO - add this to reducer
+export const TOGGLE_CREATE_SCRUM_YESTERDAY_ITEM = "TOGGLE_CREATE_SCRUM_YESTERDAY_ITEM";
+export const TOGGLE_CREATE_SCRUM_TODAY_ITEM = "TOGGLE_CREATE_SCRUM_TODAY_ITEM";
 
 //	Tell the app we are getting the scrum history
 export function getScrumHistory () {
@@ -156,4 +163,175 @@ export function toggleCalendar () {
 
 		type: TOGGLE_CALENDAR,
 	};
+}
+
+//	Tell the app to get a list of items for a given scrum
+export function getScrumItemsForId (scrumId, itemType) {
+
+	return function (dispatch) {
+
+		dispatch (fetchScrumItems ());
+		AsyncStorage.getItem ("scrumdiddly").then (function (results) {
+
+			dispatch (receiveScrumItems (scrumId, itemType, results));
+		}, function (err) {
+
+			//	TODO - handle error message
+			console.log (err);
+		});
+	};
+}
+
+//	Tell the app we are fetching the list of scrum items
+export function fetchScrumItems () {
+
+	return {
+
+		type: FETCH_SCRUM_ITEMS,
+	};
+}
+
+//	Receive the scrum items for a given scrum
+export function receiveScrumItems (scrumId, itemType, results) {
+
+	//	Convert to JSON object
+	let savedScrums = results;
+	if (savedScrums === undefined || savedScrums === null || savedScrums.length === 0) {
+
+		savedScrums = {
+
+			"dailyscrums": [],
+		};
+	} else {
+
+		savedScrums = JSON.parse (savedScrums);
+	}
+
+	let dailyScrums = savedScrums.dailyscrums;
+	//	Return a list of items marked as yesterday
+	let foundScrumItems = [];
+
+	// Do we have any saved scrums?
+	if (dailyScrums !== undefined && dailyScrums !== null && dailyScrums.length > 0) {
+
+		//	Iterate over all saved scrums
+		for (let i = 0; i < dailyScrums.length; i++) {
+
+			let scrum = dailyScrums[i];
+			if (scrum.scrumId === scrumId) {
+
+				//	Does the scrum have any items to display?
+				if (scrum.scrumItems !== null && scrum.scrumItems !== undefined && scrum.scrumItems.length > 0) {
+
+					let scrumItems = scrum.scrumItems;
+					// Find scrum items marked as the itemType
+					for (let j = 0; j < scrumItems.length; j++) {
+
+						let scrumItem = scrumItems[j];
+						if (scrumItem.itemType === itemType) {
+
+							//	Add this item to be diplayed
+							foundScrumItems.push (scrumItem);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	return {
+
+		type: RECEIVE_SCRUM_ITEMS,
+		foundScrumItems,
+		itemType,
+	};
+}
+
+//	Update a give scrum item
+export function updateScrumItem (scrumID, itemId, itemType, updatedText, updatedCompletedState, updatedBlockedState) {
+
+	return function (dispatch) {
+
+		//	Tell the app we are updating items
+		dispatch (updatingScrumItem ());
+		return AsyncStorage.getItem ("scrumdiddly").then (function (results) {
+
+			let resultsObject = JSON.parse(results);
+			let savedScrums = resultsObject.dailyscrums;
+
+			//	Iterate through the saved scrums
+			for (let i = 0; i < savedScrums.length; i++) {
+
+				let scrum = savedScrums[i];
+				//	Update the item
+				if (scrum.scrumId === scrumID) {
+
+					let scrumItems = scrum.scrumItems;
+					for (let j = 0; j < scrumItems.length; j++) {
+
+						let scrumItem = scrumItems[j];
+						if (scrumItem.id === itemId) {
+
+							//	Update the item
+							scrumItem.itemText = updatedText;
+							scrumItem.completed = updatedCompletedState;
+							scrumItem.blocked = updatedBlockedState;
+							scrumItem.itemType = itemType;
+						}
+					}
+				}
+			}
+			resultsObject.dailyscrums = savedScrums;
+			return AsyncStorage.mergeItem ("scrumdiddly", JSON.stringify (resultsObject));
+		}).then (function () {
+
+			console.log ("Item Updated");
+			dispatch (updatedScrumItem ());
+		}, function (err) {
+
+			//	TODO - handle error message
+			console.log (err);
+		});
+	};
+}
+
+//	Tell the app we are updating a scrum item
+export function updatingScrumItem () {
+
+	return {
+
+		type: UPDATING_SCRUM_ITEM,
+	};
+}
+
+//	Tell the app we have finished updating the scrum item
+export function updatedScrumItem () {
+
+	return {
+
+		type: UPDATED_SCRUM_ITEM,
+	};
+}
+
+//	Tell the app to delete a scrum item
+export function deleteScrumItem (scrumId, itemId) {
+
+}
+
+//	Toggles the create scrum item on/off
+export function toggleCreateScrumItem (itemType) {
+
+	if (itemType === "yesterday") {
+
+		return {
+
+			type: TOGGLE_CREATE_SCRUM_YESTERDAY_ITEM,
+		};
+	} else {
+
+		return {
+
+			type: TOGGLE_CREATE_SCRUM_TODAY_ITEM,
+		};
+	}
 }

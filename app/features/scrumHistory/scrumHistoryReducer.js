@@ -2,6 +2,7 @@
  * @providesModule ScrumHistoryReducer
  */
 
+import moment from "moment";
 import {
 
 	FETCH_SCRUM_HISTORY,
@@ -9,6 +10,10 @@ import {
 	FINDING_SCRUM_ITEM,
 	FOUND_SCRUM_ITEM,
 	TOGGLE_CALENDAR,
+	FETCH_SCRUM_ITEMS,
+	RECEIVE_SCRUM_ITEMS,
+	TOGGLE_CREATE_SCRUM_YESTERDAY_ITEM,
+	TOGGLE_CREATE_SCRUM_TODAY_ITEM,
 } from "ScrumHistoryActions";
 
 //  Default state to prepare for null
@@ -18,9 +23,13 @@ const scrumHistoryState = {
 	eventDates: [],
 	isLoadingHistory: true,
 	selectedScrumItem: {},
-	selectedScrumDate: {},
+	selectedScrumDate: moment (),
 	isSearchingForScrum: true,
 	displayCalendar: true,
+	scrumYesterdayItems: [],
+	scrumTodayItems: [],
+	toggleCreateYesterdayItem: false,
+	toggleCreateTodayItem: false,
 };
 
 const scrumHistoryReducer = (state = scrumHistoryState, action) => {
@@ -64,8 +73,7 @@ const scrumHistoryReducer = (state = scrumHistoryState, action) => {
 
 			foundScrumItem = {};
 		}
-
-		console.log (foundScrumItem);
+		
 		return {
 
 			...state,
@@ -81,6 +89,50 @@ const scrumHistoryReducer = (state = scrumHistoryState, action) => {
 
 			...state,
 			displayCalendar: toggle,
+		};
+	}
+	case FETCH_SCRUM_ITEMS: {
+
+		return {
+
+			...state,
+		};
+	}
+	case RECEIVE_SCRUM_ITEMS: {
+
+		let itemType = action.itemType;
+		if (itemType === "yesterday") {
+
+			return {
+
+				...state,
+				scrumYesterdayItems: action.foundScrumItems,
+			};
+		} else {
+
+			return {
+
+				...state,
+				scrumTodayItems: action.foundScrumItems,
+			};
+		}
+	}
+	case TOGGLE_CREATE_SCRUM_YESTERDAY_ITEM: {
+
+		let toggle = !state.toggleCreateYesterdayItem;
+		return {
+
+			...state,
+			toggleCreateYesterdayItem: toggle,
+		};
+	}
+	case TOGGLE_CREATE_SCRUM_TODAY_ITEM: {
+
+		let toggle = !state.toggleCreateTodayItem;
+		return {
+
+			...state,
+			toggleCreateTodayItem: toggle,
 		};
 	}
 	default:
