@@ -14,6 +14,8 @@ import {
 	RECEIVE_SCRUM_ITEMS,
 	TOGGLE_CREATE_SCRUM_YESTERDAY_ITEM,
 	TOGGLE_CREATE_SCRUM_TODAY_ITEM,
+	REMOVE_SCRUM_YESTERDAY_ITEM,
+	REMOVE_SCRUM_TODAY_ITEM,
 } from "ScrumHistoryActions";
 
 //  Default state to prepare for null
@@ -133,6 +135,42 @@ const scrumHistoryReducer = (state = scrumHistoryState, action) => {
 
 			...state,
 			toggleCreateTodayItem: toggle,
+		};
+	}
+	case REMOVE_SCRUM_YESTERDAY_ITEM: {
+
+		let itemsList = [...state.scrumYesterdayItems];
+		for (let i = 0; i < itemsList.length; i++) {
+			
+			let item = itemsList[i];
+			if (item.id === action.itemId) {
+
+				itemsList.splice(i,1);
+			}
+		}
+
+		return {
+
+			...state,
+			scrumYesterdayItems: itemsList,
+		};
+	}
+	case REMOVE_SCRUM_TODAY_ITEM: {
+
+		let itemsList = [...state.scrumTodayItems];
+		for (let i = 0; i < itemsList.length; i++) {
+			
+			let item = itemsList[i];
+			if (item.id === action.itemId) {
+
+				itemsList.splice(i,1);
+			}
+		}
+
+		return {
+
+			...state,
+			scrumTodayItems: itemsList,
 		};
 	}
 	default:

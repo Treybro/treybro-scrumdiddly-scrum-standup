@@ -20,6 +20,8 @@ export const UPDATING_SCRUM_ITEM = "UPDATING_SCRUM_ITEM";	// TODO - add this to 
 export const UPDATED_SCRUM_ITEM = "UPDATED_SCRUM_ITEM"; // TODO - add this to reducer
 export const TOGGLE_CREATE_SCRUM_YESTERDAY_ITEM = "TOGGLE_CREATE_SCRUM_YESTERDAY_ITEM";
 export const TOGGLE_CREATE_SCRUM_TODAY_ITEM = "TOGGLE_CREATE_SCRUM_TODAY_ITEM";
+export const REMOVE_SCRUM_YESTERDAY_ITEM = "REMOVE_SCRUM_YESTERDAY_ITEM";
+export const REMOVE_SCRUM_TODAY_ITEM = "REMOVE_SCRUM_TODAY_ITEM";
 
 //	Tell the app we are getting the scrum history
 export function getScrumHistory () {
@@ -314,8 +316,67 @@ export function updatedScrumItem () {
 }
 
 //	Tell the app to delete a scrum item
-export function deleteScrumItem (scrumId, itemId) {
+export function deleteScrumItem (scrumId, itemId, itemType) {
 
+	return function (dispatch) {
+
+		dispatch (removeScrumItem (scrumId, itemId, itemType));
+		return AsyncStorage.getItem ("scrumdiddly").then (function (results) {
+
+			let resultsObject = JSON.parse(results);
+			let savedScrums = resultsObject.dailyscrums;
+
+			//	Iterate through the saved scrums
+			for (let i = 0; i < savedScrums.length; i++) {
+
+				let scrum = savedScrums[i];
+				//	Remove the scrum from todays scrum
+				if (scrum.scrumId === scrumId) {
+
+					let scrumItems = scrum.scrumItems;
+					for (let j = 0; j < scrumItems.length; j++) {
+
+						let scrumItem = scrumItems[j];
+						if (scrumItem.id === itemId) {
+
+							scrumItems.splice(j, 1);
+						}
+					}
+				}
+			}
+			resultsObject.dailyscrums = savedScrums;
+			return AsyncStorage.mergeItem ("scrumdiddly", JSON.stringify (resultsObject));
+		}).then (function () {
+
+			console.log ("Item Removed");
+		}, function (err) {
+
+			//	TODO - handle error message
+			console.log (err);
+		});
+	};
+}
+
+//	Tell the app were removing a scrum item
+export function removeScrumItem (scrumId, itemId, itemType) {
+
+	if (itemType === "yesterday") {
+
+		return {
+
+			type: REMOVE_SCRUM_YESTERDAY_ITEM,
+			scrumId,
+			itemId,
+		};
+	} else {
+
+		return {
+
+			type: REMOVE_SCRUM_TODAY_ITEM,
+			scrumId,
+			itemId,
+		};
+	}
 }
 
 //	Toggles the create scrum item on/off

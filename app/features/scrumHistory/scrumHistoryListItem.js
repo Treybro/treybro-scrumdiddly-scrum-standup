@@ -173,8 +173,8 @@ export class YesterdayListItem extends Component {
 			editItem: false,
 			canSave: false,
 		}, () => {
-
-			this.props.deleteScrumItem (this.props.listItem.id);
+			
+			this.props.deleteScrumItem (this.props.scrumId, this.props.listItem.id, this.props.listItem.itemType);
 		});
 	}
 
@@ -371,7 +371,7 @@ const styles = StyleSheet.create({
 */
 const mapDispatchToProps = dispatch => ({
 
-	deleteScrumItem: (scrumId, itemId) => dispatch (deleteScrumItem (scrumId, itemId)),
+	deleteScrumItem: (scrumId, itemId, itemType) => dispatch (deleteScrumItem (scrumId, itemId, itemType)),
 	updateScrumItem: (scrumID, itemId, itemType, updatedText, updatedCompletedState, updatedBlockedState) => dispatch (updateScrumItem (scrumID, itemId, itemType, updatedText, updatedCompletedState, updatedBlockedState)),
 });
 
