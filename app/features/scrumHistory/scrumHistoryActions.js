@@ -319,19 +319,21 @@ export function deleteScrumItem (scrumId, itemId) {
 }
 
 //	Toggles the create scrum item on/off
-export function toggleCreateScrumItem (itemType) {
+export function toggleCreateScrumItem (itemType, toggle) {
 
 	if (itemType === "yesterday") {
 
 		return {
 
 			type: TOGGLE_CREATE_SCRUM_YESTERDAY_ITEM,
+			toggle,
 		};
 	} else {
 
 		return {
 
 			type: TOGGLE_CREATE_SCRUM_TODAY_ITEM,
+			toggle,
 		};
 	}
 }

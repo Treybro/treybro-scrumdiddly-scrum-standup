@@ -55,6 +55,20 @@ export class EmptyScrumList extends Component {
 		};
 	}
 
+	componentDidMount () {
+
+		//	Need to reset after view is refreshed to kick redux
+		if (this.props.toggleCreateTodayItem === true) {
+
+			this.props.toggleCreateScrumItem (this.props.itemType, false);
+		}
+
+		if (this.props.toggleCreateYesterdayItem === true) {
+
+			this.props.toggleCreateScrumItem (this.props.itemType, false);
+		}
+	}
+
 	render () {
 
 		//	Tell the user to add a yesterday item
@@ -68,7 +82,7 @@ export class EmptyScrumList extends Component {
 
 			return (
 
-				<TouchableOpacity onPress={() => this.props.toggleCreateScrumItem (this.props.itemType)}>
+				<TouchableOpacity onPress={() => this.props.toggleCreateScrumItem (this.props.itemType, true)}>
 					<View style={styles.containerView}>
 						<Text style={styles.emptyText}>You did not complete anything on {this.state.newDisplayDate}, add an item to show how busy you were!</Text>
 					</View>
@@ -84,7 +98,7 @@ export class EmptyScrumList extends Component {
 		//	Standard view
 		return (
 
-			<TouchableOpacity onPress={() => this.props.toggleCreateScrumItem (this.props.itemType)}>
+			<TouchableOpacity onPress={() => this.props.toggleCreateScrumItem (this.props.itemType, true)}>
 				<View style={styles.containerView}>
 					<Text style={styles.emptyText}>You did not complete anything on {this.state.newDisplayDate}, add an item to show how busy you were!</Text>
 				</View>
@@ -128,7 +142,7 @@ const mapStateToProps = state => ({
 */
 const mapDispatchToProps = dispatch => ({
 
-	toggleCreateScrumItem: (itemType) => dispatch (toggleCreateScrumItem (itemType)),
+	toggleCreateScrumItem: (itemType, toggle) => dispatch (toggleCreateScrumItem (itemType, toggle)),
 });
 
 export default connect (mapStateToProps, mapDispatchToProps)(EmptyScrumList);

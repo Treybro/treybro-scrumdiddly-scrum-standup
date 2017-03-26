@@ -119,7 +119,7 @@ const scrumHistoryReducer = (state = scrumHistoryState, action) => {
 	}
 	case TOGGLE_CREATE_SCRUM_YESTERDAY_ITEM: {
 
-		let toggle = !state.toggleCreateYesterdayItem;
+		let toggle = action.toggle;
 		return {
 
 			...state,
@@ -128,7 +128,7 @@ const scrumHistoryReducer = (state = scrumHistoryState, action) => {
 	}
 	case TOGGLE_CREATE_SCRUM_TODAY_ITEM: {
 
-		let toggle = !state.toggleCreateTodayItem;
+		let toggle = action.toggle;
 		return {
 
 			...state,
