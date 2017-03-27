@@ -19,9 +19,9 @@ import {
 import { connect } from "react-redux";
 import {
 
-	toggleCreateYesterdayItem,
-	saveYesterdayItem,
-} from "YesterdayListActions";
+	toggleCreateScrumItem,
+	saveScrumItem,
+} from "ScrumHistoryActions";
 
 import theme from "AppTheme";
 import getIconAsset from "IconAssets";
@@ -34,9 +34,11 @@ export class CreateScrumItem extends Component {
 	static propTypes = {
 
 		itemType: React.PropTypes.string.isRequired,
-		showToggle: React.PropTypes.bool,
-		saveYesterdayItem: React.PropTypes.func.isRequired,
-		toggleCreateYesterdayItem: React.PropTypes.func.isRequired,
+		scrumItemID: React.PropTypes.number.isRequired,
+		saveScrumItem: React.PropTypes.func.isRequired,
+		toggleCreateScrumItem: React.PropTypes.func.isRequired,
+		toggleCreateYesterdayItem: React.PropTypes.bool.isRequired,
+		toggleCreateTodayItem: React.PropTypes.bool.isRequired,
 	};
 
 	constructor (props) {
@@ -52,58 +54,86 @@ export class CreateScrumItem extends Component {
 
 	render () {
 
-		//	Don't need to display anything
-		if (this.props.showToggle === false) {
+		//	Do we want to create a yesterday item?
+		if (this.props.itemType === "yesterday") {
+
+			//	Don't display anything
+			if (this.props.toggleCreateYesterdayItem === false) {
+
+				return null;
+			}
+
+			return (
+
+				<View style={styles.containerView}>
+					{this._renderView ()}
+				</View>
+			);
+		}
+
+		//	Don't display anything
+		if (this.props.toggleCreateTodayItem === false) {
 
 			return null;
 		}
 
 		return (
-			
+
 			<View style={styles.containerView}>
-				<View style={styles.contentContainer}>
-					<View style={styles.textContainer}>
-						<TextInput
-							placeholder={"eg. Fixed that bug that was bugging everyone..."}
-							editable={this.props.showToggle}
-							value={this.state.text}
-							style={[styles.listItemText,{height: Math.max(35, this.state.height)}]}
-							onChangeText={(text) => this._determineSaveState (text)}
-							autoCapitalize={"sentences"}
-							autoCorrect={false}
-							autoFocus={true}
-							maxLength={240}
-							onFocus={() => {}}
-							returnKeyType={(Platform.OS === "ios") ? "done" : "done"}
-							multiline={true}
-							underlineColorAndroid={theme.lightGrey}
-							onContentSizeChange={(event) => {
-								this.setState({height: event.nativeEvent.contentSize.height});
-							}}
-							enablesReturnKeyAutomatically={true}
-							onKeyPress={(event) => {
+				{this._renderView ()}
+			</View>
+		);
+	}
 
-								if (event.nativeEvent.key === "Enter") {
+	/*
+	*	Displays the main view
+	*/
+	_renderView () {
 
-									Keyboard.dismiss ();
-								}
-							}}/>
-					</View>
-					<Animated.View style={[styles.editContents]}>
-						<TouchableOpacity onPress={() => this._cancelItem ()}>
-							<Image 
-								source={getIconAsset ("cancelIcon")} 
-								resizeMode={"stretch"} 
-								style={styles.deleteIcon} />
-						</TouchableOpacity>
-						<TouchableOpacity onPress={() => this._saveItem ()}>
-							<Image 
-								source={getIconAsset ("tickIcon")} 
-								resizeMode={"stretch"} 
-								style={(this.state.canSave === false) ? styles.saveIcon : [styles.saveIcon, {tintColor: theme.lightGreen}]} />
-						</TouchableOpacity>
-					</Animated.View>
+		return (
+
+			<View style={styles.contentContainer}>
+				<View style={styles.textContainer}>
+					<TextInput
+						placeholder={"eg. Fixed that bug that was bugging everyone..."}
+						editable={(this.props.itemType === "yesterday") ? this.props.toggleCreateYesterdayItem : this.props.toggleCreateTodayItem}
+						value={this.state.text}
+						style={[styles.listItemText,{height: Math.max(35, this.state.height)}]}
+						onChangeText={(text) => this._determineSaveState (text)}
+						autoCapitalize={"sentences"}
+						autoCorrect={false}
+						autoFocus={true}
+						maxLength={240}
+						onFocus={() => {}}
+						returnKeyType={(Platform.OS === "ios") ? "done" : "done"}
+						multiline={true}
+						underlineColorAndroid={theme.lightGrey}
+						onContentSizeChange={(event) => {
+							this.setState({height: event.nativeEvent.contentSize.height});
+						}}
+						enablesReturnKeyAutomatically={true}
+						onKeyPress={(event) => {
+
+							if (event.nativeEvent.key === "Enter") {
+
+								Keyboard.dismiss ();
+							}
+						}}/>
 				</View>
+				<Animated.View style={[styles.editContents]}>
+					<TouchableOpacity onPress={() => this._cancelItem ()}>
+						<Image 
+							source={getIconAsset ("cancelIcon")} 
+							resizeMode={"stretch"} 
+							style={styles.deleteIcon} />
+					</TouchableOpacity>
+					<TouchableOpacity onPress={() => this._saveItem ()}>
+						<Image 
+							source={getIconAsset ("tickIcon")} 
+							resizeMode={"stretch"} 
+							style={(this.state.canSave === false) ? styles.saveIcon : [styles.saveIcon, {tintColor: theme.lightGreen}]} />
+					</TouchableOpacity>
+				</Animated.View>
 			</View>
 		);
 	}
@@ -146,15 +176,15 @@ export class CreateScrumItem extends Component {
 
 		let itemText = this.state.text.trim ();
 		if (itemText !== undefined && itemText !== null && itemText.length > 0 && itemText.length <= 240) {
-
-			this.props.saveYesterdayItem (itemText);
+			
+			this.props.saveScrumItem (this.props.scrumItemID, this.props.itemType, itemText);
 			this.setState ({
 
 				text: "",
 				canSave: false,
 			}, () => {
 
-				this.props.toggleCreateYesterdayItem ();
+				this.props.toggleCreateScrumItem (this.props.itemType, false);
 			});
 		} else {
 
@@ -173,7 +203,7 @@ export class CreateScrumItem extends Component {
 			canSave: false,
 		}, () => {
 
-			this.props.toggleCreateYesterdayItem ();
+			this.props.toggleCreateScrumItem (this.props.itemType, false);
 		});
 	}
 }
@@ -238,7 +268,8 @@ const styles = StyleSheet.create({
 */
 const mapStateToProps = state => ({
 
-	showToggle: state.yesterdayListReducer.toggleCreate,
+	toggleCreateYesterdayItem: state.scrumHistoryReducer.toggleCreateYesterdayItem,
+	toggleCreateTodayItem: state.scrumHistoryReducer.toggleCreateTodayItem,
 });
 
 /*
@@ -246,8 +277,8 @@ const mapStateToProps = state => ({
 */
 const mapDispatchToProps = dispatch => ({
 
-	saveYesterdayItem: (itemText) => dispatch (saveYesterdayItem (itemText)),
-	toggleCreateYesterdayItem: () => dispatch (toggleCreateYesterdayItem ()),
+	saveScrumItem: (scrumId, itemType, itemText) => dispatch (saveScrumItem (scrumId, itemType, itemText)),
+	toggleCreateScrumItem: (itemType, toggle) => dispatch (toggleCreateScrumItem (itemType, toggle)),
 });
 
 export default connect (mapStateToProps, mapDispatchToProps)(CreateScrumItem);

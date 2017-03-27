@@ -58,7 +58,8 @@ class ScrumHistoryList extends Component {
 
 					<View style={styles.card}>
 						<CreateScrumItem 
-							itemType={this.props.itemType}/>
+							itemType={this.props.itemType}
+							scrumItemID={this.props.scrumItemID}/>
 						<EmptyScrumList
 							itemType={this.props.itemType}
 							displayDate={this.props.displayDate}/>
@@ -90,7 +91,8 @@ class ScrumHistoryList extends Component {
 
 				<View style={styles.card}>
 					<CreateScrumItem 
-						itemType={this.props.itemType}/>
+						itemType={this.props.itemType}
+						scrumItemID={this.props.scrumItemID}/>
 					<EmptyScrumList
 						itemType={this.props.itemType}
 						displayDate={this.props.displayDate}/>

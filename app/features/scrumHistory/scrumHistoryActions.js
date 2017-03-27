@@ -22,6 +22,8 @@ export const TOGGLE_CREATE_SCRUM_YESTERDAY_ITEM = "TOGGLE_CREATE_SCRUM_YESTERDAY
 export const TOGGLE_CREATE_SCRUM_TODAY_ITEM = "TOGGLE_CREATE_SCRUM_TODAY_ITEM";
 export const REMOVE_SCRUM_YESTERDAY_ITEM = "REMOVE_SCRUM_YESTERDAY_ITEM";
 export const REMOVE_SCRUM_TODAY_ITEM = "REMOVE_SCRUM_TODAY_ITEM";
+export const SAVE_SCRUM_ITEM = "SAVE_SCRUM_ITEM";
+export const ADD_SCRUM_ITEM = "ADD_SCRUM_ITEM";
 
 //	Tell the app we are getting the scrum history
 export function getScrumHistory () {
@@ -397,4 +399,122 @@ export function toggleCreateScrumItem (itemType, toggle) {
 			toggle,
 		};
 	}
+}
+
+//	Tell the app to save a list item for a given scrum
+export function saveScrumItem (scrumId, itemType, itemText) {
+
+	return function (dispatch) {
+
+		return AsyncStorage.getItem ("scrumdiddly").then (function (results) {
+
+			//	Convert to JSON object
+			let savedScrums = results;
+			if (savedScrums === undefined || savedScrums === null) {
+
+				savedScrums = {
+
+					"dailyscrums": [],
+				};
+			} else {
+
+				savedScrums = JSON.parse(savedScrums);
+			}
+			let dailyScrums = savedScrums.dailyscrums;
+
+			if (dailyScrums === undefined || dailyScrums === null) {
+
+				//	Create empty array to store new scrum
+				dailyScrums = [];
+			}
+
+			let timestampId = moment ().valueOf ();
+			let createdDate = moment ().format ("DD-MM-YYYY");
+
+			//	Create a new scrum item
+			let newScrumItem = {
+
+				"id": timestampId,
+				"createdAt": createdDate,
+				"itemText": itemText,
+				"completed": false,
+				"blocked": false,
+				"itemType": itemType,
+			};
+			//	Add the new item to the current displayed items
+			dispatch (addScrumItem (newScrumItem));
+
+			//	Is this our first scrum?
+			if (dailyScrums.length > 0) {
+
+				let scrumFound = false;
+				//	Iterate over all the saved scrums
+				for (let i = 0; i < dailyScrums.length; i++) {
+
+					let scrum = dailyScrums[i];
+					//	Are we saving to the correct scrum?
+					if (scrum.scrumId === scrumId) {
+
+						let scrumItems = dailyScrums[i].scrumItems;
+						scrumItems.push (newScrumItem);
+						scrumFound = true;
+					}
+				}
+
+				//	First item in a new scrum
+				if (scrumFound === false) {
+
+					let scrumItems = [];
+					//	Add the scrum item to the scrum items list
+					scrumItems.push (newScrumItem);
+
+					//	Create the new scrum
+					let newScrum = {
+
+						"scrumId": timestampId,
+						"scrumDate": createdDate,
+						"scrumItems": scrumItems,
+					};
+
+					//	Add the scrum to the list of users scrums
+					dailyScrums.push (newScrum);
+				}
+			} else {
+
+				let scrumItems = [];
+				//	Add the scrum item to the scrum items list
+				scrumItems.push (newScrumItem);
+
+				//	Create our first new scrum
+				let newScrum = {
+
+					"scrumId": timestampId,
+					"scrumDate": createdDate,
+					"scrumItems": scrumItems,
+				};
+				//	Add the scrum to the list of users scrums
+				dailyScrums.push (newScrum);
+			}
+
+			savedScrums.dailyscrums = dailyScrums;
+			return AsyncStorage.mergeItem ("scrumdiddly", JSON.stringify (savedScrums));
+		}).then (function () {
+
+			console.log ("Item Saved");
+		}, function (err) {
+
+			//	TODO - handle error message
+			console.log (err);
+		});
+	};
+}
+
+//	Add an item to the scrum
+export function addScrumItem (newScrumItem) {
+	
+	return {
+
+		type: ADD_SCRUM_ITEM,
+		newScrumItem,
+	};
 }
