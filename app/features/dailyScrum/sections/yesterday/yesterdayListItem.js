@@ -231,7 +231,7 @@ export class YesterdayListItem extends Component {
 				if (itemText !== this.props.yesterdayItem.itemText) {
 
 					let item = this.props.yesterdayItem;
-					this.props.updateYesterdayItem (item.id, itemText, item.completed, item.blocked);
+					this.props.updateYesterdayItem (item.id, itemText, this.state.itemCompleted, this.state.itemBlocked);
 				}
 			});
 		} else {
@@ -264,7 +264,7 @@ export class YesterdayListItem extends Component {
 		}, () => {
 
 			let item = this.props.yesterdayItem;
-			this.props.updateYesterdayItem (item.id, item.itemText, toggle, item.blocked);
+			this.props.updateYesterdayItem (item.id, item.itemText, toggle, this.state.itemBlocked);
 		});
 	}
 
@@ -280,7 +280,7 @@ export class YesterdayListItem extends Component {
 		}, () => {
 
 			let item = this.props.yesterdayItem;
-			this.props.updateYesterdayItem (item.id, item.itemText, item.completed, toggle);
+			this.props.updateYesterdayItem (item.id, item.itemText, this.state.itemCompleted, toggle);
 		});
 	}
 

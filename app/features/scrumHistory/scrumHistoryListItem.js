@@ -232,7 +232,7 @@ export class YesterdayListItem extends Component {
 				if (itemText !== this.props.listItem.itemText) {
 
 					let item = this.props.listItem;
-					this.props.updateScrumItem (this.props.scrumId, item.id, item.itemType, itemText, item.completed, item.blocked);
+					this.props.updateScrumItem (this.props.scrumId, item.id, item.itemType, itemText, this.state.itemCompleted, this.state.itemBlocked);
 				}
 			});
 		} else {
@@ -265,7 +265,7 @@ export class YesterdayListItem extends Component {
 		}, () => {
 
 			let item = this.props.listItem;
-			this.props.updateScrumItem (this.props.scrumId, item.id, item.itemType, item.itemText, toggle, item.blocked);
+			this.props.updateScrumItem (this.props.scrumId, item.id, item.itemType, item.itemText, toggle, this.state.itemBlocked);
 		});
 	}
 
@@ -281,7 +281,7 @@ export class YesterdayListItem extends Component {
 		}, () => {
 
 			let item = this.props.listItem;
-			this.props.updateScrumItem (this.props.scrumId, item.id, item.itemType, item.itemText, item.completed, toggle);
+			this.props.updateScrumItem (this.props.scrumId, item.id, item.itemType, item.itemText, this.state.itemCompleted, toggle);
 		});
 	}
 

@@ -12,6 +12,7 @@ import {
 	TOGGLE_CALENDAR,
 	FETCH_SCRUM_ITEMS,
 	RECEIVE_SCRUM_ITEMS,
+	UPDATED_SCRUM_ITEM,
 	TOGGLE_CREATE_SCRUM_YESTERDAY_ITEM,
 	TOGGLE_CREATE_SCRUM_TODAY_ITEM,
 	REMOVE_SCRUM_YESTERDAY_ITEM,
@@ -118,6 +119,13 @@ const scrumHistoryReducer = (state = scrumHistoryState, action) => {
 				scrumTodayItems: action.foundScrumItems,
 			};
 		}
+	}
+	case UPDATED_SCRUM_ITEM: {
+
+		return {
+
+			...state,
+		};
 	}
 	case TOGGLE_CREATE_SCRUM_YESTERDAY_ITEM: {
 

@@ -231,7 +231,7 @@ export class TodayListItem extends Component {
 				if (itemText !== this.props.todayItem.itemText) {
 
 					let item = this.props.todayItem;
-					this.props.updateTodayItem (item.id, itemText, item.completed, item.blocked);
+					this.props.updateTodayItem (item.id, itemText, this.state.itemCompleted, this.state.itemBlocked);
 				}
 			});
 		} else {
@@ -264,7 +264,7 @@ export class TodayListItem extends Component {
 		}, () => {
 
 			let item = this.props.todayItem;
-			this.props.updateTodayItem (item.id, item.itemText, toggle, item.blocked);
+			this.props.updateTodayItem (item.id, item.itemText, toggle, this.state.itemBlocked);
 		});
 	}
 
@@ -280,7 +280,7 @@ export class TodayListItem extends Component {
 		}, () => {
 
 			let item = this.props.todayItem;
-			this.props.updateTodayItem (item.id, item.itemText, item.completed, toggle);
+			this.props.updateTodayItem (item.id, item.itemText, this.state.itemCompleted, toggle);
 		});
 	}
 
