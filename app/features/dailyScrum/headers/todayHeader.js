@@ -17,6 +17,7 @@ import {
 
 import { connect } from "react-redux";
 import { toggleCreateTodayItem } from "TodayListActions";
+import { toggleCreateScrumItem } from "ScrumHistoryActions";
 
 import theme from "AppTheme";
 import getIconAsset from "IconAssets";
@@ -28,6 +29,8 @@ export class TodayHeader extends Component {
 
 	static propTypes = {
 
+		toggleCreateScrumItem: React.PropTypes.func.isRequired,
+		toggleCreateTodayItemBool: React.PropTypes.bool.isRequired,
 		toggleCreateTodayItem: React.PropTypes.func.isRequired,
 		isEditable: React.PropTypes.bool.isRequired,
 		headerType: React.PropTypes.string.isRequired,
@@ -55,7 +58,7 @@ export class TodayHeader extends Component {
 			<View style={styles.viewContainer}>
 				<Text style={styles.todayText}>Today I...</Text>
 				<TouchableOpacity 
-					onPress={(this.props.headerType === "daily") ? () => this.props.toggleCreateTodayItem () : () => console.log ("History")} 
+					onPress={(this.props.headerType === "daily") ? () => this.props.toggleCreateTodayItem () : () => this.props.toggleCreateScrumItem ("today", !this.props.toggleCreateTodayItemBool)} 
 					style={styles.addButton}>
 					<Image source={getIconAsset ("pencilIcon")} style={styles.addButtonImage}/>
 				</TouchableOpacity>
@@ -104,11 +107,20 @@ const styles = StyleSheet.create({
 });
 
 /*
+* Mapping for redux state.
+*/
+const mapStateToProps = state => ({
+
+	toggleCreateTodayItemBool: state.scrumHistoryReducer.toggleCreateTodayItem,
+});
+
+/*
 * Mapping for redux dispatch functions.
 */
 const mapDispatchToProps = dispatch => ({
 
 	toggleCreateTodayItem: () => dispatch (toggleCreateTodayItem ()),
+	toggleCreateScrumItem: (itemType, toggle) => dispatch (toggleCreateScrumItem (itemType, toggle)),
 });
 
-export default connect (null, mapDispatchToProps)(TodayHeader);
+export default connect (mapStateToProps, mapDispatchToProps)(TodayHeader);
