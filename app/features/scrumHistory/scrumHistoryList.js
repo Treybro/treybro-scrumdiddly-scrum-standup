@@ -70,6 +70,9 @@ class ScrumHistoryList extends Component {
 			return (
 
 				<View style={styles.containerView}>
+					<CreateScrumItem 
+						itemType={this.props.itemType}
+						scrumItemID={this.props.scrumItemID}/>
 					{
 						this.props.scrumYesterdayItems.map ((yesterdayItem) => (
 
@@ -103,6 +106,9 @@ class ScrumHistoryList extends Component {
 		return (
 
 			<View style={styles.containerView}>
+				<CreateScrumItem 
+					itemType={this.props.itemType}
+					scrumItemID={this.props.scrumItemID}/>
 				{
 					this.props.scrumTodayItems.map ((todayItem) => (
 
