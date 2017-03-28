@@ -21,6 +21,7 @@ import {
 	updateScrumItem,
 	deleteScrumItem,
 } from "ScrumHistoryActions";
+import { showDeleteScrumItemModal } from "ModalActions";
 
 import theme from "AppTheme";
 import EditYesterdayContents from "EditYesterdayContents";
@@ -36,6 +37,7 @@ export class YesterdayListItem extends Component {
 		listItem: React.PropTypes.object.isRequired,
 		deleteScrumItem: React.PropTypes.func.isRequired,
 		updateScrumItem: React.PropTypes.func.isRequired,
+		showDeleteScrumItemModal: React.PropTypes.func.isRequired,
 	};
 
 	constructor (props) {
@@ -145,37 +147,7 @@ export class YesterdayListItem extends Component {
 	*/
 	_deleteAlert () {
 
-		Alert.alert (
-
-			"Delete Scrum Item?",
-			"Are you sure you would like to delete this scrum item?",
-			[{
-
-				text: "Cancel", onPress: () => {},
-			}, {
-
-				text: "OK", onPress: () => this._deleteItem ()},
-			], { 
-
-				cancelable: false,
-			});
-	}
-
-	/*
-	*	Deletes the selected item
-	*	gets dispatched to redux
-	*/
-	_deleteItem () {
-		
-		this.setState ({
-
-			showEditItems: false,
-			editItem: false,
-			canSave: false,
-		}, () => {
-			
-			this.props.deleteScrumItem (this.props.scrumId, this.props.listItem.id, this.props.listItem.itemType);
-		});
+		this.props.showDeleteScrumItemModal (this.props.scrumId, this.props.listItem.id, this.props.listItem.itemType);
 	}
 
 	/*
@@ -371,6 +343,7 @@ const styles = StyleSheet.create({
 */
 const mapDispatchToProps = dispatch => ({
 
+	showDeleteScrumItemModal: (scrumId, scrumItemId, itemType) => dispatch (showDeleteScrumItemModal (scrumId, scrumItemId, itemType)),
 	deleteScrumItem: (scrumId, itemId, itemType) => dispatch (deleteScrumItem (scrumId, itemId, itemType)),
 	updateScrumItem: (scrumID, itemId, itemType, updatedText, updatedCompletedState, updatedBlockedState) => dispatch (updateScrumItem (scrumID, itemId, itemType, updatedText, updatedCompletedState, updatedBlockedState)),
 });

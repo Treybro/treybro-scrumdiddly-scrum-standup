@@ -90,12 +90,21 @@ export class CreateScrumItem extends Component {
 	*/
 	_renderView () {
 
+		let placeholderText = "";
+		if (this.props.itemType === "yesterday") {
+
+			placeholderText = "eg. Fixed that bug that was bugging everyone...";
+		} else {
+
+			placeholderText = "eg. Will fix all the things!!";
+		}
+
 		return (
 
 			<View style={styles.contentContainer}>
 				<View style={styles.textContainer}>
 					<TextInput
-						placeholder={"eg. Fixed that bug that was bugging everyone..."}
+						placeholder={placeholderText}
 						editable={(this.props.itemType === "yesterday") ? this.props.toggleCreateYesterdayItem : this.props.toggleCreateTodayItem}
 						value={this.state.text}
 						style={[styles.listItemText,{height: Math.max(35, this.state.height)}]}

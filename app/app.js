@@ -3,6 +3,11 @@
  */
 
 import React, { Component } from "react";
+import {
+
+	StyleSheet,
+	View,
+} from "react-native";
 import { connect } from "react-redux";
 
 import appSettings from "AppSettings";
@@ -11,6 +16,9 @@ import AppDrawer from "AppDrawer";
 import LoadingScreen from "LoadingScreen";
 import WelcomeScreen from "WelcomeScreen";
 import TutorialScreen from "TutorialScreen";
+
+//	App modals
+import DeleteScrumItemPopup from "DeleteScrumItemPopup";
 
 /*
 * App Root
@@ -21,8 +29,8 @@ class App extends Component {
 
 	static propTypes = {
 
-		hasViewedTutorial: React.PropTypes.bool,
-		enterButtonPressed: React.PropTypes.bool,
+		hasViewedTutorial: React.PropTypes.bool.isRequired,
+		enterButtonPressed: React.PropTypes.bool.isRequired,
 	};
 
 	constructor (props) {
@@ -65,7 +73,13 @@ class App extends Component {
 		}
 
 		//	Last option - show the app
-		return <AppDrawer />;
+		return (
+
+			<View style={styles.containerView}>
+				<DeleteScrumItemPopup />
+				<AppDrawer />
+			</View>
+		);
 	}
 
 	//  Tell the component to stop loading
@@ -77,6 +91,14 @@ class App extends Component {
 		});
 	};
 }
+
+const styles = StyleSheet.create({
+
+	containerView: {
+
+		flex: 1,
+	},
+});
 
 /*
 * Mapping for redux state.
