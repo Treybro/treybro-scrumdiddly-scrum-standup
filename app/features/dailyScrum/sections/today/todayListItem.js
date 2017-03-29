@@ -13,14 +13,10 @@ import {
 	TextInput,
 	Platform,
 	Keyboard,
-	Alert,
 } from "react-native";
 import { connect } from "react-redux";
-import {
-
-	deleteTodayItem,
-	updateTodayItem,
-} from "TodayListActions";
+import { updateTodayItem } from "TodayListActions";
+import { showDeleteScrumItemModalTodayItem } from "ModalActions";
 
 import theme from "AppTheme";
 import EditTodayContents from "EditTodayContents";
@@ -33,8 +29,8 @@ export class TodayListItem extends Component {
 	static propTypes = {
 
 		todayItem: React.PropTypes.object.isRequired,
-		deleteTodayItem: React.PropTypes.func.isRequired,
 		updateTodayItem: React.PropTypes.func.isRequired,
+		showDeleteScrumItemModalTodayItem: React.PropTypes.func.isRequired,
 	};
 
 	constructor (props) {
@@ -144,37 +140,7 @@ export class TodayListItem extends Component {
 	*/
 	_deleteAlert () {
 
-		Alert.alert (
-
-			"Delete Scrum Item?",
-			"Are you sure you would like to delete this scrum item?",
-			[{
-
-				text: "Cancel", onPress: () => {},
-			}, {
-
-				text: "OK", onPress: () => this._deleteItem ()},
-			], { 
-
-				cancelable: false,
-			});
-	}
-
-	/*
-	*	Deletes the selected item
-	*	gets dispatched to redux
-	*/
-	_deleteItem () {
-		
-		this.setState ({
-
-			showEditItems: false,
-			editItem: false,
-			canSave: false,
-		}, () => {
-
-			this.props.deleteTodayItem (this.props.todayItem.id);
-		});
+		this.props.showDeleteScrumItemModalTodayItem (this.props.todayItem.id);
 	}
 
 	/*
@@ -370,7 +336,7 @@ const styles = StyleSheet.create({
 */
 const mapDispatchToProps = dispatch => ({
 
-	deleteTodayItem: (itemId) => dispatch (deleteTodayItem (itemId)),
+	showDeleteScrumItemModalTodayItem: (todayItemId) => dispatch (showDeleteScrumItemModalTodayItem (todayItemId)),
 	updateTodayItem: (originalItemId, updatedText, updatedCompletedState, updatedBlockedState) => dispatch (updateTodayItem (originalItemId, updatedText, updatedCompletedState, updatedBlockedState)),
 });
 

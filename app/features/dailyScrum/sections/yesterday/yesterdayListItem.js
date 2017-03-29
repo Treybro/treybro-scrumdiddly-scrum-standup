@@ -13,14 +13,10 @@ import {
 	TextInput,
 	Platform,
 	Keyboard,
-	Alert,
 } from "react-native";
 import { connect } from "react-redux";
-import {
-
-	deleteYesterdayItem,
-	updateYesterdayItem,
-} from "YesterdayListActions";
+import { updateYesterdayItem } from "YesterdayListActions";
+import { showDeleteScrumItemModalYesterdayItem } from "ModalActions";
 
 import theme from "AppTheme";
 import EditYesterdayContents from "EditYesterdayContents";
@@ -33,8 +29,8 @@ export class YesterdayListItem extends Component {
 	static propTypes = {
 
 		yesterdayItem: React.PropTypes.object.isRequired,
-		deleteYesterdayItem: React.PropTypes.func.isRequired,
 		updateYesterdayItem: React.PropTypes.func.isRequired,
+		showDeleteScrumItemModalYesterdayItem: React.PropTypes.func.isRequired,
 	};
 
 	constructor (props) {
@@ -144,37 +140,7 @@ export class YesterdayListItem extends Component {
 	*/
 	_deleteAlert () {
 
-		Alert.alert (
-
-			"Delete Scrum Item?",
-			"Are you sure you would like to delete this scrum item?",
-			[{
-
-				text: "Cancel", onPress: () => {},
-			}, {
-
-				text: "OK", onPress: () => this._deleteItem ()},
-			], { 
-
-				cancelable: false,
-			});
-	}
-
-	/*
-	*	Deletes the selected item
-	*	gets dispatched to redux
-	*/
-	_deleteItem () {
-		
-		this.setState ({
-
-			showEditItems: false,
-			editItem: false,
-			canSave: false,
-		}, () => {
-
-			this.props.deleteYesterdayItem (this.props.yesterdayItem.id);
-		});
+		this.props.showDeleteScrumItemModalYesterdayItem (this.props.yesterdayItem.id);
 	}
 
 	/*
@@ -370,7 +336,7 @@ const styles = StyleSheet.create({
 */
 const mapDispatchToProps = dispatch => ({
 
-	deleteYesterdayItem: (itemId) => dispatch (deleteYesterdayItem (itemId)),
+	showDeleteScrumItemModalYesterdayItem: (yesterdayItemId) => dispatch (showDeleteScrumItemModalYesterdayItem (yesterdayItemId)),
 	updateYesterdayItem: (originalItemId, updatedText, updatedCompletedState, updatedBlockedState) => dispatch (updateYesterdayItem (originalItemId, updatedText, updatedCompletedState, updatedBlockedState)),
 });
 

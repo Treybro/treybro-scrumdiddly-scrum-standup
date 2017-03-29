@@ -16,6 +16,11 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 
+//	TODO - get rid of this
+import { deleteYesterdayItem } from "YesterdayListActions";
+//	TODO - get rid of this
+import { deleteTodayItem } from "TodayListActions";
+
 import {
 
 	hideDeleteScrumItemModal,
@@ -27,7 +32,6 @@ import {
 } from "ScrumHistoryActions";
 
 import theme from "AppTheme";
-import getIconAsset from "IconAssets";
 
 class DeleteScrumItemPopup extends Component {
 
@@ -38,6 +42,8 @@ class DeleteScrumItemPopup extends Component {
 		hideDeleteScrumItemModal: React.PropTypes.func.isRequired,
 		scrumItemDetails: React.PropTypes.object.isRequired,
 		deleteScrumItem: React.PropTypes.func.isRequired,
+		deleteYesterdayItem: React.PropTypes.func.isRequired,
+		deleteTodayItem: React.PropTypes.func.isRequired,
 	};
 
 	//	Default constructor
@@ -59,7 +65,7 @@ class DeleteScrumItemPopup extends Component {
 				<View style={styles.containerView}>
 					<View style={styles.deleteScrumItemView}>
 						<Image 
-							source={getIconAsset ("binIcon")}
+							source={require("../../../assets/images/icons/icon-bin@3x.png")}
 							resizeMode={"stretch"}
 							style={styles.icon}/>
 						<Text style={styles.headerText}>Delete Scrum Item?</Text>
@@ -91,7 +97,21 @@ class DeleteScrumItemPopup extends Component {
 	//	Deletes the scrum item
 	_deleteItem () {
 
-		this.props.deleteScrumItem (this.props.scrumItemDetails.scrumId, this.props.scrumItemDetails.scrumItemId, this.props.scrumItemDetails.scrumItemType);
+		//	TODO - refactor this
+		if (this.props.scrumItemDetails.scrumId === "yesterday-item" || this.props.scrumItemDetails.scrumId === "today-item") {
+
+			//	If its a yesterday item
+			if (this.props.scrumItemDetails.scrumId === "yesterday-item") {
+				
+				this.props.deleteYesterdayItem (this.props.scrumItemDetails.scrumItemId);
+			} else {
+
+				this.props.deleteTodayItem (this.props.scrumItemDetails.scrumItemId);
+			}
+		} else {
+
+			this.props.deleteScrumItem (this.props.scrumItemDetails.scrumId, this.props.scrumItemDetails.scrumItemId, this.props.scrumItemDetails.scrumItemType);
+		}
 		this.props.hideDeleteScrumItemModal ();
 	}
 }
@@ -110,7 +130,7 @@ const styles = StyleSheet.create({
 		width: 250,
 		height: 250,
 		backgroundColor: theme.pink,
-		borderRadius: 5,
+		borderRadius: 10,
 		alignItems: "center",
 		justifyContent: "center",
 	},
@@ -133,8 +153,8 @@ const styles = StyleSheet.create({
 
 		backgroundColor: theme.white,
 		height: 50,
-		borderBottomLeftRadius: 5,
-		borderBottomRightRadius: 5,
+		borderBottomLeftRadius: 10,
+		borderBottomRightRadius: 10,
 		flexDirection: "row",
 	},
 	cancelButton: {
@@ -144,7 +164,7 @@ const styles = StyleSheet.create({
 		backgroundColor: theme.white,
 		alignItems: "center",
 		justifyContent: "center",
-		borderBottomLeftRadius: 5,
+		borderBottomLeftRadius: 10,
 	},
 	cancelButtonText: {
 
@@ -159,7 +179,7 @@ const styles = StyleSheet.create({
 		backgroundColor: theme.white,
 		alignItems: "center",
 		justifyContent: "center",
-		borderBottomRightRadius: 5,
+		borderBottomRightRadius: 10,
 	},
 	okButtonText: {
 
@@ -189,6 +209,8 @@ const mapDispatchToProps = dispatch => ({
 
 	hideDeleteScrumItemModal: () => dispatch (hideDeleteScrumItemModal ()),
 	deleteScrumItem: (scrumId, itemId, itemType) => dispatch (deleteScrumItem (scrumId, itemId, itemType)),
+	deleteYesterdayItem: (itemId) => dispatch (deleteYesterdayItem (itemId)),
+	deleteTodayItem: (itemId) => dispatch (deleteTodayItem (itemId)),
 });
 
 export default connect(mapStateToProps,mapDispatchToProps)(DeleteScrumItemPopup);

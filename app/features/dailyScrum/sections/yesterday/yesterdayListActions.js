@@ -233,7 +233,7 @@ export function removeYesterdayItem (itemId) {
 
 //	Deletes the item from local storage
 export function deleteYesterdayItem (itemId) {
-
+	
 	return function (dispatch) {
 
 		dispatch (removeYesterdayItem (itemId));
