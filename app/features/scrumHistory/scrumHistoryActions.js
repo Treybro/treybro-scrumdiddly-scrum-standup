@@ -281,10 +281,10 @@ export function updateScrumItem (scrumID, itemId, itemCreatedAt, itemType, updat
 			dispatch (updatedScrumItem ());
 			if (updatedCompletedState === true) {
 
-				dispatch (completeScrumItem (itemId, itemCreatedAt, updatedText, itemType));
+				dispatch (completeScrumItem (itemId, itemCreatedAt, updatedText));
 			} else {
 
-				dispatch (cancelScrumItem (itemId, itemCreatedAt, updatedText, itemType));
+				dispatch (cancelScrumItem (itemId, itemCreatedAt, updatedText));
 			}
 		});
 	};
@@ -507,7 +507,7 @@ export function addScrumItem (newScrumItem) {
 }
 
 //	Complete a scrum item
-export function completeScrumItem (paramsScrumItemId, paramsCreatedAt, paramsItemText, paramsItemType) {
+export function completeScrumItem (paramsScrumItemId, paramsCreatedAt, paramsItemText) {
 
 	/*
 	*	When we complete a scrum item, we add the item to the next days
@@ -541,7 +541,7 @@ export function completeScrumItem (paramsScrumItemId, paramsCreatedAt, paramsIte
 				"itemText": paramsItemText,
 				"completed": true,
 				"blocked": false,
-				"itemType": paramsItemType,
+				"itemType": 'yesterday',
 			};
 
 			let nextScrumDate = moment (paramsCreatedAt, "DD-MM-YYYY");
