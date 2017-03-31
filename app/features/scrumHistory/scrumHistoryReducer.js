@@ -19,6 +19,7 @@ import {
 	REMOVE_SCRUM_TODAY_ITEM,
 	SAVE_SCRUM_ITEM,
 	ADD_SCRUM_ITEM,
+	COMPLETE_SCRUM_ITEM,
 } from "ScrumHistoryActions";
 
 //  Default state to prepare for null
@@ -212,6 +213,13 @@ const scrumHistoryReducer = (state = scrumHistoryState, action) => {
 				],
 			};
 		}
+	}
+	case COMPLETE_SCRUM_ITEM : {
+
+		return {
+
+			...state,
+		};
 	}
 	default:
 		return state;

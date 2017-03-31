@@ -24,6 +24,7 @@ export const REMOVE_SCRUM_YESTERDAY_ITEM = "REMOVE_SCRUM_YESTERDAY_ITEM";
 export const REMOVE_SCRUM_TODAY_ITEM = "REMOVE_SCRUM_TODAY_ITEM";
 export const SAVE_SCRUM_ITEM = "SAVE_SCRUM_ITEM";
 export const ADD_SCRUM_ITEM = "ADD_SCRUM_ITEM";
+export const COMPLETE_SCRUM_ITEM = "COMPLETE_SCRUM_ITEM";
 
 //	Tell the app we are getting the scrum history
 export function getScrumHistory () {
@@ -34,10 +35,6 @@ export function getScrumHistory () {
 		AsyncStorage.getItem ("scrumdiddly").then (function (results) {
 
 			dispatch (receiveScrumHistory (results));
-		}, function (err) {
-
-			//	TODO - handle error message
-			console.log (err);
 		});
 	};
 }
@@ -131,10 +128,6 @@ export function getScrumForDate (date) {
 
 			//	Tell the calandar to collapse after an item is selected
 			dispatch (toggleCalendar ());
-		}, function (err) {
-
-			//	TODO - handle error message
-			console.log (err);
 		});
 	};
 }
@@ -178,10 +171,6 @@ export function getScrumItemsForId (scrumId, itemType) {
 		AsyncStorage.getItem ("scrumdiddly").then (function (results) {
 
 			dispatch (receiveScrumItems (scrumId, itemType, results));
-		}, function (err) {
-
-			//	TODO - handle error message
-			console.log (err);
 		});
 	};
 }
@@ -252,7 +241,7 @@ export function receiveScrumItems (scrumId, itemType, results) {
 }
 
 //	Update a give scrum item
-export function updateScrumItem (scrumID, itemId, itemType, updatedText, updatedCompletedState, updatedBlockedState) {
+export function updateScrumItem (scrumID, itemId, itemCreatedAt, itemType, updatedText, updatedCompletedState, updatedBlockedState) {
 
 	return function (dispatch) {
 
@@ -289,12 +278,14 @@ export function updateScrumItem (scrumID, itemId, itemType, updatedText, updated
 			return AsyncStorage.mergeItem ("scrumdiddly", JSON.stringify (resultsObject));
 		}).then (function () {
 
-			console.log ("Item Updated");
 			dispatch (updatedScrumItem ());
-		}, function (err) {
+			if (updatedCompletedState === true) {
 
-			//	TODO - handle error message
-			console.log (err);
+				dispatch (completeScrumItem (itemId, itemCreatedAt, updatedText, itemType));
+			} else {
+
+				dispatch (cancelScrumItem (itemId, itemCreatedAt, updatedText, itemType));
+			}
 		});
 	};
 }
@@ -351,10 +342,6 @@ export function deleteScrumItem (scrumId, itemId, itemType) {
 		}).then (function () {
 
 			console.log ("Item Removed");
-		}, function (err) {
-
-			//	TODO - handle error message
-			console.log (err);
 		});
 	};
 }
@@ -516,5 +503,161 @@ export function addScrumItem (newScrumItem) {
 
 		type: ADD_SCRUM_ITEM,
 		newScrumItem,
+	};
+}
+
+//	Complete a scrum item
+export function completeScrumItem (paramsScrumItemId, paramsCreatedAt, paramsItemText, paramsItemType) {
+
+	/*
+	*	When we complete a scrum item, we add the item to the next days
+	*	"Yesterday I..." section, this way the user doesn't have to add 2 entries
+	*	for every single completed scrum item :)
+	*/
+	return function (dispatch) {
+
+		//	Get a list of all scrums
+		return AsyncStorage.getItem ("scrumdiddly").then (function (results) {
+
+			//	Convert to JSON object
+			let savedScrums = results;
+			if (savedScrums === undefined || savedScrums === null) {
+
+				savedScrums = {
+
+					"dailyscrums": [],
+				};
+			} else {
+
+				savedScrums = JSON.parse(savedScrums);
+			}
+			let dailyScrums = savedScrums.dailyscrums;
+
+			//	Create a new scrum item to be put into tomorrows items
+			let newScrumItem = {
+
+				"id": paramsScrumItemId,
+				"createdAt": paramsCreatedAt,
+				"itemText": paramsItemText,
+				"completed": true,
+				"blocked": false,
+				"itemType": paramsItemType,
+			};
+
+			let nextScrumDate = moment (paramsCreatedAt, "DD-MM-YYYY");
+			nextScrumDate.add (1, "days");
+			let nextScrumDateText = nextScrumDate.format ("DD-MM-YYYY");
+			let nextDayScrumFound = false;
+
+			//	Iterate through the saved scrums and find the next days scrum
+			for (let i = 0; i < dailyScrums.length; i++) {
+
+				if (dailyScrums[i].scrumDate === nextScrumDateText) {
+
+					console.log ("Scrum Found");
+					nextDayScrumFound = true;
+
+					let scrum = dailyScrums[i];
+					console.log (scrum.scrumItems);
+					let scrumItems = scrum.scrumItems;
+					scrumItems.push (newScrumItem);
+					console.log (scrum.scrumItems);
+				}
+			}
+
+			//	First item in a new scrum
+			if (nextDayScrumFound === false) {
+
+				console.log ("No scrum found, creating a new scrum entry");
+				let scrumItems = [];
+				//	Add the scrum item to the scrum items list
+				scrumItems.push (newScrumItem);
+
+				let timestampId = nextScrumDate.valueOf ();
+
+				//	Create the new scrum
+				let newScrum = {
+
+					"scrumId": timestampId,
+					"scrumDate": nextScrumDateText,
+					"scrumItems": scrumItems,
+				};
+
+				//	Add the scrum to the list of users scrums
+				dailyScrums.push (newScrum);
+			}
+
+			savedScrums.dailyscrums = dailyScrums;
+			return AsyncStorage.mergeItem ("scrumdiddly", JSON.stringify (savedScrums));
+		}).then (function () {
+
+			console.log ("Item Completed and tomorrows scrum updated too");
+		}, function (err) {
+
+			//	TODO - handle error message
+			console.log (err);
+		});
+	};
+}
+
+//	Cancel a completed scrum item
+export function cancelScrumItem (paramsScrumItemId, paramsCreatedAt, paramsItemText, paramsItemType) {
+
+	/*
+	*	When a user cancels a completed scrum item, we need to remove it from
+	*	the next scrums item list
+	*/
+	return function (dispatch) {
+
+		//	Get a list of all scrums
+		return AsyncStorage.getItem ("scrumdiddly").then (function (results) {
+
+			//	Convert to JSON object
+			let savedScrums = results;
+			if (savedScrums === undefined || savedScrums === null) {
+
+				savedScrums = {
+
+					"dailyscrums": [],
+				};
+			} else {
+
+				savedScrums = JSON.parse(savedScrums);
+			}
+			let dailyScrums = savedScrums.dailyscrums;
+
+			let nextScrumDate = moment (paramsCreatedAt, "DD-MM-YYYY");
+			nextScrumDate.add (1, "days");
+			let nextScrumDateText = nextScrumDate.format ("DD-MM-YYYY");
+
+			//	Iterate through the saved scrums and find the next days scrum
+			for (let i = 0; i < dailyScrums.length; i++) {
+
+				//	Remove the scrum item from the scrum
+				if (dailyScrums[i].scrumDate === nextScrumDateText) {
+
+					let scrum = dailyScrums[i];
+					let scrumItems = scrum.scrumItems;
+					for (let j = 0; j < scrumItems.length; j++) {
+
+						let scrumItem = scrumItems[j];
+						if (scrumItem.id === paramsScrumItemId) {
+
+							scrumItems.splice(j, 1);
+						}
+					}
+				}
+			}
+
+			savedScrums.dailyscrums = dailyScrums;
+			return AsyncStorage.mergeItem ("scrumdiddly", JSON.stringify (savedScrums));
+		}).then (function () {
+
+			console.log ("Item cancelled and tomorrows scrum updated too");
+		}, function (err) {
+
+			//	TODO - handle error message
+			console.log (err);
+		});
 	};
 }

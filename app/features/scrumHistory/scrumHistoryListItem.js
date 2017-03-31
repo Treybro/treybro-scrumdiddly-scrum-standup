@@ -236,7 +236,7 @@ export class YesterdayListItem extends Component {
 		}, () => {
 
 			let item = this.props.listItem;
-			this.props.updateScrumItem (this.props.scrumId, item.id, item.itemType, item.itemText, toggle, this.state.itemBlocked);
+			this.props.updateScrumItem (this.props.scrumId, item.id, item.createdAt, item.itemType, item.itemText, toggle, this.state.itemBlocked);
 		});
 	}
 
@@ -344,7 +344,7 @@ const mapDispatchToProps = dispatch => ({
 
 	showDeleteScrumItemModal: (scrumId, scrumItemId, itemType) => dispatch (showDeleteScrumItemModal (scrumId, scrumItemId, itemType)),
 	deleteScrumItem: (scrumId, itemId, itemType) => dispatch (deleteScrumItem (scrumId, itemId, itemType)),
-	updateScrumItem: (scrumID, itemId, itemType, updatedText, updatedCompletedState, updatedBlockedState) => dispatch (updateScrumItem (scrumID, itemId, itemType, updatedText, updatedCompletedState, updatedBlockedState)),
+	updateScrumItem: (scrumID, itemId, itemCreatedAt, itemType, updatedText, updatedCompletedState, updatedBlockedState) => dispatch (updateScrumItem (scrumID, itemId, itemCreatedAt, itemType, updatedText, updatedCompletedState, updatedBlockedState)),
 });
 
 export default connect (null, mapDispatchToProps)(YesterdayListItem);
