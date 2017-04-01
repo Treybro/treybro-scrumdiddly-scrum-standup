@@ -16,7 +16,11 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { updateTodayItem } from "TodayListActions";
-import { showDeleteScrumItemModalTodayItem } from "ModalActions";
+import { 
+	showDeleteScrumItemModalTodayItem,
+	showBlockedErrorModal,
+	showCompletedErrorModal,
+} from "ModalActions";
 
 import theme from "AppTheme";
 import EditTodayContents from "EditTodayContents";
@@ -31,6 +35,8 @@ export class TodayListItem extends Component {
 		todayItem: React.PropTypes.object.isRequired,
 		updateTodayItem: React.PropTypes.func.isRequired,
 		showDeleteScrumItemModalTodayItem: React.PropTypes.func.isRequired,
+		showBlockedErrorModal: React.PropTypes.func.isRequired,
+		showCompletedErrorModal: React.PropTypes.func.isRequired,
 	};
 
 	constructor (props) {
@@ -223,15 +229,22 @@ export class TodayListItem extends Component {
 	*/
 	_toggleCompleteItem () {
 
-		let toggle = !this.state.itemCompleted;
-		this.setState ({
+		//	Can't complete an item if it is blocked
+		if (this.state.itemBlocked === true) {
 
-			itemCompleted: toggle,
-		}, () => {
+			this.props.showBlockedErrorModal ();
+		} else {
 
-			let item = this.props.todayItem;
-			this.props.updateTodayItem (item.id, item.createdAt, item.itemText, toggle, this.state.itemBlocked, true);
-		});
+			let toggle = !this.state.itemCompleted;
+			this.setState ({
+
+				itemCompleted: toggle,
+			}, () => {
+
+				let item = this.props.todayItem;
+				this.props.updateTodayItem (item.id, item.createdAt, item.itemText, toggle, this.state.itemBlocked, true);
+			});
+		}
 	}
 
 	/*
@@ -239,15 +252,22 @@ export class TodayListItem extends Component {
 	*/
 	_toggleBlockItem () {
 
-		let toggle = !this.state.itemBlocked;
-		this.setState ({
+		//	Can't block an item if it is completed
+		if (this.state.itemCompleted === true) {
 
-			itemBlocked: toggle,
-		}, () => {
+			this.props.showCompletedErrorModal ();
+		} else {
 
-			let item = this.props.todayItem;
-			this.props.updateTodayItem (item.id, item.createdAt, item.itemText, this.state.itemCompleted, toggle, false);
-		});
+			let toggle = !this.state.itemBlocked;
+			this.setState ({
+
+				itemBlocked: toggle,
+			}, () => {
+
+				let item = this.props.todayItem;
+				this.props.updateTodayItem (item.id, item.createdAt, item.itemText, this.state.itemCompleted, toggle, false);
+			});
+		}
 	}
 
 	/*
@@ -336,6 +356,8 @@ const styles = StyleSheet.create({
 */
 const mapDispatchToProps = dispatch => ({
 
+	showCompletedErrorModal: () => dispatch (showCompletedErrorModal ()),
+	showBlockedErrorModal: () => dispatch (showBlockedErrorModal ()),
 	showDeleteScrumItemModalTodayItem: (todayItemId) => dispatch (showDeleteScrumItemModalTodayItem (todayItemId)),
 	updateTodayItem: (originalItemId, itemCreatedAt, updatedText, updatedCompletedState, updatedBlockedState, updateCompletedItem) => dispatch (updateTodayItem (originalItemId, itemCreatedAt, updatedText, updatedCompletedState, updatedBlockedState, updateCompletedItem)),
 });

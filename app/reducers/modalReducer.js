@@ -9,13 +9,21 @@ import {
 	HIDE_DELETE_SCRUM_ITEM_MODAL,
 	SHOW_DELETE_SCRUM_ITEM_MODAL_YESTERDAY_ITEM,
 	SHOW_DELETE_SCRUM_ITEM_MODAL_TODAY_ITEM,
+	TOGGLE_BLOCKED_ERROR_MODAL,
+	SHOW_BLOCKED_ERROR_MODAL,
+	HIDE_BLOCKED_ERROR_MODAL,
+	TOGGLE_COMPLETED_ERROR_MODAL,
+	SHOW_COMPLETED_ERROR_MODAL,
+	HIDE_COMPLETED_ERROR_MODAL,
 } from "ModalActions";
 
 //  Default state to prepare for null
 const defaultModalState = {
 
-	toggleDeleteScrumItemModal: false,
+	showDeleteScrumItemModal: false,
 	scrumItemDetails: {},
+	showBlockedErrorModal: false,
+	showCompletedErrorModal: false,
 };
 
 const modalReducer = (state = defaultModalState, action) => {
@@ -27,7 +35,7 @@ const modalReducer = (state = defaultModalState, action) => {
 		return {
 
 			...state,
-			toggleDeleteScrumItemModal: !state.toggleDeleteScrumItemModal,
+			showDeleteScrumItemModal: !state.showDeleteScrumItemModal,
 		};
 	}
 	case SHOW_DELETE_SCRUM_ITEM_MODAL: {
@@ -42,7 +50,7 @@ const modalReducer = (state = defaultModalState, action) => {
 		return {
 
 			...state,
-			toggleDeleteScrumItemModal: true,
+			showDeleteScrumItemModal: true,
 			scrumItemDetails: details,
 		};
 	}
@@ -51,7 +59,7 @@ const modalReducer = (state = defaultModalState, action) => {
 		return {
 
 			...state,
-			toggleDeleteScrumItemModal: false,
+			showDeleteScrumItemModal: false,
 		};
 	}
 	//	TODO - get rid of this
@@ -66,7 +74,8 @@ const modalReducer = (state = defaultModalState, action) => {
 
 		return {
 
-			toggleDeleteScrumItemModal: true,
+			...state,
+			showDeleteScrumItemModal: true,
 			scrumItemDetails: details,
 		};
 	}
@@ -82,12 +91,64 @@ const modalReducer = (state = defaultModalState, action) => {
 
 		return {
 
-			toggleDeleteScrumItemModal: true,
+			...state,
+			showDeleteScrumItemModal: true,
 			scrumItemDetails: details,
 		};
 	}
+	case TOGGLE_BLOCKED_ERROR_MODAL : {
+
+		return {
+
+			...state,
+			showBlockedErrorModal: !state.showBlockedErrorModal,
+		};
+	}
+	case SHOW_BLOCKED_ERROR_MODAL : {
+
+		return {
+
+			...state,
+			showBlockedErrorModal: true,
+		};
+	}
+	case HIDE_BLOCKED_ERROR_MODAL : {
+
+		return {
+
+			...state,
+			showBlockedErrorModal: false,
+		};
+	}
+	case TOGGLE_COMPLETED_ERROR_MODAL : {
+
+		return {
+
+			...state,
+			showCompletedErrorModal: !state.showCompletedErrorModal,
+		};
+	}
+	case SHOW_COMPLETED_ERROR_MODAL : {
+
+		return {
+
+			...state,
+			showCompletedErrorModal: true,
+		};
+	}
+	case HIDE_COMPLETED_ERROR_MODAL : {
+
+		return {
+
+			...state,
+			showCompletedErrorModal: false,
+		};
+	}
 	default:
-		return state;
+		return {
+
+			...state,
+		};
 	}
 };
 

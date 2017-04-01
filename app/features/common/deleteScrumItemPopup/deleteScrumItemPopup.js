@@ -54,11 +54,15 @@ class DeleteScrumItemPopup extends Component {
 
 	render () {
 
+		if (this.props.deleteScrumItemPopupToggle === false) {
+
+			return null;
+		}
+
 		return (
 
 			<Modal
 				animationType={"fade"}
-				onShow={() => console.log ("Modal Popup!")}
 				transparent={true}
 				visible={this.props.deleteScrumItemPopupToggle}
 				onRequestClose={() => this._hideModal ()}>
@@ -183,7 +187,7 @@ const styles = StyleSheet.create({
 	},
 	okButtonText: {
 
-		color: theme.pink,
+		color: theme.darkGrey,
 		fontSize: 14,
 		fontWeight: "bold",
 	},
@@ -198,7 +202,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
 
-	deleteScrumItemPopupToggle: state.modalReducer.toggleDeleteScrumItemModal,
+	deleteScrumItemPopupToggle: state.modalReducer.showDeleteScrumItemModal,
 	scrumItemDetails: state.modalReducer.scrumItemDetails,
 });
 

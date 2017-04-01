@@ -20,7 +20,11 @@ import {
 	updateScrumItem,
 	deleteScrumItem,
 } from "ScrumHistoryActions";
-import { showDeleteScrumItemModal } from "ModalActions";
+import { 
+	showDeleteScrumItemModal,
+	showBlockedErrorModal,
+	showCompletedErrorModal,
+} from "ModalActions";
 
 import theme from "AppTheme";
 import EditYesterdayContents from "EditYesterdayContents";
@@ -37,6 +41,8 @@ export class YesterdayListItem extends Component {
 		deleteScrumItem: React.PropTypes.func.isRequired,
 		updateScrumItem: React.PropTypes.func.isRequired,
 		showDeleteScrumItemModal: React.PropTypes.func.isRequired,
+		showBlockedErrorModal: React.PropTypes.func.isRequired,
+		showCompletedErrorModal: React.PropTypes.func.isRequired,
 	};
 
 	constructor (props) {
@@ -229,15 +235,22 @@ export class YesterdayListItem extends Component {
 	*/
 	_toggleCompleteItem () {
 
-		let toggle = !this.state.itemCompleted;
-		this.setState ({
+		//	Can't complete an item if it is blocked
+		if (this.state.itemBlocked === true) {
 
-			itemCompleted: toggle,
-		}, () => {
+			this.props.showBlockedErrorModal ();
+		} else {
 
-			let item = this.props.listItem;
-			this.props.updateScrumItem (this.props.scrumId, item.id, item.createdAt, item.itemType, item.itemText, toggle, this.state.itemBlocked, true);
-		});
+			let toggle = !this.state.itemCompleted;
+			this.setState ({
+
+				itemCompleted: toggle,
+			}, () => {
+
+				let item = this.props.listItem;
+				this.props.updateScrumItem (this.props.scrumId, item.id, item.createdAt, item.itemType, item.itemText, toggle, this.state.itemBlocked, true);
+			});
+		}
 	}
 
 	/*
@@ -245,15 +258,22 @@ export class YesterdayListItem extends Component {
 	*/
 	_toggleBlockItem () {
 
-		let toggle = !this.state.itemBlocked;
-		this.setState ({
+		//	Can't block an item if it is completed
+		if (this.state.itemCompleted === true) {
 
-			itemBlocked: toggle,
-		}, () => {
+			this.props.showCompletedErrorModal ();
+		} else {
 
-			let item = this.props.listItem;
-			this.props.updateScrumItem (this.props.scrumId, item.id, item.createdAt, item.itemType, item.itemText, this.state.itemCompleted, toggle, false);
-		});
+			let toggle = !this.state.itemBlocked;
+			this.setState ({
+
+				itemBlocked: toggle,
+			}, () => {
+
+				let item = this.props.listItem;
+				this.props.updateScrumItem (this.props.scrumId, item.id, item.createdAt, item.itemType, item.itemText, this.state.itemCompleted, toggle, false);
+			});
+		}
 	}
 
 	/*
@@ -342,6 +362,8 @@ const styles = StyleSheet.create({
 */
 const mapDispatchToProps = dispatch => ({
 
+	showBlockedErrorModal: () => dispatch (showBlockedErrorModal ()),
+	showCompletedErrorModal: () => dispatch (showCompletedErrorModal ()),
 	showDeleteScrumItemModal: (scrumId, scrumItemId, itemType) => dispatch (showDeleteScrumItemModal (scrumId, scrumItemId, itemType)),
 	deleteScrumItem: (scrumId, itemId, itemType) => dispatch (deleteScrumItem (scrumId, itemId, itemType)),
 	updateScrumItem: (scrumID, itemId, itemCreatedAt, itemType, updatedText, updatedCompletedState, updatedBlockedState, updateCompletedItem) => dispatch (updateScrumItem (scrumID, itemId, itemCreatedAt, itemType, updatedText, updatedCompletedState, updatedBlockedState, updateCompletedItem)),
