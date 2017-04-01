@@ -24,7 +24,8 @@ export const REMOVE_SCRUM_YESTERDAY_ITEM = "REMOVE_SCRUM_YESTERDAY_ITEM";
 export const REMOVE_SCRUM_TODAY_ITEM = "REMOVE_SCRUM_TODAY_ITEM";
 export const SAVE_SCRUM_ITEM = "SAVE_SCRUM_ITEM";
 export const ADD_SCRUM_ITEM = "ADD_SCRUM_ITEM";
-export const COMPLETE_SCRUM_ITEM = "COMPLETE_SCRUM_ITEM";
+export const COMPLETED_SCRUM_ITEM = "COMPLETED_SCRUM_ITEM";
+export const CANCELED_SCRUM_ITEM = "CANCELED_SCRUM_ITEM";
 
 //	Tell the app we are getting the scrum history
 export function getScrumHistory () {
@@ -290,7 +291,7 @@ export function updateScrumItem (scrumID, itemId, itemCreatedAt, itemType, updat
 				} else {
 
 					//	Remove the scrum item from the next scrum
-					dispatch (cancelScrumItem (itemId, itemCreatedAt, updatedText));
+					dispatch (cancelScrumItem (itemId, itemCreatedAt));
 				}
 			}
 		});
@@ -495,10 +496,6 @@ export function saveScrumItem (scrumId, itemType, itemText) {
 		}).then (function () {
 
 			console.log ("Item Saved");
-		}, function (err) {
-
-			//	TODO - handle error message
-			console.log (err);
 		});
 	};
 }
@@ -609,16 +606,22 @@ export function completeScrumItem (paramsScrumItemId, paramsCreatedAt, paramsIte
 		}).then (function () {
 
 			console.log ("Item Completed and tomorrows scrum updated too");
-		}, function (err) {
-
-			//	TODO - handle error message
-			console.log (err);
+			dispatch (completedScrumItem ());
 		});
 	};
 }
 
+//	Tell the app we have completed a scrum item
+export function completedScrumItem () {
+
+	return {
+
+		type: COMPLETED_SCRUM_ITEM,
+	};
+}
+
 //	Cancel a completed scrum item
-export function cancelScrumItem (paramsScrumItemId, paramsCreatedAt, paramsItemText, paramsItemType) {
+export function cancelScrumItem (paramsScrumItemId, paramsCreatedAt) {
 
 	/*
 	*	When a user cancels a completed scrum item, we need to remove it from
@@ -671,10 +674,16 @@ export function cancelScrumItem (paramsScrumItemId, paramsCreatedAt, paramsItemT
 		}).then (function () {
 
 			console.log ("Item cancelled and tomorrows scrum updated too");
-		}, function (err) {
-
-			//	TODO - handle error message
-			console.log (err);
+			dispatch (canceledScrumItem ());
 		});
+	};
+}
+
+//	Tell the app we cancelled a scrum item
+export function canceledScrumItem () {
+
+	return {
+
+		type: CANCELED_SCRUM_ITEM,
 	};
 }

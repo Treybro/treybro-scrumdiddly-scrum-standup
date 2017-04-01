@@ -9,6 +9,8 @@ import {
 	ADD_TODAY_ITEM,
 	REMOVE_TODAY_ITEM,
 	TOGGLE_CREATE_TODAY_ITEM,
+	COMPLETED_TODAY_SCRUM_ITEM,
+	CANCELED_TODAY_SCRUM_ITEM,
 } from "TodayListActions";
 
 //  Default state to prepare for null
@@ -73,6 +75,20 @@ const todayListReducer = (state = todayListState, action) => {
 
 			...state,
 			toggleCreate: toggle,
+		};
+	}
+	case COMPLETED_TODAY_SCRUM_ITEM : {
+
+		return {
+
+			...state,
+		};
+	}
+	case CANCELED_TODAY_SCRUM_ITEM : {
+
+		return {
+
+			...state,
 		};
 	}
 	default:

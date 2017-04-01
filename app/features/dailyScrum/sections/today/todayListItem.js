@@ -197,7 +197,7 @@ export class TodayListItem extends Component {
 				if (itemText !== this.props.todayItem.itemText) {
 
 					let item = this.props.todayItem;
-					this.props.updateTodayItem (item.id, itemText, this.state.itemCompleted, this.state.itemBlocked);
+					this.props.updateTodayItem (item.id, item.createdAt, itemText, this.state.itemCompleted, this.state.itemBlocked, true);
 				}
 			});
 		} else {
@@ -230,7 +230,7 @@ export class TodayListItem extends Component {
 		}, () => {
 
 			let item = this.props.todayItem;
-			this.props.updateTodayItem (item.id, item.itemText, toggle, this.state.itemBlocked);
+			this.props.updateTodayItem (item.id, item.createdAt, item.itemText, toggle, this.state.itemBlocked, true);
 		});
 	}
 
@@ -246,7 +246,7 @@ export class TodayListItem extends Component {
 		}, () => {
 
 			let item = this.props.todayItem;
-			this.props.updateTodayItem (item.id, item.itemText, this.state.itemCompleted, toggle);
+			this.props.updateTodayItem (item.id, item.createdAt, item.itemText, this.state.itemCompleted, toggle, false);
 		});
 	}
 
@@ -337,7 +337,7 @@ const styles = StyleSheet.create({
 const mapDispatchToProps = dispatch => ({
 
 	showDeleteScrumItemModalTodayItem: (todayItemId) => dispatch (showDeleteScrumItemModalTodayItem (todayItemId)),
-	updateTodayItem: (originalItemId, updatedText, updatedCompletedState, updatedBlockedState) => dispatch (updateTodayItem (originalItemId, updatedText, updatedCompletedState, updatedBlockedState)),
+	updateTodayItem: (originalItemId, itemCreatedAt, updatedText, updatedCompletedState, updatedBlockedState, updateCompletedItem) => dispatch (updateTodayItem (originalItemId, itemCreatedAt, updatedText, updatedCompletedState, updatedBlockedState, updateCompletedItem)),
 });
 
 export default connect (null, mapDispatchToProps)(TodayListItem);
