@@ -108,6 +108,7 @@ class ScrumHistory extends Component {
 				<View style={styles.containerView}>
 					<Calendar
 						ref="calendar"
+						scrollEnabled={true}
 						eventDates={this.props.eventDates}
 						showControls={true}
 						showEventIndicators={true}

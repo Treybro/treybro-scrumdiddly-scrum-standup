@@ -241,7 +241,7 @@ export function receiveScrumItems (scrumId, itemType, results) {
 }
 
 //	Update a give scrum item
-export function updateScrumItem (scrumID, itemId, itemCreatedAt, itemType, updatedText, updatedCompletedState, updatedBlockedState) {
+export function updateScrumItem (scrumID, itemId, itemCreatedAt, itemType, updatedText, updatedCompletedState, updatedBlockedState, updateCompletedItem) {
 
 	return function (dispatch) {
 
@@ -279,12 +279,19 @@ export function updateScrumItem (scrumID, itemId, itemCreatedAt, itemType, updat
 		}).then (function () {
 
 			dispatch (updatedScrumItem ());
-			if (updatedCompletedState === true) {
 
-				dispatch (completeScrumItem (itemId, itemCreatedAt, updatedText));
-			} else {
+			//	Do we need to compelete any saved completed items in the next scrum?
+			if (updateCompletedItem === true) {
 
-				dispatch (cancelScrumItem (itemId, itemCreatedAt, updatedText));
+				if (updatedCompletedState === true) {
+
+					//	Add the item to the next scrum
+					dispatch (completeScrumItem (itemId, itemCreatedAt, updatedText));
+				} else {
+
+					//	Remove the scrum item from the next scrum
+					dispatch (cancelScrumItem (itemId, itemCreatedAt, updatedText));
+				}
 			}
 		});
 	};
@@ -541,7 +548,7 @@ export function completeScrumItem (paramsScrumItemId, paramsCreatedAt, paramsIte
 				"itemText": paramsItemText,
 				"completed": true,
 				"blocked": false,
-				"itemType": 'yesterday',
+				"itemType": "yesterday",
 			};
 
 			let nextScrumDate = moment (paramsCreatedAt, "DD-MM-YYYY");
@@ -558,10 +565,20 @@ export function completeScrumItem (paramsScrumItemId, paramsCreatedAt, paramsIte
 					nextDayScrumFound = true;
 
 					let scrum = dailyScrums[i];
-					console.log (scrum.scrumItems);
 					let scrumItems = scrum.scrumItems;
+
+					//	Does the scrum item already exist? - used to update the item
+					for (let j = 0; j < scrumItems.length; j++) {
+
+						let scrumItem = scrumItems[j];
+						if (scrumItem.id === paramsScrumItemId) {
+
+							//	Remove the current item so we can replace it
+							scrumItems.splice(j, 1);
+						}
+					}
+
 					scrumItems.push (newScrumItem);
-					console.log (scrum.scrumItems);
 				}
 			}
 
