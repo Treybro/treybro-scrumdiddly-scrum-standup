@@ -98,7 +98,7 @@ class DailyTab extends Component {
 					<TodayList />
 					<BlockerHeader
 						headerType={"daily"}
-						isEditable={true}/>
+						isEditable={false}/>
 				</ScrollView>
 			</View>
 		);
