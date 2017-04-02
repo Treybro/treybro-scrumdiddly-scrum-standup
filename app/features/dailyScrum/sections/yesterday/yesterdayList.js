@@ -81,7 +81,10 @@ export class YesterdayList extends Component {
 				{
 					this.props.yesterdaysItems.map ((yesterDayItem) => (
 
-						<YesterdayListItem key={"list-item-yesterday-key-" + yesterDayItem.id} yesterdayItem={yesterDayItem} />
+						<YesterdayListItem 
+							key={"list-item-yesterday-key-" + yesterDayItem.id} 
+							yesterdayItem={yesterDayItem}
+							userCanEditContents={false}/>
 					))
 				}
 			</View>

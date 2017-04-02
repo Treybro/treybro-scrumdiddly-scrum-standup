@@ -84,6 +84,7 @@ class ScrumHistoryList extends Component {
 								key={"list-item-yesterday-key-" + yesterdayItem.id}
 								scrumId={this.props.scrumItemID}
 								listItem={yesterdayItem}
+								userCanEditContents={false}
 								/>
 						))
 					}
@@ -123,6 +124,7 @@ class ScrumHistoryList extends Component {
 							key={"list-item-today-key-" + todayItem.id}
 							scrumId={this.props.scrumItemID}
 							listItem={todayItem}
+							userCanEditContents={true}
 							/>
 					))
 				}

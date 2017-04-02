@@ -45,6 +45,7 @@ export class YesterdayListItem extends Component {
 		showBlockedErrorModal: React.PropTypes.func.isRequired,
 		showCompletedErrorModal: React.PropTypes.func.isRequired,
 		showDeleteErrorModal: React.PropTypes.func.isRequired,
+		userCanEditContents: React.PropTypes.bool.isRequired,
 	};
 
 	constructor (props) {
@@ -240,6 +241,12 @@ export class YesterdayListItem extends Component {
 	*/
 	_toggleEdit () {
 
+		//	Is the user allowed to edit the item?
+		if (this.props.userCanEditContents === false) {
+
+			return;
+		}
+		
 		let toggle = !this.state.showEditItems;
 		this.setState ({
 
