@@ -21,6 +21,7 @@ import TutorialScreen from "TutorialScreen";
 import DeleteScrumItemPopup from "DeleteScrumItemPopup";
 import BlockedErrorPopup from "BlockedErrorPopup";
 import CompletedErrorPopup from "CompletedErrorPopup";
+import DeleteErrorPopup from "DeleteErrorPopup";
 
 /*
 * App Root
@@ -81,6 +82,7 @@ class App extends Component {
 				<DeleteScrumItemPopup />
 				<BlockedErrorPopup />
 				<CompletedErrorPopup />
+				<DeleteErrorPopup />
 				<AppDrawer />
 			</View>
 		);

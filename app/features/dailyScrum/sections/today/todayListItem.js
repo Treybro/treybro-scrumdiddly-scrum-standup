@@ -20,6 +20,7 @@ import {
 	showDeleteScrumItemModalTodayItem,
 	showBlockedErrorModal,
 	showCompletedErrorModal,
+	showDeleteErrorModal,
 } from "ModalActions";
 
 import theme from "AppTheme";
@@ -37,6 +38,7 @@ export class TodayListItem extends Component {
 		showDeleteScrumItemModalTodayItem: React.PropTypes.func.isRequired,
 		showBlockedErrorModal: React.PropTypes.func.isRequired,
 		showCompletedErrorModal: React.PropTypes.func.isRequired,
+		showDeleteErrorModal: React.PropTypes.func.isRequired,
 	};
 
 	constructor (props) {
@@ -146,6 +148,19 @@ export class TodayListItem extends Component {
 	*/
 	_deleteAlert () {
 
+		//	Can't delete an item if it's completed
+		if (this.state.itemCompleted === true) {
+
+			this.props.showDeleteErrorModal ("completed");
+			return;
+		}
+
+		//	Can't delete an item if it's blocked
+		if (this.state.itemBlocked === true) {
+
+			this.props.showDeleteErrorModal ("blocked");
+			return;
+		}
 		this.props.showDeleteScrumItemModalTodayItem (this.props.todayItem.id);
 	}
 
@@ -356,6 +371,7 @@ const styles = StyleSheet.create({
 */
 const mapDispatchToProps = dispatch => ({
 
+	showDeleteErrorModal: (errorDescription) => dispatch (showDeleteErrorModal (errorDescription)),
 	showCompletedErrorModal: () => dispatch (showCompletedErrorModal ()),
 	showBlockedErrorModal: () => dispatch (showBlockedErrorModal ()),
 	showDeleteScrumItemModalTodayItem: (todayItemId) => dispatch (showDeleteScrumItemModalTodayItem (todayItemId)),

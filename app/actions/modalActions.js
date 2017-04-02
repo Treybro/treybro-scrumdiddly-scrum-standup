@@ -8,9 +8,12 @@ export const HIDE_DELETE_SCRUM_ITEM_MODAL = "HIDE_DELETE_SCRUM_ITEM_MODAL";
 export const TOGGLE_BLOCKED_ERROR_MODAL = "TOGGLE_BLOCKED_ERROR_MODAL";
 export const SHOW_BLOCKED_ERROR_MODAL = "SHOW_BLOCKED_ERROR_MODAL";
 export const HIDE_BLOCKED_ERROR_MODAL = "HIDE_BLOCKED_ERROR_MODAL";
-export const TOGGLE_COMPLETED_ERROR_MODAL = "";
-export const SHOW_COMPLETED_ERROR_MODAL = "";
-export const HIDE_COMPLETED_ERROR_MODAL = "";
+export const TOGGLE_COMPLETED_ERROR_MODAL = "TOGGLE_COMPLETED_ERROR_MODAL";
+export const SHOW_COMPLETED_ERROR_MODAL = "SHOW_COMPLETED_ERROR_MODAL";
+export const HIDE_COMPLETED_ERROR_MODAL = "HIDE_COMPLETED_ERROR_MODAL";
+export const TOGGLE_DELETE_ERROR_MODAL = "TOGGLE_DELETE_ERROR_MODAL";
+export const SHOW_DELETE_ERROR_MODAL = "SHOW_DELETE_ERROR_MODAL";
+export const HIDE_DELETE_ERROR_MODAL = "HIDE_DELETE_ERROR_MODAL";
 
 /*
 *	TODO - Refactor this
@@ -122,5 +125,33 @@ export function hideCompletedErrorModal () {
 	return {
 
 		type: HIDE_COMPLETED_ERROR_MODAL,
+	};
+}
+
+//	Toggle the display of the delete error modal
+export function toggleDeleteErrorModal () {
+
+	return {
+
+		type: TOGGLE_DELETE_ERROR_MODAL,
+	};
+}
+
+//	Show the delete error modal
+export function showDeleteErrorModal (errorDescription) {
+
+	return {
+
+		type: SHOW_DELETE_ERROR_MODAL,
+		errorDescription,
+	};
+}
+
+//	Hide the delete error modal
+export function hideDeleteErrorModal () {
+
+	return {
+
+		type: HIDE_DELETE_ERROR_MODAL,
 	};
 }

@@ -15,6 +15,9 @@ import {
 	TOGGLE_COMPLETED_ERROR_MODAL,
 	SHOW_COMPLETED_ERROR_MODAL,
 	HIDE_COMPLETED_ERROR_MODAL,
+	TOGGLE_DELETE_ERROR_MODAL,
+	SHOW_DELETE_ERROR_MODAL,
+	HIDE_DELETE_ERROR_MODAL,
 } from "ModalActions";
 
 //  Default state to prepare for null
@@ -24,6 +27,8 @@ const defaultModalState = {
 	scrumItemDetails: {},
 	showBlockedErrorModal: false,
 	showCompletedErrorModal: false,
+	showDeleteErrorModal: false,
+	errorDescription: "",
 };
 
 const modalReducer = (state = defaultModalState, action) => {
@@ -142,6 +147,32 @@ const modalReducer = (state = defaultModalState, action) => {
 
 			...state,
 			showCompletedErrorModal: false,
+		};
+	}
+	case TOGGLE_DELETE_ERROR_MODAL : {
+
+		return {
+
+			...state,
+			showDeleteErrorModal: !state.showDeleteErrorModal,
+		};
+	}
+	case SHOW_DELETE_ERROR_MODAL : {
+
+		return {
+
+			...state,
+			showDeleteErrorModal: true,
+			errorDescription: action.errorDescription,
+		};
+	}
+	case HIDE_DELETE_ERROR_MODAL : {
+
+		return {
+
+			...state,
+			showDeleteErrorModal: false,
+			errorDescription: "",
 		};
 	}
 	default:
