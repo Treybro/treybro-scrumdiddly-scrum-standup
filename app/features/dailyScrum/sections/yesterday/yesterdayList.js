@@ -68,7 +68,7 @@ export class YesterdayList extends Component {
 
 				<View style={styles.card}>
 					<CreateYesterdayItem />
-					<EmptyYesterdayList />
+					<EmptyYesterdayList allowUserToAddItems={false}/>
 				</View>
 			);
 		}

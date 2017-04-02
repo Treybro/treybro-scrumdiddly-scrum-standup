@@ -64,7 +64,8 @@ class ScrumHistoryList extends Component {
 							scrumItemScrumDate={this.props.scrumItemScrumDate}/>
 						<EmptyScrumList
 							itemType={this.props.itemType}
-							displayDate={this.props.displayDate}/>
+							displayDate={this.props.displayDate}
+							allowUserToAddItems={false}/>
 					</View>
 				);
 			}
@@ -102,7 +103,8 @@ class ScrumHistoryList extends Component {
 						scrumItemScrumDate={this.props.scrumItemScrumDate}/>
 					<EmptyScrumList
 						itemType={this.props.itemType}
-						displayDate={this.props.displayDate}/>
+						displayDate={this.props.displayDate}
+						allowUserToAddItems={true}/>
 				</View>
 			);
 		}

@@ -35,6 +35,7 @@ export class EmptyScrumList extends Component {
 		toggleCreateYesterdayItem: React.PropTypes.bool.isRequired,
 		toggleCreateTodayItem: React.PropTypes.bool.isRequired,
 		toggleCreateScrumItem: React.PropTypes.func.isRequired,
+		allowUserToAddItems: React.PropTypes.bool.isRequired,
 	};
 
 	constructor (props) {
@@ -80,6 +81,16 @@ export class EmptyScrumList extends Component {
 				return null;
 			}
 
+			if (this.props.allowUserToAddItems === false) {
+
+				return (
+
+					<View style={styles.containerView}>
+						<Text style={styles.emptyText}>Completed items from {this.state.newDisplayDate} will be displayed here.</Text>
+					</View>
+				);	
+			}
+
 			return (
 
 				<TouchableOpacity onPress={() => this.props.toggleCreateScrumItem (this.props.itemType, true)}>
@@ -95,6 +106,17 @@ export class EmptyScrumList extends Component {
 
 			return null;
 		}
+
+		if (this.props.allowUserToAddItems === false) {
+
+			return (
+
+				<View style={styles.containerView}>
+					<Text style={styles.emptyText}>You did not complete anything on {this.state.newDisplayDate}, add an item to show how busy you were!</Text>
+				</View>
+			);	
+		}
+
 		//	Standard view
 		return (
 

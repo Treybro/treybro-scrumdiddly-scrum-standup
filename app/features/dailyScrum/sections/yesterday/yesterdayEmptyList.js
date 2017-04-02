@@ -31,6 +31,7 @@ export class EmptyYesterdayList extends Component {
 
 		showToggle: React.PropTypes.bool.isRequired,
 		toggleCreateYesterdayItem: React.PropTypes.func.isRequired,
+		allowUserToAddItems: React.PropTypes.bool.isRequired,
 	};
 
 	constructor (props) {
@@ -44,6 +45,17 @@ export class EmptyYesterdayList extends Component {
 		if (this.props.showToggle === true) {
 
 			return null;
+		}
+
+		//	Allow the user to add a yesterday item?
+		if (this.props.allowUserToAddItems === false) {
+
+			return (
+
+				<View style={styles.containerView}>
+					<Text style={styles.emptyText}>You have not completed any items since your last scrum</Text>
+				</View>
+			);
 		}
 
 		//	Standard view

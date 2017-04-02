@@ -101,7 +101,7 @@ class ScrumHistoryItem extends Component {
 				<ScrollView>
 					<YesterdayHeader 
 						headerType={"history"}
-						isEditable={true}/>
+						isEditable={false}/>
 					<ScrumHistoryList 
 						scrumItemID={this.props.scrumItem.scrumId} 
 						scrumItemScrumDate={this.props.scrumItem.scrumDate}

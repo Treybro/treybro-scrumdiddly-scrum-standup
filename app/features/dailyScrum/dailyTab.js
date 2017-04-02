@@ -90,7 +90,7 @@ class DailyTab extends Component {
 				<ScrollView>
 					<YesterdayHeader 
 						headerType={"daily"}
-						isEditable={true}/>
+						isEditable={false}/>
 					<YesterdayList />
 					<TodayHeader 
 						headerType={"daily"}
