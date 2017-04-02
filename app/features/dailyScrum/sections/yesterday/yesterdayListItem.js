@@ -324,7 +324,8 @@ export class YesterdayListItem extends Component {
 
 		if (this.state.itemCompleted === true) {
 
-			return styles.completedListItemText;
+			return styles.listItemText;
+			//return styles.completedListItemText;
 		} else {
 
 			return styles.listItemText;
