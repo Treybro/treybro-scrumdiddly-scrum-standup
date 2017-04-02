@@ -3,16 +3,17 @@
  */
 import { DrawerNavigator } from "react-navigation";
 
-import AppTabs from "AppTabs";
+//import AppTabs from "AppTabs";
+import DailyTabNav from "DailyTabNav";
 import HistoryNav from "HistoryNav";
 
 import theme from "AppTheme";
 
 const AppDrawer = DrawerNavigator ({
 
-	AppTabs: {
+	DailyTabNav: {
 
-		screen: AppTabs,
+		screen: DailyTabNav,
 	},
 	HistoryNav: {
 

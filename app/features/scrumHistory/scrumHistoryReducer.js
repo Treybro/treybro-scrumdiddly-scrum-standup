@@ -199,8 +199,8 @@ const scrumHistoryReducer = (state = scrumHistoryState, action) => {
 
 				...state,
 				scrumYesterdayItems: [
-					...state.scrumYesterdayItems,
 					action.newScrumItem,
+					...state.scrumYesterdayItems,
 				],
 			};
 		} else {
@@ -209,8 +209,8 @@ const scrumHistoryReducer = (state = scrumHistoryState, action) => {
 
 				...state,
 				scrumTodayItems: [
-					...state.scrumTodayItems,
 					action.newScrumItem,
+					...state.scrumTodayItems,
 				],
 			};
 		}

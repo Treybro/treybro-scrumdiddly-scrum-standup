@@ -45,8 +45,8 @@ const yesterdayListReducer = (state = yesterdayListState, action) => {
 		return {
 			...state,
 			yesterdaysItems: [
-				...state.yesterdaysItems,
 				action.newScrumItem,
+				...state.yesterdaysItems,
 			],
 		};
 	case REMOVE_YESTERDAY_ITEM: {

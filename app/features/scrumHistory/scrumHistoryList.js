@@ -29,6 +29,7 @@ class ScrumHistoryList extends Component {
 
 		displayDate: React.PropTypes.object.isRequired,
 		scrumItemID: React.PropTypes.number.isRequired,
+		scrumItemScrumDate: React.PropTypes.string.isRequired,
 		itemType: React.PropTypes.string.isRequired,
 		getScrumItemsForId: React.PropTypes.func.isRequired,
 		scrumYesterdayItems: React.PropTypes.array.isRequired,
@@ -59,7 +60,8 @@ class ScrumHistoryList extends Component {
 					<View style={styles.card}>
 						<CreateScrumItem 
 							itemType={this.props.itemType}
-							scrumItemID={this.props.scrumItemID}/>
+							scrumItemID={this.props.scrumItemID}
+							scrumItemScrumDate={this.props.scrumItemScrumDate}/>
 						<EmptyScrumList
 							itemType={this.props.itemType}
 							displayDate={this.props.displayDate}/>
@@ -72,7 +74,8 @@ class ScrumHistoryList extends Component {
 				<View style={styles.containerView}>
 					<CreateScrumItem 
 						itemType={this.props.itemType}
-						scrumItemID={this.props.scrumItemID}/>
+						scrumItemID={this.props.scrumItemID}
+						scrumItemScrumDate={this.props.scrumItemScrumDate}/>
 					{
 						this.props.scrumYesterdayItems.map ((yesterdayItem) => (
 
@@ -95,7 +98,8 @@ class ScrumHistoryList extends Component {
 				<View style={styles.card}>
 					<CreateScrumItem 
 						itemType={this.props.itemType}
-						scrumItemID={this.props.scrumItemID}/>
+						scrumItemID={this.props.scrumItemID}
+						scrumItemScrumDate={this.props.scrumItemScrumDate}/>
 					<EmptyScrumList
 						itemType={this.props.itemType}
 						displayDate={this.props.displayDate}/>
@@ -108,7 +112,8 @@ class ScrumHistoryList extends Component {
 			<View style={styles.containerView}>
 				<CreateScrumItem 
 					itemType={this.props.itemType}
-					scrumItemID={this.props.scrumItemID}/>
+					scrumItemID={this.props.scrumItemID}
+					scrumItemScrumDate={this.props.scrumItemScrumDate}/>
 				{
 					this.props.scrumTodayItems.map ((todayItem) => (
 

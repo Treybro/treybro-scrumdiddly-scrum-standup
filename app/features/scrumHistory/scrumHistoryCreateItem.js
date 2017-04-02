@@ -35,6 +35,7 @@ export class CreateScrumItem extends Component {
 
 		itemType: React.PropTypes.string.isRequired,
 		scrumItemID: React.PropTypes.number.isRequired,
+		scrumItemScrumDate: React.PropTypes.string.isRequired,
 		saveScrumItem: React.PropTypes.func.isRequired,
 		toggleCreateScrumItem: React.PropTypes.func.isRequired,
 		toggleCreateYesterdayItem: React.PropTypes.bool.isRequired,
@@ -186,7 +187,7 @@ export class CreateScrumItem extends Component {
 		let itemText = this.state.text.trim ();
 		if (itemText !== undefined && itemText !== null && itemText.length > 0 && itemText.length <= 240) {
 			
-			this.props.saveScrumItem (this.props.scrumItemID, this.props.itemType, itemText);
+			this.props.saveScrumItem (this.props.scrumItemID, this.props.itemType, itemText, this.props.scrumItemScrumDate);
 			this.setState ({
 
 				text: "",
@@ -286,7 +287,7 @@ const mapStateToProps = state => ({
 */
 const mapDispatchToProps = dispatch => ({
 
-	saveScrumItem: (scrumId, itemType, itemText) => dispatch (saveScrumItem (scrumId, itemType, itemText)),
+	saveScrumItem: (scrumId, itemType, itemText, scrumItemScrumDate) => dispatch (saveScrumItem (scrumId, itemType, itemText, scrumItemScrumDate)),
 	toggleCreateScrumItem: (itemType, toggle) => dispatch (toggleCreateScrumItem (itemType, toggle)),
 });
 

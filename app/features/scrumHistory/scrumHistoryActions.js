@@ -397,7 +397,7 @@ export function toggleCreateScrumItem (itemType, toggle) {
 }
 
 //	Tell the app to save a list item for a given scrum
-export function saveScrumItem (scrumId, itemType, itemText) {
+export function saveScrumItem (scrumId, itemType, itemText, scrumItemScrumDate) {
 
 	return function (dispatch) {
 
@@ -424,7 +424,7 @@ export function saveScrumItem (scrumId, itemType, itemText) {
 			}
 
 			let timestampId = moment ().valueOf ();
-			let createdDate = moment ().format ("DD-MM-YYYY");
+			let createdDate = moment (scrumItemScrumDate, "DD-MM-YYYY").format ("DD-MM-YYYY");
 
 			//	Create a new scrum item
 			let newScrumItem = {
@@ -552,6 +552,9 @@ export function completeScrumItem (paramsScrumItemId, paramsCreatedAt, paramsIte
 			nextScrumDate.add (1, "days");
 			let nextScrumDateText = nextScrumDate.format ("DD-MM-YYYY");
 			let nextDayScrumFound = false;
+
+			console.log (moment (paramsCreatedAt, "DD-MM-YYYY").format ("DD-MM-YYYY"));
+			console.log (nextScrumDateText);
 
 			//	Iterate through the saved scrums and find the next days scrum
 			for (let i = 0; i < dailyScrums.length; i++) {

@@ -104,6 +104,7 @@ class ScrumHistoryItem extends Component {
 						isEditable={true}/>
 					<ScrumHistoryList 
 						scrumItemID={this.props.scrumItem.scrumId} 
+						scrumItemScrumDate={this.props.scrumItem.scrumDate}
 						itemType={"yesterday"}
 						displayDate={this.props.displayDate}/>
 					<TodayHeader 
@@ -111,6 +112,7 @@ class ScrumHistoryItem extends Component {
 						isEditable={true}/>
 					<ScrumHistoryList 
 						scrumItemID={this.props.scrumItem.scrumId} 
+						scrumItemScrumDate={this.props.scrumItem.scrumDate}
 						itemType={"today"}
 						displayDate={this.props.displayDate}/>
 					<BlockerHeader 
