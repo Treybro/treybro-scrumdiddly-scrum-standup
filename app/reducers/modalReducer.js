@@ -18,6 +18,9 @@ import {
 	TOGGLE_DELETE_ERROR_MODAL,
 	SHOW_DELETE_ERROR_MODAL,
 	HIDE_DELETE_ERROR_MODAL,
+	TOGGLE_BLOCKER_MODAL,
+	SHOW_BLOCKER_MODAL,
+	HIDE_BLOCKER_MODAL,
 } from "ModalActions";
 
 //  Default state to prepare for null
@@ -29,6 +32,7 @@ const defaultModalState = {
 	showCompletedErrorModal: false,
 	showDeleteErrorModal: false,
 	errorDescription: "",
+	showBlockerModal: false,
 };
 
 const modalReducer = (state = defaultModalState, action) => {
@@ -173,6 +177,30 @@ const modalReducer = (state = defaultModalState, action) => {
 			...state,
 			showDeleteErrorModal: false,
 			errorDescription: "",
+		};
+	}
+	case TOGGLE_BLOCKER_MODAL : {
+
+		return {
+
+			...state,
+			showBlockerModal: !state.showBlockerModal,
+		};
+	}
+	case SHOW_BLOCKER_MODAL : {
+
+		return {
+
+			...state,
+			showBlockerModal: true,
+		};
+	}
+	case HIDE_BLOCKER_MODAL : {
+
+		return {
+
+			...state,
+			showBlockerModal: false,
 		};
 	}
 	default:

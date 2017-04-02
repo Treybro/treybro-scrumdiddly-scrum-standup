@@ -14,6 +14,9 @@ export const HIDE_COMPLETED_ERROR_MODAL = "HIDE_COMPLETED_ERROR_MODAL";
 export const TOGGLE_DELETE_ERROR_MODAL = "TOGGLE_DELETE_ERROR_MODAL";
 export const SHOW_DELETE_ERROR_MODAL = "SHOW_DELETE_ERROR_MODAL";
 export const HIDE_DELETE_ERROR_MODAL = "HIDE_DELETE_ERROR_MODAL";
+export const TOGGLE_BLOCKER_MODAL = "TOGGLE_BLOCKER_MODAL";
+export const SHOW_BLOCKER_MODAL = "SHOW_BLOCKER_MODAL";
+export const HIDE_BLOCKER_MODAL = "HIDE_BLOCKER_MODAL";
 
 /*
 *	TODO - Refactor this
@@ -153,5 +156,32 @@ export function hideDeleteErrorModal () {
 	return {
 
 		type: HIDE_DELETE_ERROR_MODAL,
+	};
+}
+
+//	Toggle the display of the blocker modal
+export function toggleBlockerModal () {
+
+	return {
+
+		type: TOGGLE_BLOCKER_MODAL,
+	};
+}
+
+//	Show the blocker modal
+export function showBlockerModal () {
+
+	return {
+
+		type: SHOW_BLOCKER_MODAL,
+	};
+}
+
+//	Hide the blocker modal
+export function hideBlockerModal () {
+
+	return {
+
+		type: HIDE_BLOCKER_MODAL,
 	};
 }

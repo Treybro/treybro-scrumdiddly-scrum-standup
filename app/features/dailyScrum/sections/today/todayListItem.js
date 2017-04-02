@@ -21,6 +21,7 @@ import {
 	showBlockedErrorModal,
 	showCompletedErrorModal,
 	showDeleteErrorModal,
+	showBlockerModal,
 } from "ModalActions";
 
 import theme from "AppTheme";
@@ -39,6 +40,7 @@ export class TodayListItem extends Component {
 		showBlockedErrorModal: React.PropTypes.func.isRequired,
 		showCompletedErrorModal: React.PropTypes.func.isRequired,
 		showDeleteErrorModal: React.PropTypes.func.isRequired,
+		showBlockerModal: React.PropTypes.func.isRequired,
 	};
 
 	constructor (props) {
@@ -273,6 +275,8 @@ export class TodayListItem extends Component {
 			this.props.showCompletedErrorModal ();
 		} else {
 
+			this.props.showBlockerModal ();
+			/**
 			let toggle = !this.state.itemBlocked;
 			this.setState ({
 
@@ -282,6 +286,7 @@ export class TodayListItem extends Component {
 				let item = this.props.todayItem;
 				this.props.updateTodayItem (item.id, item.createdAt, item.itemText, this.state.itemCompleted, toggle, false);
 			});
+			**/
 		}
 	}
 
@@ -372,6 +377,7 @@ const styles = StyleSheet.create({
 */
 const mapDispatchToProps = dispatch => ({
 
+	showBlockerModal: () => dispatch (showBlockerModal ()),
 	showDeleteErrorModal: (errorDescription) => dispatch (showDeleteErrorModal (errorDescription)),
 	showCompletedErrorModal: () => dispatch (showCompletedErrorModal ()),
 	showBlockedErrorModal: () => dispatch (showBlockedErrorModal ()),

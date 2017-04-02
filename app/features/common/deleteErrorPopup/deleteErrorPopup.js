@@ -54,7 +54,7 @@ class DeleteErrorPopup extends Component {
 				visible={this.props.showDeleteErrorModal}
 				onRequestClose={() => this._hideModal ()}>
 				<View style={styles.containerView}>
-					<View style={styles.blockedErrorView}>
+					<View style={styles.deleteErrorView}>
 						<Image 
 							source={require("../../../assets/images/icons/icon-warning@3x.png")}
 							resizeMode={"stretch"}
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
 	},
-	blockedErrorView: {
+	deleteErrorView: {
 
 		width: 250,
 		height: 250,
