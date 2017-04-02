@@ -56,7 +56,7 @@ class DeleteErrorPopup extends Component {
 				<View style={styles.containerView}>
 					<View style={styles.blockedErrorView}>
 						<Image 
-							source={require("../../../assets/images/icons/icon-bin@3x.png")}
+							source={require("../../../assets/images/icons/icon-warning@3x.png")}
 							resizeMode={"stretch"}
 							style={styles.icon}/>
 						<Text style={styles.headerText}>{(this.props.errorDescription === "completed") ? "Item is completed!" : "Item is blocked!"}</Text>
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
 
 		width: 250,
 		height: 250,
-		backgroundColor: theme.pink,
+		backgroundColor: theme.lightOrange,
 		borderRadius: 10,
 		alignItems: "center",
 		justifyContent: "center",
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
 
 		marginTop: 20,
 		height: 80,
-		width: 50,
+		width: 80,
 		tintColor: theme.white,
 	},
 });

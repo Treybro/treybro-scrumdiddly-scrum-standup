@@ -55,7 +55,7 @@ class BlockedErrorPopup extends Component {
 				<View style={styles.containerView}>
 					<View style={styles.blockedErrorView}>
 						<Image 
-							source={require("../../../assets/images/icons/icon-blocker@3x.png")}
+							source={require("../../../assets/images/icons/icon-warning@3x.png")}
 							resizeMode={"stretch"}
 							style={styles.icon}/>
 						<Text style={styles.headerText}>Item is blocked!</Text>
