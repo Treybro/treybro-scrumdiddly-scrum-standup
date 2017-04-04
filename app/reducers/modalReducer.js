@@ -33,6 +33,7 @@ const defaultModalState = {
 	showDeleteErrorModal: false,
 	errorDescription: "",
 	showBlockerModal: false,
+	selectedScrumItemObject: {},
 };
 
 const modalReducer = (state = defaultModalState, action) => {
@@ -193,6 +194,7 @@ const modalReducer = (state = defaultModalState, action) => {
 
 			...state,
 			showBlockerModal: true,
+			selectedScrumItemObject: action.selectedScrumItemObject,
 		};
 	}
 	case HIDE_BLOCKER_MODAL : {

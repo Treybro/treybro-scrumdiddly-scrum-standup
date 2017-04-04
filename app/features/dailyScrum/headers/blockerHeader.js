@@ -41,7 +41,7 @@ export class BlockerHeader extends Component {
 			return (
 
 				<View style={styles.viewContainer}>
-					<Text style={styles.yesterdayText}>Blockers...</Text>
+					<Text style={styles.yesterdayText}>I am blocked by...</Text>
 				</View>
 			);
 		}

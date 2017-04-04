@@ -220,7 +220,7 @@ export class TodayListItem extends Component {
 				if (itemText !== this.props.todayItem.itemText) {
 
 					let item = this.props.todayItem;
-					this.props.updateTodayItem (item.id, item.createdAt, itemText, this.state.itemCompleted, this.state.itemBlocked, true);
+					this.props.updateTodayItem (item.id, item.createdAt, itemText, this.state.itemCompleted, this.state.itemBlocked, true, false, null);
 				}
 			});
 		} else {
@@ -259,7 +259,7 @@ export class TodayListItem extends Component {
 			}, () => {
 
 				let item = this.props.todayItem;
-				this.props.updateTodayItem (item.id, item.createdAt, item.itemText, toggle, this.state.itemBlocked, true);
+				this.props.updateTodayItem (item.id, item.createdAt, item.itemText, toggle, this.state.itemBlocked, true, false, null);
 			});
 		}
 	}
@@ -275,18 +275,22 @@ export class TodayListItem extends Component {
 			this.props.showCompletedErrorModal ();
 		} else {
 
-			this.props.showBlockerModal ();
-			/**
-			let toggle = !this.state.itemBlocked;
-			this.setState ({
+			//	Can't block an already blocked item
+			if (this.state.itemBlocked === true) {
 
-				itemBlocked: toggle,
-			}, () => {
+				this.setState ({
+
+					itemBlocked: false,
+				}, () => {
+
+					let item = this.props.todayItem;
+					this.props.updateTodayItem (item.id, item.createdAt, item.itemText, this.state.itemCompleted, false, false, true, null);
+				});
+			} else {
 
 				let item = this.props.todayItem;
-				this.props.updateTodayItem (item.id, item.createdAt, item.itemText, this.state.itemCompleted, toggle, false);
-			});
-			**/
+				this.props.showBlockerModal (item.id, item.createdAt, item.itemText, this.state.itemCompleted, true);
+			}
 		}
 	}
 
@@ -377,12 +381,12 @@ const styles = StyleSheet.create({
 */
 const mapDispatchToProps = dispatch => ({
 
-	showBlockerModal: () => dispatch (showBlockerModal ()),
+	showBlockerModal: (scrumItemId, scrumItemCreatedAt, scrumItemItemText, scrumItemCompleted, scrumItemBlocked) => dispatch (showBlockerModal (scrumItemId, scrumItemCreatedAt, scrumItemItemText, scrumItemCompleted, scrumItemBlocked)),
 	showDeleteErrorModal: (errorDescription) => dispatch (showDeleteErrorModal (errorDescription)),
 	showCompletedErrorModal: () => dispatch (showCompletedErrorModal ()),
 	showBlockedErrorModal: () => dispatch (showBlockedErrorModal ()),
 	showDeleteScrumItemModalTodayItem: (todayItemId) => dispatch (showDeleteScrumItemModalTodayItem (todayItemId)),
-	updateTodayItem: (originalItemId, itemCreatedAt, updatedText, updatedCompletedState, updatedBlockedState, updateCompletedItem) => dispatch (updateTodayItem (originalItemId, itemCreatedAt, updatedText, updatedCompletedState, updatedBlockedState, updateCompletedItem)),
+	updateTodayItem: (originalItemId, itemCreatedAt, updatedText, updatedCompletedState, updatedBlockedState, updateCompletedItem, updateBlockerItem, blockerItemText) => dispatch (updateTodayItem (originalItemId, itemCreatedAt, updatedText, updatedCompletedState, updatedBlockedState, updateCompletedItem, updateBlockerItem, blockerItemText)),
 });
 
 export default connect (null, mapDispatchToProps)(TodayListItem);

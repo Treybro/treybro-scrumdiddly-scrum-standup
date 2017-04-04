@@ -11,6 +11,10 @@ import {
 	TOGGLE_CREATE_TODAY_ITEM,
 	COMPLETED_TODAY_SCRUM_ITEM,
 	CANCELED_TODAY_SCRUM_ITEM,
+	ADD_BLOCKER_ITEM,
+	FETCH_BLOCKER_ITEMS,
+	RECEIVE_BLOCKER_ITEMS,
+	REMOVE_BLOCKER_ITEM,
 } from "TodayListActions";
 
 //  Default state to prepare for null
@@ -19,6 +23,8 @@ const todayListState = {
 	isFetchingTodayItems: false,
 	todaysItems: [],
 	toggleCreate: false,
+	isFetchingBlockerItems: false,
+	blockerItems: [],
 };
 
 const todayListReducer = (state = todayListState, action) => {
@@ -89,6 +95,52 @@ const todayListReducer = (state = todayListState, action) => {
 		return {
 
 			...state,
+		};
+	}
+	case FETCH_BLOCKER_ITEMS : {
+
+		return {
+
+			...state,
+			isFetchingBlockerItems: true,
+		};
+	}
+	case RECEIVE_BLOCKER_ITEMS : {
+
+		let toDoItems = action.todayScrumItems;
+		console.log (toDoItems);
+		return {
+
+			...state,
+			isFetchingBlockerItems: false,
+			blockerItems: toDoItems,
+		};
+	}
+	case ADD_BLOCKER_ITEM : {
+
+		return {
+			...state,
+			blockerItems: [
+				action.newScrumItem,
+				...state.blockerItems,
+			],
+		};
+	}
+	case REMOVE_BLOCKER_ITEM : {
+		
+		let itemsList = [...state.blockerItems];
+		for (let i = 0; i < itemsList.length; i++) {
+			
+			let item = itemsList[i];
+			if (item.originalScrumItemId === action.itemId) {
+
+				itemsList.splice(i,1);
+			}
+		}
+		return {
+
+			...state,
+			blockerItems: itemsList,
 		};
 	}
 	default:

@@ -169,11 +169,20 @@ export function toggleBlockerModal () {
 }
 
 //	Show the blocker modal
-export function showBlockerModal () {
+export function showBlockerModal (scrumItemId, scrumItemCreatedAt, scrumItemItemText, scrumItemCompleted, scrumItemBlocked) {
+	
+	let selectedScrumItemObject = {
 
+		scrumItemId: scrumItemId,
+		scrumItemCreatedAt: scrumItemCreatedAt,
+		scrumItemItemText: scrumItemItemText,
+		scrumItemCompleted: scrumItemCompleted,
+		scrumItemBlocked: scrumItemBlocked,
+	};
 	return {
 
 		type: SHOW_BLOCKER_MODAL,
+		selectedScrumItemObject,
 	};
 }
 

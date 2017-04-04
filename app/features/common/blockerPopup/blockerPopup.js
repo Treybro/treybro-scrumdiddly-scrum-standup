@@ -18,10 +18,8 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 
-import {
-
-	hideBlockerModal,
-} from "ModalActions";
+import { hideBlockerModal } from "ModalActions";
+import { updateTodayItem } from "TodayListActions";
 
 import theme from "AppTheme";
 
@@ -32,6 +30,8 @@ class BlockerPopup extends Component {
 
 		showBlockerModal: React.PropTypes.bool.isRequired,
 		hideBlockerModal: React.PropTypes.func.isRequired,
+		selectedScrumItemObject: React.PropTypes.object.isRequired,
+		updateTodayItem: React.PropTypes.func.isRequired,
 	};
 
 	//	Default constructor
@@ -118,6 +118,23 @@ class BlockerPopup extends Component {
 	//	Blocks the item
 	_blockItem () {
 
+		let itemText = this.state.editedText.trim ();
+		if (itemText !== undefined && itemText !== null && itemText.length > 0 && itemText.length <= 240) {
+
+			this.setState ({
+
+				editedText: "",
+				canSave: false,
+			}, () => {
+
+				let scrumObject = this.props.selectedScrumItemObject;
+				this.props.updateTodayItem (scrumObject.scrumItemId, scrumObject.scrumItemCreatedAt, scrumObject.scrumItemItemText, scrumObject.scrumItemCompleted, true, false, true, itemText);
+				this.props.hideBlockerModal ();
+			});
+		} else {
+
+			//	TODO - fancy animation and vibration or something
+		}
 	}
 
 	/*
@@ -234,6 +251,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => ({
 
 	showBlockerModal: state.modalReducer.showBlockerModal,
+	selectedScrumItemObject: state.modalReducer.selectedScrumItemObject,
 });
 
 /*
@@ -242,6 +260,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
 
 	hideBlockerModal: () => dispatch (hideBlockerModal ()),
+	updateTodayItem: (originalItemId, itemCreatedAt, updatedText, updatedCompletedState, updatedBlockedState, updateCompletedItem, updateBlockerItem, blockerItemText) => dispatch (updateTodayItem (originalItemId, itemCreatedAt, updatedText, updatedCompletedState, updatedBlockedState, updateCompletedItem, updateBlockerItem, blockerItemText)),
 });
 
 export default connect(mapStateToProps,mapDispatchToProps)(BlockerPopup);

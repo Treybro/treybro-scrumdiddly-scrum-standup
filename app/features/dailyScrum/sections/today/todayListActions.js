@@ -13,12 +13,15 @@ export const RECEIVE_TODAY_ITEMS = "RECEIVE_TODAY_ITEMS";
 export const ADD_TODAY_ITEM = "ADD_TODAY_ITEM";
 export const REMOVE_TODAY_ITEM = "REMOVE_TODAY_ITEM";
 export const TOGGLE_CREATE_TODAY_ITEM = "TOGGLE_CREATE_TODAY_ITEM";
-export const DELETE_TODAY_ITEM = "DELETE_TODAY_ITEM";
 export const UPDATE_TODAY_ITEM = "UPDATE_TODAY_ITEM";
 export const UPDATING_TODAY_ITEM = "UPDATING_TODAY_ITEM";
 export const UPDATED_TODAY_ITEM = "UPDATED_TODAY_ITEM";
 export const COMPLETED_TODAY_SCRUM_ITEM = "COMPLETED_TODAY_SCRUM_ITEM";
 export const CANCELED_TODAY_SCRUM_ITEM = "CANCELED_TODAY_SCRUM_ITEM";
+export const FETCH_BLOCKER_ITEMS = "FETCH_BLOCKER_ITEMS";
+export const RECEIVE_BLOCKER_ITEMS = "RECEIVE_BLOCKER_ITEMS";
+export const ADD_BLOCKER_ITEM = "ADD_BLOCKER_ITEM";
+export const REMOVE_BLOCKER_ITEM = "REMOVE_BLOCKER_ITEM";
 
 //	Tell the app we are getting the today items
 export function getTodayItems () {
@@ -202,10 +205,6 @@ export function saveTodayItem (itemText) {
 		}).then (function () {
 
 			console.log ("Item Saved");
-		}, function (err) {
-
-			//	TODO - handle error message
-			console.log (err);
 		});
 	};
 }
@@ -283,7 +282,7 @@ export function toggleCreateTodayItem () {
 }
 
 //	Edit the current item
-export function updateTodayItem (originalItemId, itemCreatedAt, updatedText, updatedCompletedState, updatedBlockedState, updateCompletedItem) {
+export function updateTodayItem (originalItemId, itemCreatedAt, updatedText, updatedCompletedState, updatedBlockedState, updateCompletedItem, updateBlockerItem, blockerItemText) {
 
 	return function (dispatch) {
 
@@ -332,6 +331,21 @@ export function updateTodayItem (originalItemId, itemCreatedAt, updatedText, upd
 
 					//	Remove the scrum item from the next scrum
 					dispatch (cancelTodayScrumItem (originalItemId, itemCreatedAt));
+				}
+			}
+
+			//	Do we need to add a blocker to the item?
+			if (updateBlockerItem === true) {
+
+				if (updatedBlockedState === true) {
+
+					//	Add a blocker to the scrum item
+					dispatch (blockTodayScrumItem (originalItemId, blockerItemText));
+				} else {
+
+					console.log ("Unblocking an item");
+					//	Remove the blocker from the scrum
+					dispatch (unblockTodayScrumItem (originalItemId));
 				}
 			}
 		});
@@ -535,5 +549,256 @@ export function canceledTodayScrumItem () {
 	return {
 
 		type: CANCELED_TODAY_SCRUM_ITEM,
+	};
+}
+
+//	Tell the app we are getting todays blocker items
+export function getBlockerItems () {
+
+	return function (dispatch) {
+
+		//	Tell the app to fetch from localstorage  
+		//	TODO - add API request
+		dispatch (fetchBlockerItems ());
+		return AsyncStorage.getItem ("scrumdiddly").then (function (results) {
+			
+			dispatch (receiveBlockerItems (results));
+		});
+	};
+}
+
+//	Tell the app we are fetching todays blocker items
+export function fetchBlockerItems () {
+
+	return {
+
+		type: FETCH_BLOCKER_ITEMS,
+	};
+}
+
+//	Tell the app we have received a list of todays blockers
+export function receiveBlockerItems (results) {
+
+	//	Convert to JSON object
+	let savedScrums = results;
+	if (savedScrums === undefined || savedScrums === null || savedScrums.length === 0) {
+
+		savedScrums = {
+
+			"dailyscrums": [],
+		};
+	} else {
+
+		savedScrums = JSON.parse (savedScrums);
+	}
+
+	//	Get todays date
+	let today = moment ().format ("DD-MM-YYYY");
+	let dailyScrums = savedScrums.dailyscrums;
+
+	//	Return a list of items marked as today
+	let todayScrumItems = [];
+
+	// Do we have any saved scrums?
+	if (dailyScrums !== undefined && dailyScrums !== null && dailyScrums.length > 0) {
+
+		//	Iterate over all saved scrums
+		for (let i = 0; i < dailyScrums.length; i++) {
+
+			let scrum = dailyScrums[i];
+			if (scrum.scrumDate === today) {
+
+				//	Does the scrum have any items to display?
+				if (scrum.scrumItems !== null && scrum.scrumItems !== undefined && scrum.scrumItems.length > 0) {
+
+					let scrumItems = scrum.scrumItems;
+					// Find scrum items marked as blocker items
+					for (let j = 0; j < scrumItems.length; j++) {
+
+						let scrumItem = scrumItems[j];
+						if (scrumItem.itemType === "blocker") {
+
+							//	Add this item to be diplayed within the today section
+							todayScrumItems.push (scrumItem);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	return {
+
+		type: RECEIVE_BLOCKER_ITEMS,
+		todayScrumItems,
+	};
+}
+
+//	Tell the app we want to save a blocker
+export function blockTodayScrumItem (originalScrumItemId, itemText) {
+
+	return function (dispatch) {
+
+		return AsyncStorage.getItem ("scrumdiddly").then (function (results) {
+
+			//	Convert to JSON object
+			let savedScrums = results;
+			if (savedScrums === undefined || savedScrums === null) {
+
+				savedScrums = {
+
+					"dailyscrums": [],
+				};
+			} else {
+
+				savedScrums = JSON.parse(savedScrums);
+			}
+			let dailyScrums = savedScrums.dailyscrums;
+
+			if (dailyScrums === undefined || dailyScrums === null) {
+
+				//	Create empty array to store new scrum
+				dailyScrums = [];
+			}
+
+			let timestampId = moment ().valueOf ();
+			let createdDate = moment ().format ("DD-MM-YYYY");
+
+			//	Create a new scrum item
+			let newScrumItem = {
+
+				"id": timestampId,
+				"originalScrumItemId": originalScrumItemId,
+				"createdAt": createdDate,
+				"itemText": itemText,
+				"completed": false,
+				"blocked": true,
+				"itemType": "blocker",
+			};
+			//	Add the new blocker to the current displayed blockers
+			dispatch (addBlockerItem (newScrumItem));
+
+			//	Is this our first scrum?
+			if (dailyScrums.length > 0) {
+
+				let scrumFound = false;
+				//	Iterate over all the saved scrums
+				for (let i = 0; i < dailyScrums.length; i++) {
+
+					let scrum = dailyScrums[i];
+					//	Are we saving to the correct scrum?
+					if (scrum.scrumDate === createdDate) {
+
+						let scrumItems = dailyScrums[i].scrumItems;
+						scrumItems.push (newScrumItem);
+						scrumFound = true;
+					}
+				}
+
+				//	First item in a new scrum
+				if (scrumFound === false) {
+
+					let scrumItems = [];
+					//	Add the scrum item to the scrum items list
+					scrumItems.push (newScrumItem);
+
+					//	Create the new scrum
+					let newScrum = {
+
+						"scrumId": timestampId,
+						"scrumDate": createdDate,
+						"scrumItems": scrumItems,
+					};
+
+					//	Add the scrum to the list of users scrums
+					dailyScrums.push (newScrum);
+				}
+			} else {
+
+				let scrumItems = [];
+				//	Add the scrum item to the scrum items list
+				scrumItems.push (newScrumItem);
+
+				//	Create our first new scrum
+				let newScrum = {
+
+					"scrumId": timestampId,
+					"scrumDate": createdDate,
+					"scrumItems": scrumItems,
+				};
+				//	Add the scrum to the list of users scrums
+				dailyScrums.push (newScrum);
+			}
+
+			savedScrums.dailyscrums = dailyScrums;
+			return AsyncStorage.mergeItem ("scrumdiddly", JSON.stringify (savedScrums));
+		}).then (function () {
+
+			console.log ("Item Saved");
+		});
+	};
+}
+
+//	Add an item to the users today blocker items
+export function addBlockerItem (newScrumItem) {
+	
+	return {
+
+		type: ADD_BLOCKER_ITEM,
+		newScrumItem,
+	};
+}
+
+//	Deletes the blocker item from local storage
+export function unblockTodayScrumItem (itemId) {
+
+	return function (dispatch) {
+
+		dispatch (removeBlockerItem (itemId));
+		return AsyncStorage.getItem ("scrumdiddly").then (function (results) {
+
+			let resultsObject = JSON.parse(results);
+			let savedScrums = resultsObject.dailyscrums;
+			let today = moment ().format ("DD-MM-YYYY");
+
+			//	Iterate through the saved scrums
+			for (let i = 0; i < savedScrums.length; i++) {
+
+				let scrum = savedScrums[i];
+				//	Remove the scrum from todays scrum
+				if (scrum.scrumDate === today) {
+
+					let scrumItems = scrum.scrumItems;
+					for (let j = 0; j < scrumItems.length; j++) {
+
+						let scrumItem = scrumItems[j];
+						if (scrumItem.originalScrumItemId === itemId) {
+
+							console.log ("Found an item");
+							scrumItems.splice(j, 1);
+						}
+					}
+				}
+			}
+			resultsObject.dailyscrums = savedScrums;
+			return AsyncStorage.mergeItem ("scrumdiddly", JSON.stringify (resultsObject));
+		}).then (function () {
+
+			console.log ("Item Removed");
+		}, function (err) {
+
+			//	TODO - handle error message
+			console.log (err);
+		});
+	};
+}
+
+//	Removes the blocker from the display list
+export function removeBlockerItem (itemId) {
+	
+	return {
+
+		type: REMOVE_BLOCKER_ITEM,
+		itemId,
 	};
 }

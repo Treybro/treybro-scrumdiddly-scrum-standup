@@ -27,6 +27,7 @@ import TodayHeader from "TodayHeader";
 import BlockerHeader from "BlockerHeader";
 import YesterdayList from "YesterdayList";
 import TodayList from "TodayList";
+import BlockerList from "BlockerList";
 
 import theme from "AppTheme";
 import getIconAsset from "IconAssets";
@@ -99,6 +100,7 @@ class DailyTab extends Component {
 					<BlockerHeader
 						headerType={"daily"}
 						isEditable={false}/>
+					<BlockerList />
 				</ScrollView>
 			</View>
 		);
