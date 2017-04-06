@@ -118,6 +118,11 @@ class ScrumHistoryItem extends Component {
 					<BlockerHeader 
 						headerType={"history"}
 						isEditable={false}/>
+					<ScrumHistoryList 
+						scrumItemID={this.props.scrumItem.scrumId} 
+						scrumItemScrumDate={this.props.scrumItem.scrumDate}
+						itemType={"blocker"}
+						displayDate={this.props.displayDate}/>
 				</ScrollView>
 			</View>
 		);

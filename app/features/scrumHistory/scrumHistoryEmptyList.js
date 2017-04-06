@@ -99,33 +99,61 @@ export class EmptyScrumList extends Component {
 					</View>
 				</TouchableOpacity>
 			);
-		}
+		} else if (this.props.itemType === "today") {
 
-		//	Don't display if a user is creating an item
-		if (this.props.toggleCreateTodayItem === true) {
+			//	Don't display if a user is creating an item
+			if (this.props.toggleCreateTodayItem === true) {
 
-			return null;
-		}
+				return null;
+			}
 
-		if (this.props.allowUserToAddItems === false) {
+			if (this.props.allowUserToAddItems === false) {
 
+				return (
+
+					<View style={styles.containerView}>
+						<Text style={styles.emptyText}>You did not complete anything on {this.state.newDisplayDate}, add an item to show how busy you were!</Text>
+					</View>
+				);	
+			}
+
+			//	Standard view
 			return (
 
-				<View style={styles.containerView}>
-					<Text style={styles.emptyText}>You did not complete anything on {this.state.newDisplayDate}, add an item to show how busy you were!</Text>
-				</View>
-			);	
+				<TouchableOpacity onPress={() => this.props.toggleCreateScrumItem (this.props.itemType, true)}>
+					<View style={styles.containerView}>
+						<Text style={styles.emptyText}>You did not complete anything on {this.state.newDisplayDate}, add an item to show how busy you were!</Text>
+					</View>
+				</TouchableOpacity>
+			);
+		} else {
+
+			//	Don't display if a user is creating an item
+			if (this.props.toggleCreateTodayItem === true) {
+
+				return null;
+			}
+
+			if (this.props.allowUserToAddItems === false) {
+
+				return (
+
+					<View style={styles.containerView}>
+						<Text style={styles.emptyText}>You're path was clear on {this.state.newDisplayDate}</Text>
+					</View>
+				);	
+			}
+
+			//	Standard view
+			return (
+
+				<TouchableOpacity onPress={() => this.props.toggleCreateScrumItem (this.props.itemType, true)}>
+					<View style={styles.containerView}>
+						<Text style={styles.emptyText}>You're path was clear on {this.state.newDisplayDate}</Text>
+					</View>
+				</TouchableOpacity>
+			);
 		}
-
-		//	Standard view
-		return (
-
-			<TouchableOpacity onPress={() => this.props.toggleCreateScrumItem (this.props.itemType, true)}>
-				<View style={styles.containerView}>
-					<Text style={styles.emptyText}>You did not complete anything on {this.state.newDisplayDate}, add an item to show how busy you were!</Text>
-				</View>
-			</TouchableOpacity>
-		);
 	}
 }
 

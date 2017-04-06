@@ -62,8 +62,6 @@ export class YesterdayListItem extends Component {
 			itemBlocked: this.props.listItem.blocked,
 			canSave: false,
 		};
-
-		console.log (this.props.listItem.createdAt);
 	}
 
 	render () {

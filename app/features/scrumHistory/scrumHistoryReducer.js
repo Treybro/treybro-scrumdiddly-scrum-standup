@@ -35,6 +35,7 @@ const scrumHistoryState = {
 	displayCalendar: true,
 	scrumYesterdayItems: [],
 	scrumTodayItems: [],
+	scrumBlockerItems: [],
 	toggleCreateYesterdayItem: false,
 	toggleCreateTodayItem: false,
 };
@@ -115,12 +116,19 @@ const scrumHistoryReducer = (state = scrumHistoryState, action) => {
 				...state,
 				scrumYesterdayItems: action.foundScrumItems,
 			};
-		} else {
+		} else if (itemType === "today"){
 
 			return {
 
 				...state,
 				scrumTodayItems: action.foundScrumItems,
+			};
+		} else {
+
+			return {
+
+				...state,
+				scrumBlockerItems: action.foundScrumItems,
 			};
 		}
 	}

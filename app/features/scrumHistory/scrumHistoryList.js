@@ -9,6 +9,7 @@ import {
 
 	View,
 	StyleSheet,
+	Text,
 } from "react-native";
 import { connect } from "react-redux";
 import {
@@ -34,6 +35,7 @@ class ScrumHistoryList extends Component {
 		getScrumItemsForId: React.PropTypes.func.isRequired,
 		scrumYesterdayItems: React.PropTypes.array.isRequired,
 		scrumTodayItems: React.PropTypes.array.isRequired,
+		scrumBlockerItems: React.PropTypes.array.isRequired,
 	};
 
 	//	Default constructor
@@ -90,46 +92,79 @@ class ScrumHistoryList extends Component {
 					}
 				</View>
 			);
-		}
+		} else if (this.props.itemType === "today") {
 
-		// Do we have any items to display?
-		if (this.props.scrumTodayItems === undefined || this.props.scrumTodayItems === null || this.props.scrumTodayItems.length === 0) {
+			// Do we have any items to display?
+			if (this.props.scrumTodayItems === undefined || this.props.scrumTodayItems === null || this.props.scrumTodayItems.length === 0) {
+
+				return (
+
+					<View style={styles.card}>
+						<CreateScrumItem 
+							itemType={this.props.itemType}
+							scrumItemID={this.props.scrumItemID}
+							scrumItemScrumDate={this.props.scrumItemScrumDate}/>
+						<EmptyScrumList
+							itemType={this.props.itemType}
+							displayDate={this.props.displayDate}
+							allowUserToAddItems={true}/>
+					</View>
+				);
+			}
 
 			return (
 
-				<View style={styles.card}>
+				<View style={styles.containerView}>
 					<CreateScrumItem 
 						itemType={this.props.itemType}
 						scrumItemID={this.props.scrumItemID}
 						scrumItemScrumDate={this.props.scrumItemScrumDate}/>
-					<EmptyScrumList
-						itemType={this.props.itemType}
-						displayDate={this.props.displayDate}
-						allowUserToAddItems={true}/>
+					{
+						this.props.scrumTodayItems.map ((todayItem) => (
+
+							<ScrumHistoryListItem 
+								key={"list-item-today-key-" + todayItem.id}
+								scrumId={this.props.scrumItemID}
+								listItem={todayItem}
+								userCanEditContents={true}
+								/>
+						))
+					}
+				</View>
+			);
+		} else {
+
+			// Do we have any items to display?
+			if (this.props.scrumBlockerItems === undefined || this.props.scrumBlockerItems === null || this.props.scrumBlockerItems.length === 0) {
+
+				return (
+
+					<View style={styles.card}>
+						<EmptyScrumList
+							itemType={this.props.itemType}
+							displayDate={this.props.displayDate}
+							allowUserToAddItems={false}/>
+					</View>
+				);
+			}
+
+			return (
+
+				<View style={styles.containerView}>
+					{
+						this.props.scrumBlockerItems.map ((blockerItem) => (
+
+							<ScrumHistoryListItem 
+								key={"list-item-blocker-key-" + blockerItem.id}
+								scrumId={this.props.scrumItemID}
+								listItem={blockerItem}
+								userCanEditContents={false}
+								/>
+						))
+					}
 				</View>
 			);
 		}
-
-		return (
-
-			<View style={styles.containerView}>
-				<CreateScrumItem 
-					itemType={this.props.itemType}
-					scrumItemID={this.props.scrumItemID}
-					scrumItemScrumDate={this.props.scrumItemScrumDate}/>
-				{
-					this.props.scrumTodayItems.map ((todayItem) => (
-
-						<ScrumHistoryListItem 
-							key={"list-item-today-key-" + todayItem.id}
-							scrumId={this.props.scrumItemID}
-							listItem={todayItem}
-							userCanEditContents={true}
-							/>
-					))
-				}
-			</View>
-		);
 	}
 }
 
@@ -149,6 +184,7 @@ const mapStateToProps = state => ({
 
 	scrumYesterdayItems: state.scrumHistoryReducer.scrumYesterdayItems,
 	scrumTodayItems: state.scrumHistoryReducer.scrumTodayItems,
+	scrumBlockerItems: state.scrumHistoryReducer.scrumBlockerItems,
 });
 
 /*
