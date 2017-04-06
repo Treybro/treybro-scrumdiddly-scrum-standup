@@ -20,6 +20,7 @@ import { connect } from "react-redux";
 
 import { hideBlockerModal } from "ModalActions";
 import { updateTodayItem } from "TodayListActions";
+import { updateScrumItem } from "ScrumHistoryActions";
 
 import theme from "AppTheme";
 
@@ -32,6 +33,7 @@ class BlockerPopup extends Component {
 		hideBlockerModal: React.PropTypes.func.isRequired,
 		selectedScrumItemObject: React.PropTypes.object.isRequired,
 		updateTodayItem: React.PropTypes.func.isRequired,
+		updateScrumItem: React.PropTypes.func.isRequired,
 	};
 
 	//	Default constructor
@@ -128,7 +130,15 @@ class BlockerPopup extends Component {
 			}, () => {
 
 				let scrumObject = this.props.selectedScrumItemObject;
-				this.props.updateTodayItem (scrumObject.scrumItemId, scrumObject.scrumItemCreatedAt, scrumObject.scrumItemItemText, scrumObject.scrumItemCompleted, true, false, true, itemText);
+
+				if (scrumObject.scrumItemSection === "today") {
+
+					this.props.updateTodayItem (scrumObject.scrumItemId, scrumObject.scrumItemCreatedAt, scrumObject.scrumItemItemText, scrumObject.scrumItemCompleted, true, false, true, itemText);
+				} else {
+
+												//scrumID, 					itemId, 				itemCreatedAt, 					itemType, updatedText, updatedCompletedState, updatedBlockedState, updateCompletedItem
+					this.props.updateScrumItem (scrumObject.originalScrumId, scrumObject.scrumItemId, scrumObject.scrumItemCreatedAt, "today", scrumObject.scrumItemItemText, scrumObject.scrumItemCompleted, true, false, true, itemText);
+				}
 				this.props.hideBlockerModal ();
 			});
 		} else {
@@ -261,6 +271,7 @@ const mapDispatchToProps = dispatch => ({
 
 	hideBlockerModal: () => dispatch (hideBlockerModal ()),
 	updateTodayItem: (originalItemId, itemCreatedAt, updatedText, updatedCompletedState, updatedBlockedState, updateCompletedItem, updateBlockerItem, blockerItemText) => dispatch (updateTodayItem (originalItemId, itemCreatedAt, updatedText, updatedCompletedState, updatedBlockedState, updateCompletedItem, updateBlockerItem, blockerItemText)),
+	updateScrumItem: (scrumID, itemId, itemCreatedAt, itemType, updatedText, updatedCompletedState, updatedBlockedState, updateCompletedItem, updateBlockerItem, blockerItemText) => dispatch (updateScrumItem (scrumID, itemId, itemCreatedAt, itemType, updatedText, updatedCompletedState, updatedBlockedState, updateCompletedItem, updateBlockerItem, blockerItemText)),
 });
 
 export default connect(mapStateToProps,mapDispatchToProps)(BlockerPopup);

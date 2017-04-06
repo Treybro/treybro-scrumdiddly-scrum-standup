@@ -289,7 +289,7 @@ export class TodayListItem extends Component {
 			} else {
 
 				let item = this.props.todayItem;
-				this.props.showBlockerModal (item.id, item.createdAt, item.itemText, this.state.itemCompleted, true);
+				this.props.showBlockerModal (item.id, item.createdAt, item.itemText, this.state.itemCompleted, true, "today", "");
 			}
 		}
 	}
@@ -381,7 +381,7 @@ const styles = StyleSheet.create({
 */
 const mapDispatchToProps = dispatch => ({
 
-	showBlockerModal: (scrumItemId, scrumItemCreatedAt, scrumItemItemText, scrumItemCompleted, scrumItemBlocked) => dispatch (showBlockerModal (scrumItemId, scrumItemCreatedAt, scrumItemItemText, scrumItemCompleted, scrumItemBlocked)),
+	showBlockerModal: (scrumItemId, scrumItemCreatedAt, scrumItemItemText, scrumItemCompleted, scrumItemBlocked, scrumItemSection, originalScrumId) => dispatch (showBlockerModal (scrumItemId, scrumItemCreatedAt, scrumItemItemText, scrumItemCompleted, scrumItemBlocked, scrumItemSection, originalScrumId)),
 	showDeleteErrorModal: (errorDescription) => dispatch (showDeleteErrorModal (errorDescription)),
 	showCompletedErrorModal: () => dispatch (showCompletedErrorModal ()),
 	showBlockedErrorModal: () => dispatch (showBlockedErrorModal ()),

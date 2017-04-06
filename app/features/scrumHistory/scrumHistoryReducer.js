@@ -17,6 +17,7 @@ import {
 	TOGGLE_CREATE_SCRUM_TODAY_ITEM,
 	REMOVE_SCRUM_YESTERDAY_ITEM,
 	REMOVE_SCRUM_TODAY_ITEM,
+	REMOVE_SCRUM_BLOCKER_ITEM,
 	SAVE_SCRUM_ITEM,
 	ADD_SCRUM_ITEM,
 	COMPLETED_SCRUM_ITEM,
@@ -193,6 +194,24 @@ const scrumHistoryReducer = (state = scrumHistoryState, action) => {
 			scrumTodayItems: itemsList,
 		};
 	}
+	case REMOVE_SCRUM_BLOCKER_ITEM : {
+
+		let itemsList = [...state.scrumBlockerItems];
+		for (let i = 0; i < itemsList.length; i++) {
+			
+			let item = itemsList[i];
+			if (item.originalScrumItemId === action.itemId) {
+
+				itemsList.splice(i,1);
+			}
+		}
+
+		return {
+
+			...state,
+			scrumBlockerItems: itemsList,
+		};
+	}
 	case SAVE_SCRUM_ITEM: {
 
 		return {
@@ -211,7 +230,7 @@ const scrumHistoryReducer = (state = scrumHistoryState, action) => {
 					...state.scrumYesterdayItems,
 				],
 			};
-		} else {
+		} else if (action.newScrumItem.itemType === "today") {
 
 			return {
 
@@ -219,6 +238,16 @@ const scrumHistoryReducer = (state = scrumHistoryState, action) => {
 				scrumTodayItems: [
 					action.newScrumItem,
 					...state.scrumTodayItems,
+				],
+			};
+		} else {
+
+			return {
+
+				...state,
+				scrumBlockerItems: [
+					action.newScrumItem,
+					...state.scrumBlockerItems,
 				],
 			};
 		}

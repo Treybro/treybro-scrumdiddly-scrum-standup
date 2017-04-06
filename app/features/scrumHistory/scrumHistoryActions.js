@@ -22,6 +22,7 @@ export const TOGGLE_CREATE_SCRUM_YESTERDAY_ITEM = "TOGGLE_CREATE_SCRUM_YESTERDAY
 export const TOGGLE_CREATE_SCRUM_TODAY_ITEM = "TOGGLE_CREATE_SCRUM_TODAY_ITEM";
 export const REMOVE_SCRUM_YESTERDAY_ITEM = "REMOVE_SCRUM_YESTERDAY_ITEM";
 export const REMOVE_SCRUM_TODAY_ITEM = "REMOVE_SCRUM_TODAY_ITEM";
+export const REMOVE_SCRUM_BLOCKER_ITEM = "REMOVE_SCRUM_BLOCKER_ITEM";
 export const SAVE_SCRUM_ITEM = "SAVE_SCRUM_ITEM";
 export const ADD_SCRUM_ITEM = "ADD_SCRUM_ITEM";
 export const COMPLETED_SCRUM_ITEM = "COMPLETED_SCRUM_ITEM";
@@ -242,7 +243,7 @@ export function receiveScrumItems (scrumId, itemType, results) {
 }
 
 //	Update a give scrum item
-export function updateScrumItem (scrumID, itemId, itemCreatedAt, itemType, updatedText, updatedCompletedState, updatedBlockedState, updateCompletedItem) {
+export function updateScrumItem (scrumID, itemId, itemCreatedAt, itemType, updatedText, updatedCompletedState, updatedBlockedState, updateCompletedItem, updateBlockerItem, blockerItemText) {
 
 	return function (dispatch) {
 
@@ -292,6 +293,22 @@ export function updateScrumItem (scrumID, itemId, itemCreatedAt, itemType, updat
 
 					//	Remove the scrum item from the next scrum
 					dispatch (cancelScrumItem (itemId, itemCreatedAt));
+				}
+			}
+
+			//	Do we need to add a blocker to the item?
+			if (updateBlockerItem === true) {
+
+				if (updatedBlockedState === true) {
+
+					//	Add a blocker to the scrum item
+					console.log ("Blocker Scrum Item");
+					dispatch (blockScrumItem (scrumID, itemId, itemCreatedAt, blockerItemText));
+				} else {
+
+					console.log ("UnBlocking Scrum Item");
+					//	Remove the blocker from the scrum
+					dispatch (unblockScrumItem (scrumID, itemId));
 				}
 			}
 		});
@@ -365,11 +382,19 @@ export function removeScrumItem (scrumId, itemId, itemType) {
 			scrumId,
 			itemId,
 		};
-	} else {
+	} else if (itemType === "today") {
 
 		return {
 
 			type: REMOVE_SCRUM_TODAY_ITEM,
+			scrumId,
+			itemId,
+		};
+	} else {
+
+		return {
+
+			type: REMOVE_SCRUM_BLOCKER_ITEM,
 			scrumId,
 			itemId,
 		};
@@ -688,5 +713,155 @@ export function canceledScrumItem () {
 	return {
 
 		type: CANCELED_SCRUM_ITEM,
+	};
+}
+
+//	Block a scrum item for a specified scrum
+export function blockScrumItem (originalScrumID, originalScrumItemId, itemCreatedAt, blockerItemText) {
+
+	/*
+	*	When we block a scrum item we need to add a new blocker
+	*	item to the original scrum list
+	*/
+	return function (dispatch) {
+
+		return AsyncStorage.getItem ("scrumdiddly").then (function (results) {
+
+			//	Convert to JSON object
+			let savedScrums = results;
+			if (savedScrums === undefined || savedScrums === null) {
+
+				savedScrums = {
+
+					"dailyscrums": [],
+				};
+			} else {
+
+				savedScrums = JSON.parse(savedScrums);
+			}
+			let dailyScrums = savedScrums.dailyscrums;
+
+			if (dailyScrums === undefined || dailyScrums === null) {
+
+				//	Create empty array to store new scrum
+				dailyScrums = [];
+			}
+
+			let timestampId = moment ().valueOf ();
+			let createdDate = moment (itemCreatedAt, "DD-MM-YYYY").format ("DD-MM-YYYY");
+
+			//	Create a new scrum item
+			let newScrumItem = {
+
+				"id": timestampId,
+				"originalScrumItemId": originalScrumItemId,
+				"createdAt": createdDate,
+				"itemText": blockerItemText,
+				"completed": false,
+				"blocked": true,
+				"itemType": "blocker",
+			};
+			//	Add the new item to the current displayed items
+			dispatch (addScrumItem (newScrumItem));
+
+			//	Is this our first scrum?
+			if (dailyScrums.length > 0) {
+
+				let scrumFound = false;
+				//	Iterate over all the saved scrums
+				for (let i = 0; i < dailyScrums.length; i++) {
+
+					let scrum = dailyScrums[i];
+					//	Are we saving to the correct scrum?
+					if (scrum.scrumId === originalScrumID) {
+
+						let scrumItems = dailyScrums[i].scrumItems;
+						scrumItems.push (newScrumItem);
+						scrumFound = true;
+					}
+				}
+
+				//	First item in a new scrum
+				if (scrumFound === false) {
+
+					let scrumItems = [];
+					//	Add the scrum item to the scrum items list
+					scrumItems.push (newScrumItem);
+
+					//	Create the new scrum
+					let newScrum = {
+
+						"scrumId": timestampId,
+						"scrumDate": createdDate,
+						"scrumItems": scrumItems,
+					};
+
+					//	Add the scrum to the list of users scrums
+					dailyScrums.push (newScrum);
+				}
+			} else {
+
+				let scrumItems = [];
+				//	Add the scrum item to the scrum items list
+				scrumItems.push (newScrumItem);
+
+				//	Create our first new scrum
+				let newScrum = {
+
+					"scrumId": timestampId,
+					"scrumDate": createdDate,
+					"scrumItems": scrumItems,
+				};
+				//	Add the scrum to the list of users scrums
+				dailyScrums.push (newScrum);
+			}
+
+			savedScrums.dailyscrums = dailyScrums;
+			return AsyncStorage.mergeItem ("scrumdiddly", JSON.stringify (savedScrums));
+		}).then (function () {
+
+			console.log ("Scrum Blocker Saved");
+		});
+	};
+}
+
+//	Removes the blocker item from the original scrum
+export function unblockScrumItem (scrumID, itemId) {
+
+	return function (dispatch) {
+
+		dispatch (removeScrumItem (scrumID, itemId, "blocker"));
+		return AsyncStorage.getItem ("scrumdiddly").then (function (results) {
+
+			let resultsObject = JSON.parse(results);
+			let savedScrums = resultsObject.dailyscrums;
+
+			//	Iterate through the saved scrums
+			for (let i = 0; i < savedScrums.length; i++) {
+
+				let scrum = savedScrums[i];
+				//	Remove the scrum from todays scrum
+				if (scrum.scrumId === scrumID) {
+
+					let scrumItems = scrum.scrumItems;
+					for (let j = 0; j < scrumItems.length; j++) {
+
+						let scrumItem = scrumItems[j];
+						if (scrumItem !== undefined && scrumItem.originalScrumItemId !== null) {
+
+							if (scrumItem.originalScrumItemId === itemId) {
+
+								scrumItems.splice(j, 1);
+							}
+						}
+					}
+				}
+			}
+			resultsObject.dailyscrums = savedScrums;
+			return AsyncStorage.mergeItem ("scrumdiddly", JSON.stringify (resultsObject));
+		}).then (function () {
+
+			console.log ("SCRUM BLOCKER Removed");
+		});
 	};
 }
