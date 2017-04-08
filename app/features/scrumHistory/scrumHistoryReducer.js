@@ -22,11 +22,13 @@ import {
 	ADD_SCRUM_ITEM,
 	COMPLETED_SCRUM_ITEM,
 	CANCELED_SCRUM_ITEM,
+	SET_CALENDAR_START_DATE,
 } from "ScrumHistoryActions";
 
 //  Default state to prepare for null
 const scrumHistoryState = {
 	
+	selectedDisplayDate: moment ().format ("YYYY-MM-DD"),
 	scrumData: {},
 	eventDates: [],
 	isLoadingHistory: true,
@@ -264,6 +266,14 @@ const scrumHistoryReducer = (state = scrumHistoryState, action) => {
 		return {
 
 			...state,
+		};
+	}
+	case SET_CALENDAR_START_DATE : {
+
+		return {
+
+			...state,
+			selectedDisplayDate: action.startDate,
 		};
 	}
 	default:

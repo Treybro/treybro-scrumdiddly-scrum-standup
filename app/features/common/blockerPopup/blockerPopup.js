@@ -135,8 +135,7 @@ class BlockerPopup extends Component {
 
 					this.props.updateTodayItem (scrumObject.scrumItemId, scrumObject.scrumItemCreatedAt, scrumObject.scrumItemItemText, scrumObject.scrumItemCompleted, true, false, true, itemText);
 				} else {
-
-												//scrumID, 					itemId, 				itemCreatedAt, 					itemType, updatedText, updatedCompletedState, updatedBlockedState, updateCompletedItem
+					
 					this.props.updateScrumItem (scrumObject.originalScrumId, scrumObject.scrumItemId, scrumObject.scrumItemCreatedAt, "today", scrumObject.scrumItemItemText, scrumObject.scrumItemCompleted, true, false, true, itemText);
 				}
 				this.props.hideBlockerModal ();
@@ -247,7 +246,6 @@ const styles = StyleSheet.create({
 
 		textAlignVertical: "top",
 		height: 150,
-		width: 250,
 		fontSize: (Platform.OS === "ios") ? 16 : 12,
 		fontFamily: (Platform.OS === "ios") ? "Helvetica" : "Roboto",
 		color: theme.darkerGrey,

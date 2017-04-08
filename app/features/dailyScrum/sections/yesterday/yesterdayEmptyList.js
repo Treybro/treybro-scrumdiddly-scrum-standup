@@ -53,7 +53,7 @@ export class EmptyYesterdayList extends Component {
 			return (
 
 				<View style={styles.containerView}>
-					<Text style={styles.emptyText}>You have not completed any items since your last scrum.</Text>
+					<Text style={styles.emptyText}>You have not completed any items from your last scrum.</Text>
 				</View>
 			);
 		}

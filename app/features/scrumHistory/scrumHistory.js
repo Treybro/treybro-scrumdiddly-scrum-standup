@@ -17,6 +17,7 @@ import {
 	getScrumHistory,
 	getScrumForDate,
 	toggleCalendar,
+	setCalendarStartDate,
 } from "ScrumHistoryActions";
 
 import ScrumHistoryItem from "ScrumHistoryItem";
@@ -34,6 +35,7 @@ class ScrumHistory extends Component {
 
 	static propTypes = {
 
+		selectedDisplayDate: React.PropTypes.string.isRequired,
 		isLoadingHistory: React.PropTypes.bool.isRequired,
 		eventDates: React.PropTypes.array.isRequired,
 		getScrumHistory: React.PropTypes.func.isRequired,
@@ -42,6 +44,7 @@ class ScrumHistory extends Component {
 		isSearchingForScrum: React.PropTypes.bool.isRequired,
 		displayCalendar: React.PropTypes.bool.isRequired,
 		toggleCalendar: React.PropTypes.func.isRequired,
+		setCalendarStartDate: React.PropTypes.func.isRequired,
 	};
 
 	//	Navigation bar options
@@ -107,6 +110,7 @@ class ScrumHistory extends Component {
 
 				<View style={styles.containerView}>
 					<Calendar
+						startDate={this.props.selectedDisplayDate}
 						ref="calendar"
 						scrollEnabled={false}
 						eventDates={this.props.eventDates}
@@ -127,6 +131,7 @@ class ScrumHistory extends Component {
 
 	_collapseCalendar (date) {
 
+		this.props.setCalendarStartDate (date);
 		this.props.getScrumForDate (date);
 	}
 }
@@ -145,6 +150,7 @@ const styles = StyleSheet.create({
 */
 const mapStateToProps = state => ({
 
+	selectedDisplayDate: state.scrumHistoryReducer.selectedDisplayDate,
 	isLoadingHistory: state.scrumHistoryReducer.isLoadingHistory,
 	eventDates: state.scrumHistoryReducer.eventDates,
 	selectedScrumItem: state.scrumHistoryReducer.selectedScrumItem,
@@ -160,6 +166,7 @@ const mapDispatchToProps = dispatch => ({
 	getScrumHistory: () => dispatch (getScrumHistory ()),
 	getScrumForDate: (date) => dispatch (getScrumForDate (date)),
 	toggleCalendar: () => dispatch (toggleCalendar ()),
+	setCalendarStartDate: (startDate) => dispatch (setCalendarStartDate (startDate)),
 });
 
 export default connect (mapStateToProps,mapDispatchToProps)(ScrumHistory);

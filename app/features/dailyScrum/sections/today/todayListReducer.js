@@ -108,7 +108,6 @@ const todayListReducer = (state = todayListState, action) => {
 	case RECEIVE_BLOCKER_ITEMS : {
 
 		let toDoItems = action.todayScrumItems;
-		console.log (toDoItems);
 		return {
 
 			...state,

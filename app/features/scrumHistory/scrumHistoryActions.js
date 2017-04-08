@@ -27,6 +27,7 @@ export const SAVE_SCRUM_ITEM = "SAVE_SCRUM_ITEM";
 export const ADD_SCRUM_ITEM = "ADD_SCRUM_ITEM";
 export const COMPLETED_SCRUM_ITEM = "COMPLETED_SCRUM_ITEM";
 export const CANCELED_SCRUM_ITEM = "CANCELED_SCRUM_ITEM";
+export const SET_CALENDAR_START_DATE = "SET_CALENDAR_START_DATE";
 
 //	Tell the app we are getting the scrum history
 export function getScrumHistory () {
@@ -863,5 +864,15 @@ export function unblockScrumItem (scrumID, itemId) {
 
 			console.log ("SCRUM BLOCKER Removed");
 		});
+	};
+}
+
+//	Update the calander selected date
+export function setCalendarStartDate (startDate) {
+
+	return {
+
+		type: SET_CALENDAR_START_DATE,
+		startDate,
 	};
 }
