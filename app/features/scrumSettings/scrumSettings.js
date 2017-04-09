@@ -79,10 +79,10 @@ export class ScrumSettings extends Component {
 			<View style={styles.containerView}>
 				<CurrentAppSettingsHeader />
 				<ScrollView>
-					<ScrumTimeHeader />
-					<ScrumTimeOptions />
 					<NotificationsHeader />
 					<NotificationOptions />
+					<ScrumTimeHeader />
+					<ScrumTimeOptions />
 				</ScrollView>
 			</View>
 		);
