@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 
+import { getAppSettings } from "ScrumSettingsActions";
 import appSettings from "AppSettings";
 
 import AppDrawer from "AppDrawer";
@@ -35,6 +36,7 @@ class App extends Component {
 
 		hasViewedTutorial: React.PropTypes.bool.isRequired,
 		enterButtonPressed: React.PropTypes.bool.isRequired,
+		getAppSettings: React.PropTypes.func.isRequired,
 	};
 
 	constructor (props) {
@@ -46,6 +48,9 @@ class App extends Component {
 
 			isLoading: true,
 		};
+
+		//	Get the users settings
+		this.props.getAppSettings ();
 
 		//  Set timer for loading screen
 		var intervalReference = setInterval (() => {
@@ -120,4 +125,12 @@ const mapStateToProps = state => ({
 	enterButtonPressed: state.welcomeReducer.enterButtonPressed,
 });
 
-export default connect(mapStateToProps)(App);
+/*
+* Mapping for redux dispatch functions.
+*/
+const mapDispatchToProps = dispatch => ({
+
+	getAppSettings: () => dispatch (getAppSettings ()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

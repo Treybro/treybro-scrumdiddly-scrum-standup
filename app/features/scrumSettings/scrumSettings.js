@@ -17,7 +17,9 @@ import theme from "AppTheme";
 import getIconAsset from "IconAssets";
 
 import ScrumTimeHeader from "ScrumTimeHeader";
+import ScrumTimeOptions from "ScrumTimeOptions";
 import NotificationsHeader from "NotificationsHeader";
+import CurrentAppSettingsHeader from "CurrentAppSettingsHeader";
 
 /*
 *	Displays the settings screen
@@ -74,8 +76,10 @@ export class ScrumSettings extends Component {
 		return (
 
 			<View style={styles.containerView}>
+				<CurrentAppSettingsHeader />
 				<ScrollView>
 					<ScrumTimeHeader />
+					<ScrumTimeOptions />
 					<NotificationsHeader />
 				</ScrollView>
 			</View>

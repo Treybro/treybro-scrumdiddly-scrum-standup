@@ -32,6 +32,7 @@ export class ScrumTimeHeader extends Component {
 
 			<View style={styles.viewContainer}>
 				<Text style={styles.headerText}>Scrum Time</Text>
+				<Text style={styles.scrumTimeDescription}>When does your daily scrum take place?</Text>
 			</View>
 		);
 	}
@@ -44,17 +45,24 @@ const styles = StyleSheet.create({
 		flex: 1,
 		height: (Platform.OS === "ios") ? 70 : 70,
 		backgroundColor: theme.white,
-		flexDirection: "row",
-		justifyContent: "space-between",
-		alignItems: "center",
+		flexDirection: "column",
+		justifyContent: "center",
+		borderBottomWidth: 1,
+		borderBottomColor: theme.lightGrey,
 	},
 	headerText: {
 
 		color: theme.lightBlue,
-		marginLeft: (Platform.OS === "ios") ? 20 : 20,
-		marginRight: 10,
+		paddingLeft: (Platform.OS === "ios") ? 20 : 20,
+		paddingRight: 10,
 		fontSize: 18,
 		fontWeight: "bold",
+	},
+	scrumTimeDescription: {
+
+		paddingLeft: 20,
+		fontSize: 12,
+		color: theme.darkGrey,
 	},
 });
 
