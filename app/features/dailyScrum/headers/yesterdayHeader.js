@@ -34,6 +34,7 @@ export class YesterdayHeader extends Component {
 		toggleCreateScrumItem: React.PropTypes.func.isRequired,
 		isEditable: React.PropTypes.bool.isRequired,
 		headerType: React.PropTypes.string.isRequired,
+		userScrumTime: React.PropTypes.bool.isRequired,
 	};
 
 	constructor (props) {
@@ -48,7 +49,7 @@ export class YesterdayHeader extends Component {
 			return (
 
 				<View style={styles.viewContainer}>
-					<Text style={styles.yesterdayText}>Yesterday I...</Text>
+					<Text style={styles.yesterdayText}>{(this.props.userScrumTime === true) ? "Yesterday I..." : "Today I..."}</Text>
 				</View>
 			);
 		}
@@ -56,7 +57,7 @@ export class YesterdayHeader extends Component {
 		return (
 
 			<View style={styles.viewContainer}>
-				<Text style={styles.yesterdayText}>Yesterday I...</Text>
+				<Text style={styles.yesterdayText}>{(this.props.userScrumTime === true) ? "Yesterday I..." : "Today I..."}</Text>
 				<TouchableOpacity 
 					onPress={(this.props.headerType === "daily") ? () => this.props.toggleCreateYesterdayItem () : () => this.props.toggleCreateScrumItem ("yesterday", !this.props.toggleCreateYesterdayItemBool)} 
 					style={styles.addButton}>
@@ -112,6 +113,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => ({
 
 	toggleCreateYesterdayItemBool: state.scrumHistoryReducer.toggleCreateYesterdayItem,
+	userScrumTime: state.scrumSettingsReducer.userScrumTime,
 });
 
 /*

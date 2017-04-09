@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
 	containerView: {
 
 		flex: 1,
-		height: 50,
+		height: 70,
 		flexDirection: "row",
 		justifyContent: "center",
 		alignItems: "center",
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
 	morningText: {
 
 		color: theme.darkGrey,
-		fontSize: 18,
+		fontSize: 16,
 		fontWeight: "bold",
 	},
 	eveningButton: {
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
 	eveningText: {
 
 		color: theme.darkGrey,
-		fontSize: 18,
+		fontSize: 16,
 		fontWeight: "bold",
 	},
 });

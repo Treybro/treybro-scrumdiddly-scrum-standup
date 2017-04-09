@@ -55,11 +55,12 @@ const styles = StyleSheet.create({
 		color: theme.lightBlue,
 		paddingLeft: (Platform.OS === "ios") ? 20 : 20,
 		paddingRight: 10,
-		fontSize: 18,
+		fontSize: 20,
 		fontWeight: "bold",
 	},
 	scrumTimeDescription: {
 
+		marginTop: 10,
 		paddingLeft: 20,
 		fontSize: 12,
 		color: theme.darkGrey,

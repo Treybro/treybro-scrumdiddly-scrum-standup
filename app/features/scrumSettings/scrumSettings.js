@@ -20,6 +20,7 @@ import ScrumTimeHeader from "ScrumTimeHeader";
 import ScrumTimeOptions from "ScrumTimeOptions";
 import NotificationsHeader from "NotificationsHeader";
 import CurrentAppSettingsHeader from "CurrentAppSettingsHeader";
+import NotificationOptions from "NotificationOptions";
 
 /*
 *	Displays the settings screen
@@ -81,6 +82,7 @@ export class ScrumSettings extends Component {
 					<ScrumTimeHeader />
 					<ScrumTimeOptions />
 					<NotificationsHeader />
+					<NotificationOptions />
 				</ScrollView>
 			</View>
 		);
