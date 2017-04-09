@@ -117,8 +117,18 @@ const todayListReducer = (state = todayListState, action) => {
 	}
 	case ADD_BLOCKER_ITEM : {
 
+		let todaysItems = [...state.todaysItems];
+		for (let i = 0; i < todaysItems.length; i++) {
+
+			let todayItem = todaysItems[i];
+			if (action.newScrumItem.originalScrumItemId === todayItem.id) {
+
+				todayItem.blocked = true;
+			}
+		}
 		return {
 			...state,
+			todaysItems: todaysItems,
 			blockerItems: [
 				action.newScrumItem,
 				...state.blockerItems,

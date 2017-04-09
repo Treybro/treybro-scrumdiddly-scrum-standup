@@ -288,18 +288,6 @@ export class YesterdayListItem extends Component {
 			this.props.showCompletedErrorModal ();
 		} else {
 
-			/**
-			let toggle = !this.state.itemBlocked;
-			this.setState ({
-
-				itemBlocked: toggle,
-			}, () => {
-
-				let item = this.props.listItem;
-				this.props.updateScrumItem (this.props.scrumId, item.id, item.createdAt, item.itemType, item.itemText, this.state.itemCompleted, toggle, false);
-			});
-			**/
-
 			//	Can't block an already blocked item
 			if (this.state.itemBlocked === true) {
 
@@ -309,13 +297,18 @@ export class YesterdayListItem extends Component {
 				}, () => {
 
 					let item = this.props.listItem;
-												//scrumID, 			itemId, 	itemCreatedAt, itemType, updatedText, updatedCompletedState, updatedBlockedState, updateCompletedItem, updateBlockerItem, blockerItemText
 					this.props.updateScrumItem (this.props.scrumId, item.id, item.createdAt, item.itemType, item.itemText, this.state.itemCompleted, false, false, true, "");
 				});
 			} else {
 
-				let item = this.props.listItem;
-				this.props.showBlockerModal (item.id, item.createdAt, item.itemText, this.state.itemCompleted, true, "history", this.props.scrumId);
+				this.setState ({
+
+					itemBlocked: true,
+				}, () => {
+
+					let item = this.props.listItem;
+					this.props.showBlockerModal (item.id, item.createdAt, item.itemText, this.state.itemCompleted, true, "history", this.props.scrumId);
+				});
 			}
 		}
 	}

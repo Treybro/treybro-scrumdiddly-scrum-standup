@@ -288,8 +288,14 @@ export class TodayListItem extends Component {
 				});
 			} else {
 
-				let item = this.props.todayItem;
-				this.props.showBlockerModal (item.id, item.createdAt, item.itemText, this.state.itemCompleted, true, "today", "");
+				this.setState ({
+
+					itemBlocked: true,
+				}, () => {
+
+					let item = this.props.todayItem;
+					this.props.showBlockerModal (item.id, item.createdAt, item.itemText, this.state.itemCompleted, true, "today", "");
+				});
 			}
 		}
 	}

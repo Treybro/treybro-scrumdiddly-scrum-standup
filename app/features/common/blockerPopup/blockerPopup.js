@@ -132,7 +132,7 @@ class BlockerPopup extends Component {
 				let scrumObject = this.props.selectedScrumItemObject;
 
 				if (scrumObject.scrumItemSection === "today") {
-
+					
 					this.props.updateTodayItem (scrumObject.scrumItemId, scrumObject.scrumItemCreatedAt, scrumObject.scrumItemItemText, scrumObject.scrumItemCompleted, true, false, true, itemText);
 				} else {
 					

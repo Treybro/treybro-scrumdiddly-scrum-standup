@@ -6,6 +6,8 @@ import { DrawerNavigator } from "react-navigation";
 //import AppTabs from "AppTabs";
 import DailyTabNav from "DailyTabNav";
 import HistoryNav from "HistoryNav";
+import BlockerHistoryNav from "BlockerHistoryNav";
+import ScrumSettingsNav from "ScrumSettingsNav";
 
 import theme from "AppTheme";
 
@@ -18,6 +20,14 @@ const AppDrawer = DrawerNavigator ({
 	HistoryNav: {
 
 		screen: HistoryNav,
+	},
+	BlockerHistoryNav: {
+
+		screen: BlockerHistoryNav,
+	},
+	SettingsNav: {
+
+		screen: ScrumSettingsNav,
 	},
 }, {
 
