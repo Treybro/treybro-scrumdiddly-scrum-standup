@@ -36,7 +36,7 @@ class TutorialScreen extends Component {
 
 		return (
 
-			<Swiper style={styles.wrapper} activeDotColor={"#FFFFFF"} loop={false}>
+			<Swiper activeDotColor={"#FFFFFF"} loop={false}>
 				<View style={styles.slide1}>
 					<Text style={styles.text}>Scrumdiddly</Text>
 				</View>
@@ -48,7 +48,7 @@ class TutorialScreen extends Component {
 					<TouchableOpacity 
 						onPress={() => this._completeTutorial ()} 
 						style={styles.enterButton}>
-						<Text>Get Started!</Text>
+						<Text style={styles.enterButtonText}>Enter!</Text>
 					</TouchableOpacity>
 				</View>
 			</Swiper>
@@ -63,9 +63,6 @@ class TutorialScreen extends Component {
 
 const styles = StyleSheet.create({
 
-	wrapper: {
-
-	},
 	slide1: {
 
 		flex: 1,
@@ -96,10 +93,17 @@ const styles = StyleSheet.create({
 	enterButton: {
 
 		backgroundColor: theme.blue,
-		height: 30,
-		width: 110,
+		height: 50,
+		width: 250,
+		marginTop: 20,
 		justifyContent: "center",
 		alignItems: "center",
+	},
+	enterButtonText: {
+
+		color: theme.white,
+		fontSize: 16,
+		fontWeight: "bold",
 	},
 });
 
