@@ -14,7 +14,6 @@ import { getAppSettings } from "ScrumSettingsActions";
 
 import AppDrawer from "AppDrawer";
 import LoadingScreen from "LoadingScreen";
-import WelcomeScreen from "WelcomeScreen";
 import TutorialScreen from "TutorialScreen";
 
 //	App modals
@@ -35,7 +34,6 @@ class App extends Component {
 
 		isLoadingAppSettings: React.PropTypes.bool.isRequired,
 		hasViewedTutorial: React.PropTypes.bool.isRequired,
-		enterButtonPressed: React.PropTypes.bool.isRequired,
 		getAppSettings: React.PropTypes.func.isRequired,
 	};
 
@@ -62,12 +60,6 @@ class App extends Component {
 		if (this.props.hasViewedTutorial === false) {
 
 			return <TutorialScreen />;
-		}
-
-		//	Display welcome screen?
-		if (this.props.enterButtonPressed === false) {
-
-			return <WelcomeScreen />;
 		}
 
 		//	Last option - show the app
@@ -103,7 +95,6 @@ const mapStateToProps = state => ({
 
 	isLoadingAppSettings: state.scrumSettingsReducer.isLoadingAppSettings,
 	hasViewedTutorial: state.scrumSettingsReducer.hasViewedTutorial,
-	enterButtonPressed: state.welcomeReducer.enterButtonPressed,
 });
 
 /*
