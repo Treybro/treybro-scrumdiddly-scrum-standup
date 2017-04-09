@@ -11,7 +11,6 @@ import {
 import { connect } from "react-redux";
 
 import { getAppSettings } from "ScrumSettingsActions";
-import appSettings from "AppSettings";
 
 import AppDrawer from "AppDrawer";
 import LoadingScreen from "LoadingScreen";
@@ -34,6 +33,7 @@ class App extends Component {
 
 	static propTypes = {
 
+		isLoadingAppSettings: React.PropTypes.bool.isRequired,
 		hasViewedTutorial: React.PropTypes.bool.isRequired,
 		enterButtonPressed: React.PropTypes.bool.isRequired,
 		getAppSettings: React.PropTypes.func.isRequired,
@@ -42,29 +42,18 @@ class App extends Component {
 	constructor (props) {
 
 		super (props);
-		//  Spoof loading screen
-		//  TODO add this to redux - reducer/action
-		this.state = {
+	}
 
-			isLoading: true,
-		};
+	componentDidMount () {
 
 		//	Get the users settings
 		this.props.getAppSettings ();
-
-		//  Set timer for loading screen
-		var intervalReference = setInterval (() => {
-
-			this._stopLoading ();
-			//  Cancel the loading timer
-			clearInterval(intervalReference);
-		}, appSettings.appLoadingTime);
 	}
 
 	render () {
 
 		//  Are we loading?
-		if (this.state.isLoading === true) {
+		if (this.props.isLoadingAppSettings === true) {
 
 			return <LoadingScreen />;
 		}
@@ -94,15 +83,6 @@ class App extends Component {
 			</View>
 		);
 	}
-
-	//  Tell the component to stop loading
-	_stopLoading = () => {
-		
-		this.setState ({
-
-			isLoading: false,
-		});
-	};
 }
 
 const styles = StyleSheet.create({
@@ -121,7 +101,8 @@ const styles = StyleSheet.create({
 */
 const mapStateToProps = state => ({
 
-	hasViewedTutorial: state.tutorialReducer.hasViewedTutorial,
+	isLoadingAppSettings: state.scrumSettingsReducer.isLoadingAppSettings,
+	hasViewedTutorial: state.scrumSettingsReducer.hasViewedTutorial,
 	enterButtonPressed: state.welcomeReducer.enterButtonPressed,
 });
 

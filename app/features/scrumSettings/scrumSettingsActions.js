@@ -6,6 +6,7 @@ import { AsyncStorage } from "react-native";
 export const RECEIVE_APP_SETTINGS = "RECEIVE_APP_SETTINGS";
 export const SET_SCRUM_TIME = "SET_SCRUM_TIME";
 export const SET_DAILY_REMINDERS = "SET_DAILY_REMINDERS";
+export const SET_TUTORIAL_COMPLETED = "SET_TUTORIAL_COMPLETED";
 
 //	Get the users settings
 export function getAppSettings () {
@@ -33,11 +34,16 @@ export function getAppSettings () {
 			if (userSettings === undefined || userSettings === null) {
 
 				userSettings = {
+					hasViewedTutorial: false,
 					userScrumTime: true,
 					enableDailyReminders: true,
 				};
 			}
 
+			if (userSettings.hasViewedTutorial === undefined || userSettings.hasViewedTutorial === null) {
+				userSettings.hasViewedTutorial = false;
+			}
+			
 			if (userSettings.userScrumTime === undefined || userSettings.userScrumTime === null) {
 				userSettings.userScrumTime = true;
 			}
@@ -163,6 +169,16 @@ export function setDailyReminders (toggle) {
 	return {
 
 		type: SET_DAILY_REMINDERS,
+		toggle,
+	};
+}
+
+//	Tell the app if the user has completed the tutorial or not
+export function setTutorialCompleted (toggle) {
+
+	return {
+
+		type: SET_TUTORIAL_COMPLETED,
 		toggle,
 	};
 }

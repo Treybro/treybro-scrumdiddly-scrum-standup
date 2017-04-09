@@ -6,11 +6,11 @@ import React, { Component } from "react";
 import {
 	View,
 	Text,
-	TouchableHighlight,
+	TouchableOpacity,
 	StyleSheet,
 } from "react-native";
 import { connect } from "react-redux";
-import { completeTutorial } from "TutorialActions";
+import { setTutorialCompleted } from "ScrumSettingsActions";
 
 import Swiper from "react-native-swiper";
 
@@ -24,7 +24,7 @@ class TutorialScreen extends Component {
 
 	static propTypes = {
 
-		finishTutorial: React.PropTypes.func,
+		setTutorialCompleted: React.PropTypes.func.isRequired,
 	};
 
 	constructor (props) {
@@ -45,12 +45,19 @@ class TutorialScreen extends Component {
 				</View>
 				<View style={styles.slide3}>
 					<Text style={styles.text}>Let's go!</Text>
-					<TouchableHighlight onPress={this.props.finishTutorial} style={styles.enterButton}>
+					<TouchableOpacity 
+						onPress={() => this._completeTutorial ()} 
+						style={styles.enterButton}>
 						<Text>Get Started!</Text>
-					</TouchableHighlight>
+					</TouchableOpacity>
 				</View>
 			</Swiper>
 		);
+	}
+
+	_completeTutorial () {
+
+		this.props.setTutorialCompleted (true);
 	}
 }
 
@@ -88,7 +95,7 @@ const styles = StyleSheet.create({
 	},
 	enterButton: {
 
-		backgroundColor: theme.darkGrey,
+		backgroundColor: theme.blue,
 		height: 30,
 		width: 110,
 		justifyContent: "center",
@@ -99,7 +106,7 @@ const styles = StyleSheet.create({
 //  Redux functions mapping
 const mapDispatchToProps = dispatch => ({
 
-	finishTutorial: () => dispatch(completeTutorial()),
+	setTutorialCompleted: (toggle) => dispatch (setTutorialCompleted (toggle)),
 });
 
 //  Wire this component to redux with our state and dispatch mappings
