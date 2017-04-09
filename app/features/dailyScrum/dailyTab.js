@@ -70,9 +70,18 @@ class DailyTab extends Component {
 			label: "Daily",
 			icon: () => (
 
-				<Image source={getIconAsset ("clipboardIcon")} style={styles.tabBarIcon}/>
+				<Image 
+					source={getIconAsset ("clipboardIcon")} 
+					style={styles.tabBarIcon}/>
 			),
 		},
+		drawer: () => ({
+			icon: ({ tintColor }) => (
+				<Image
+					source={getIconAsset ("editIcon")}
+					style={[styles.icon, {tintColor: tintColor}]} />
+			),
+		}),
 	};
 
 	//	Default constructor

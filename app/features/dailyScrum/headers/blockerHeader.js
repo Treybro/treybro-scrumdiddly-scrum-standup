@@ -51,7 +51,7 @@ export class BlockerHeader extends Component {
 			<View style={styles.viewContainer}>
 				<Text style={styles.yesterdayText}>Blockers...</Text>
 				<TouchableOpacity 
-					onPress={(this.props.headerType === "daily") ? () => {} : () => console.log ("History")} 
+					onPress={(this.props.headerType === "daily") ? () => {} : () => {}} 
 					style={styles.addButton}>
 					<Image source={getIconAsset ("pencilIcon")} style={styles.addButtonImage}/>
 				</TouchableOpacity>

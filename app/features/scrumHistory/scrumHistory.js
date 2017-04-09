@@ -9,6 +9,7 @@ import {
 	Text,
 	StyleSheet,
 	Platform,
+	Image,
 } from "react-native";
 
 import { connect } from "react-redux";
@@ -25,6 +26,7 @@ import MenuButton from "MenuButton";
 import CalendarButton from "CalendarButton";
 import theme from "AppTheme";
 import { customCalandarStyle } from "AppTheme";
+import getIconAsset from "IconAssets";
 
 import Calendar from "react-native-calendar";
 
@@ -74,6 +76,13 @@ class ScrumHistory extends Component {
 			},
 			tintColor: {},
 		},
+		drawer: () => ({
+			icon: ({ tintColor }) => (
+				<Image
+					source={getIconAsset ("calendarIcon")}
+					style={[styles.icon, {tintColor: tintColor}]} />
+			),
+		}),
 	};
 
 	constructor (props) {

@@ -6,13 +6,18 @@ import React, { Component } from "react";
 import {
 
 	View,
-	Text,
 	StyleSheet,
 	Platform,
+	ScrollView,
+	Image,
 } from "react-native";
 
 import MenuButton from "MenuButton";
 import theme from "AppTheme";
+import getIconAsset from "IconAssets";
+
+import ScrumTimeHeader from "ScrumTimeHeader";
+import NotificationsHeader from "NotificationsHeader";
 
 /*
 *	Displays the settings screen
@@ -46,6 +51,13 @@ export class ScrumSettings extends Component {
 			},
 			tintColor: {},
 		},
+		drawer: () => ({
+			icon: ({ tintColor }) => (
+				<Image
+					source={getIconAsset ("settingsIcon")}
+					style={[styles.icon, {tintColor: tintColor}]} />
+			),
+		}),
 	};
 
 	constructor (props) {
@@ -62,7 +74,10 @@ export class ScrumSettings extends Component {
 		return (
 
 			<View style={styles.containerView}>
-				<Text>App Settings</Text>
+				<ScrollView>
+					<ScrumTimeHeader />
+					<NotificationsHeader />
+				</ScrollView>
 			</View>
 		);
 	}

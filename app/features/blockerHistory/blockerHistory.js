@@ -9,10 +9,12 @@ import {
 	Text,
 	StyleSheet,
 	Platform,
+	Image,
 } from "react-native";
 
 import MenuButton from "MenuButton";
 import theme from "AppTheme";
+import getIconAsset from "IconAssets";
 
 /*
 *	Displays the BlockerHistory screen
@@ -46,6 +48,13 @@ export class BlockerHistory extends Component {
 			},
 			tintColor: {},
 		},
+		drawer: () => ({
+			icon: ({ tintColor }) => (
+				<Image
+					source={getIconAsset ("blockerIcon")}
+					style={[styles.icon, {tintColor: tintColor}]} />
+			),
+		}),
 	};
 
 	constructor (props) {
