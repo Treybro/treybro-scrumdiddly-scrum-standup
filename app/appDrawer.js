@@ -36,7 +36,7 @@ const AppDrawer = DrawerNavigator ({
 
 		activeTintColor: theme.white,
 		activeBackgroundColor: theme.pink,
-		inactiveTintColor: theme.white,
+		inactiveTintColor: theme.darkerGrey,
 		inactiveBackgroundColor: theme.pink,
 		style: {
 
