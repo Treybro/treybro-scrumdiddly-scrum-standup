@@ -21,6 +21,8 @@ import getIconAsset from "IconAssets";
 
 import BlockerHistoryHeader from "BlockerHistoryHeader";
 import BlockerHistoryListItem from "BlockerHistoryListItem";
+import DateHeader from "DateHeader";
+import EmptyBlockerHistory from "EmptyBlockerHistory";
 
 /*
 *	Displays the BlockerHistory screen
@@ -121,9 +123,21 @@ export class BlockerHistory extends Component {
 
 	render () {
 
+		if (this.props.currentBlockers !== undefined && this.props.currentBlockers !== null && this.props.currentBlockers.length === 0) {
+
+			return (
+
+				<View style={styles.containerView}>
+					<DateHeader displayTitle={"Current Blockers"}/>
+					<EmptyBlockerHistory />
+				</View>
+			);
+		}
+
 		return (
 
 			<View style={styles.containerView}>
+				<DateHeader displayTitle={"Current Blockers"}/>
 				<ListView
 					dataSource={this.state.dataSource}
 					renderRow={(rowData) => this._renderRow (rowData)}
