@@ -22,7 +22,7 @@ const blockerHistoryReducer = (state = blockerHistoryState, action) => {
 		return {
 
 			...state,
-			currentBlockers: action.currentBlockers,
+			currentBlockers: action.currentBlockers.reverse (),
 		};
 	}
 	default:

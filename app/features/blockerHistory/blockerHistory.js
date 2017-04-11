@@ -140,7 +140,7 @@ export class BlockerHistory extends Component {
 		let displayDate = suppliedDate.format ("MMM Do") + " Blockers";
 		if (moment (today).isSame (moment (sectionID, "DD-MM-YYYY"))) {
 
-			displayDate = "Todays Blocker";
+			displayDate = "Todays Blockers";
 		}
 
 		return (
