@@ -11,6 +11,7 @@ import {
 import { connect } from "react-redux";
 
 import { getAppSettings } from "ScrumSettingsActions";
+import { getScrumBlockers } from "BlockerHistoryActions";
 
 import AppDrawer from "AppDrawer";
 import LoadingScreen from "LoadingScreen";
@@ -35,6 +36,7 @@ class App extends Component {
 		isLoadingAppSettings: React.PropTypes.bool.isRequired,
 		hasViewedTutorial: React.PropTypes.bool.isRequired,
 		getAppSettings: React.PropTypes.func.isRequired,
+		getScrumBlockers: React.PropTypes.func.isRequired,
 	};
 
 	constructor (props) {
@@ -46,6 +48,8 @@ class App extends Component {
 
 		//	Get the users settings
 		this.props.getAppSettings ();
+		//	Get all the current blockers for the user
+		this.props.getScrumBlockers ();
 	}
 
 	render () {
@@ -103,6 +107,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
 
 	getAppSettings: () => dispatch (getAppSettings ()),
+	getScrumBlockers: () => dispatch (getScrumBlockers ()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

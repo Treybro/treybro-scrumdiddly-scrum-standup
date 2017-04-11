@@ -9,10 +9,15 @@ import {
 	StyleSheet,
 	Text,
 	Switch,
+	DatePickerIOS,
 } from "react-native";
 import { connect } from "react-redux";
+import moment from "moment";
 
-import { toggleDailyReminders } from "ScrumSettingsActions";
+import { 
+	toggleDailyReminders,
+	cancelPushNotifications,
+} from "ScrumSettingsActions";
 import theme from "AppTheme";
 
 /*
@@ -24,14 +29,46 @@ export class NotificationOptions extends Component {
 
 		toggleDailyReminders: React.PropTypes.func.isRequired,
 		enableDailyReminders: React.PropTypes.bool.isRequired,
+		cancelPushNotifications: React.PropTypes.func.isRequired,
 	};
 
 	constructor (props) {
 
 		super (props);
+		this.state = {
+
+			selectedDate: moment ().toDate (),
+		};
 	}
 
 	render () {
+
+		if (this.props.enableDailyReminders === true) {
+
+			return (
+
+				<View style={styles.containerView}>
+					<View style={styles.dailyReminders}>
+						<Text style={styles.dailyRemindersText}>Daily Reminders</Text>
+						<Switch 
+							disabled={false}
+							value={this.props.enableDailyReminders}
+							onValueChange={(value) => this._toggleDailyReminders (value)}
+							onTintColor={theme.lightGreen}/>
+					</View>
+					<View style={styles.dailyReminders}>
+						<Text style={styles.dailyRemindersText}>Reminder time?</Text>
+					</View>
+					<DatePickerIOS
+						date={this.state.selectedDate}
+						mode={"time"}
+						minuteInterval={30}
+						onDateChange={(date) =>  {
+							this.setState ({selectedDate: date});
+						}}/>
+				</View>
+			);
+		}
 
 		return (
 
@@ -51,6 +88,10 @@ export class NotificationOptions extends Component {
 	_toggleDailyReminders (value) {
 
 		this.props.toggleDailyReminders (value);
+		if (value === false) {
+
+			this.props.cancelPushNotifications ();
+		}
 	}
 }
 
@@ -94,6 +135,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
 
 	toggleDailyReminders: (toggle) => dispatch (toggleDailyReminders (toggle)),
+	cancelPushNotifications: () => dispatch (cancelPushNotifications ()),
 });
 
 export default connect (mapStateToProps, mapDispatchToProps)(NotificationOptions);

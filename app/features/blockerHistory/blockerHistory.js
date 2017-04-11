@@ -10,11 +10,17 @@ import {
 	StyleSheet,
 	Platform,
 	Image,
+	ListView,
 } from "react-native";
+import { connect } from "react-redux";
 
+import moment from "moment";
 import MenuButton from "MenuButton";
 import theme from "AppTheme";
 import getIconAsset from "IconAssets";
+
+import BlockerHistoryHeader from "BlockerHistoryHeader";
+import BlockerHistoryListItem from "BlockerHistoryListItem";
 
 /*
 *	Displays the BlockerHistory screen
@@ -23,6 +29,7 @@ export class BlockerHistory extends Component {
 
 	static propTypes = {
 
+		currentBlockers: React.PropTypes.array.isRequired,
 	};
 
 	//	Navigation bar options
@@ -60,10 +67,56 @@ export class BlockerHistory extends Component {
 	constructor (props) {
 
 		super (props);
+
+		const ds = new ListView.DataSource ({
+
+			rowHasChanged: (r1, r2) => r1 !== r2,
+			sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
+		});
+
+		this.state = {
+
+			ds: ds,
+			dataSource: ds.cloneWithRowsAndSections([]),
+		};
 	}
 
 	componentDidMount () {
 
+		let currentBlockersMap = {};
+		this.props.currentBlockers.forEach ((blocker) => {
+
+			if (!currentBlockersMap[blocker.createdAt]) {
+				currentBlockersMap[blocker.createdAt] = [];
+			}
+
+			currentBlockersMap[blocker.createdAt].push (blocker.itemText);
+		});
+
+		this.setState ({
+
+			dataSource: this.state.ds.cloneWithRowsAndSections (currentBlockersMap),
+		});
+	}
+
+	componentWillReceiveProps (nextProps) {
+
+		if (nextProps.currentBlockers !== undefined && nextProps.currentBlockers !== null) {
+
+			let currentBlockersMap = {};
+			nextProps.currentBlockers.forEach ((blocker) => {
+
+				if (!currentBlockersMap[blocker.createdAt]) {
+					currentBlockersMap[blocker.createdAt] = [];
+				}
+
+				currentBlockersMap[blocker.createdAt].push (blocker.itemText);
+			});
+			this.setState ({
+
+				dataSource: this.state.ds.cloneWithRowsAndSections (currentBlockersMap),
+			});
+		}
 	}
 
 	render () {
@@ -71,8 +124,31 @@ export class BlockerHistory extends Component {
 		return (
 
 			<View style={styles.containerView}>
-				<Text>Blocker History</Text>
+				<ListView
+					dataSource={this.state.dataSource}
+					renderRow={(rowData) => this._renderRow (rowData)}
+					renderSectionHeader={(sectionData, sectionID) => this._renderSection (sectionData, sectionID)} />
 			</View>
+		);
+	}
+
+	_renderSection (sectionData, sectionID) {
+
+		//	Set the date displayString
+		let suppliedDate = moment (sectionID, "DD-MM-YYYY");
+		let displayDate = suppliedDate.format ("MMM Do") + " Blockers";
+
+		return (
+
+			<BlockerHistoryHeader displayDate={displayDate} />
+		);
+	}
+
+	_renderRow (rowData) {
+
+		return (
+
+			<BlockerHistoryListItem itemText={rowData} />
 		);
 	}
 }
@@ -86,4 +162,19 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default BlockerHistory;
+/*
+* Mapping for redux state.
+*/
+const mapStateToProps = state => ({
+
+	currentBlockers: state.blockerHistoryReducer.currentBlockers,
+});
+
+/*
+* Mapping for redux dispatch functions.
+*/
+const mapDispatchToProps = dispatch => ({
+
+});
+
+export default connect (mapStateToProps, mapDispatchToProps)(BlockerHistory);

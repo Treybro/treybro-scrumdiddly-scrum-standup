@@ -10,6 +10,7 @@ import todayListReducer from "TodayListReducer";
 import scrumHistoryReducer from "ScrumHistoryReducer";
 import modalReducer from "ModalReducer";
 import scrumSettingsReducer from "ScrumSettingsReducer";
+import blockerHistoryReducer from "BlockerHistoryReducer";
 
 const appReducers = combineReducers ({
 	
@@ -19,6 +20,7 @@ const appReducers = combineReducers ({
 	scrumHistoryReducer,
 	modalReducer,
 	scrumSettingsReducer,
+	blockerHistoryReducer,
 });
 
 export default appReducers;

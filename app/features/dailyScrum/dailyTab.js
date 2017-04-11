@@ -19,6 +19,10 @@ import {
 
 	setDrawerNav,
 } from "DrawerActions";
+import { 
+	requestPermissions,
+	schedulePushNotifications,
+} from "ScrumSettingsActions";
 
 import MenuButton from "MenuButton";
 import DateHeader from "DateHeader";
@@ -39,6 +43,8 @@ class DailyTab extends Component {
 
 		setDrawerNav: React.PropTypes.func.isRequired,
 		navigation: React.PropTypes.object.isRequired,
+		requestPermissions: React.PropTypes.func.isRequired,
+		schedulePushNotifications: React.PropTypes.func.isRequired,
 	};
 
 	//	Navigation bar options
@@ -91,6 +97,12 @@ class DailyTab extends Component {
 		this.props.setDrawerNav (this.props.navigation);
 	}
 
+	componentDidMount () {
+
+		this.props.requestPermissions ();
+		//this.props.schedulePushNotifications ();
+	}
+
 	render () {
 
 		return (
@@ -135,6 +147,8 @@ const styles = StyleSheet.create({
 const mapDispatchToProps = dispatch => ({
 
 	setDrawerNav: (navItem) => dispatch (setDrawerNav (navItem)),
+	requestPermissions: () => dispatch (requestPermissions ()),
+	schedulePushNotifications: () => dispatch (schedulePushNotifications ()),
 });
 
 export default connect (null, mapDispatchToProps)(DailyTab);
