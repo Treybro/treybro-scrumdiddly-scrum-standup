@@ -135,8 +135,13 @@ export class BlockerHistory extends Component {
 	_renderSection (sectionData, sectionID) {
 
 		//	Set the date displayString
+		let today = moment ().format ("YYYY-MM-DD");
 		let suppliedDate = moment (sectionID, "DD-MM-YYYY");
 		let displayDate = suppliedDate.format ("MMM Do") + " Blockers";
+		if (moment (today).isSame (moment (sectionID, "DD-MM-YYYY"))) {
+
+			displayDate = "Todays Blocker";
+		}
 
 		return (
 
