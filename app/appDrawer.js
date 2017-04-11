@@ -1,6 +1,7 @@
 /**
  * @providesModule AppDrawer
  */
+import { Platform } from "react-native";
 import { DrawerNavigator } from "react-navigation";
 
 //import AppTabs from "AppTabs";
@@ -33,7 +34,7 @@ const AppDrawer = DrawerNavigator ({
 
 	contentOptions: {
 
-		activeTintColor: theme.lightBlue,
+		activeTintColor: theme.white,
 		activeBackgroundColor: theme.pink,
 		inactiveTintColor: theme.white,
 		inactiveBackgroundColor: theme.pink,
@@ -41,6 +42,8 @@ const AppDrawer = DrawerNavigator ({
 
 			flex: 1,
 			backgroundColor: theme.pink,
+			marginTop: 0,
+			paddingTop: (Platform.OS === "ios") ? 20 : 0,
 		},
 	},
 });

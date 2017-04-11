@@ -6,13 +6,14 @@ import React, { Component } from "react";
 import {
 
 	View,
-	Text,
 	StyleSheet,
 	Platform,
 	Image,
 	ListView,
 } from "react-native";
 import { connect } from "react-redux";
+
+import { getScrumBlockers } from "BlockerHistoryActions";
 
 import moment from "moment";
 import MenuButton from "MenuButton";
@@ -32,6 +33,7 @@ export class BlockerHistory extends Component {
 	static propTypes = {
 
 		currentBlockers: React.PropTypes.array.isRequired,
+		getScrumBlockers: React.PropTypes.func.isRequired,
 	};
 
 	//	Navigation bar options
@@ -81,6 +83,9 @@ export class BlockerHistory extends Component {
 			ds: ds,
 			dataSource: ds.cloneWithRowsAndSections([]),
 		};
+
+		//	Get all the current blockers for the user
+		this.props.getScrumBlockers ();
 	}
 
 	componentDidMount () {
@@ -194,6 +199,7 @@ const mapStateToProps = state => ({
 */
 const mapDispatchToProps = dispatch => ({
 
+	getScrumBlockers: () => dispatch (getScrumBlockers ()),
 });
 
 export default connect (mapStateToProps, mapDispatchToProps)(BlockerHistory);
