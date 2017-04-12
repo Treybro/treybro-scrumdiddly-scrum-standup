@@ -7,7 +7,7 @@ import { DrawerNavigator } from "react-navigation";
 //import AppTabs from "AppTabs";
 import DailyTabNav from "DailyTabNav";
 import HistoryNav from "HistoryNav";
-import BlockerHistoryNav from "BlockerHistoryNav";
+import BlockerHistoryTabNav from "BlockerHistoryTabNav";
 import ScrumSettingsNav from "ScrumSettingsNav";
 
 import theme from "AppTheme";
@@ -24,7 +24,7 @@ const AppDrawer = DrawerNavigator ({
 	},
 	BlockerHistoryNav: {
 
-		screen: BlockerHistoryNav,
+		screen: BlockerHistoryTabNav,
 	},
 	SettingsNav: {
 

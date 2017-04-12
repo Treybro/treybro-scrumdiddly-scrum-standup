@@ -23,7 +23,7 @@ import theme from "AppTheme";
 import getIconAsset from "IconAssets";
 
 /*
-*	Allows the user to add a Yesterday Item
+*	Allows the user to open/close the nav drawer
 */
 export class MenuButton extends Component {
 

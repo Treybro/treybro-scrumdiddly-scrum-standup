@@ -6,7 +6,17 @@ import { AsyncStorage } from "react-native";
 export const FETCH_SCRUM_BLOCKERS = "FETCH_SCRUM_BLOCKERS";
 export const GET_SCRUM_BLOCKERS = "GET_SCRUM_BLOCKERS";
 export const RECEIVE_SCRUM_BLOCKERS = "RECEIVE_SCRUM_BLOCKERS";
+export const SET_NAVIGATION_BACK = "SET_NAVIGATION_BACK";
 
+// Set the nav back object
+export function setNavigationBack (backNavigation) {
+
+	return {
+
+		type: SET_NAVIGATION_BACK,
+		backNavigation,
+	};
+}
 
 //	Fetch all scrum blockers
 export function fetchScrumBlocker () {

@@ -5,12 +5,14 @@
 import {
 
 	RECEIVE_SCRUM_BLOCKERS,
+	SET_NAVIGATION_BACK,
 } from "BlockerHistoryActions";
 
 //  Default state to prepare for null
 const blockerHistoryState = {
 
 	currentBlockers: [],
+	backNavigation: {},
 };
 
 const blockerHistoryReducer = (state = blockerHistoryState, action) => {
@@ -23,6 +25,14 @@ const blockerHistoryReducer = (state = blockerHistoryState, action) => {
 
 			...state,
 			currentBlockers: action.currentBlockers.reverse (),
+		};
+	}
+	case SET_NAVIGATION_BACK : {
+
+		return {
+
+			...state,
+			backNavigation: action.backNavigation,
 		};
 	}
 	default:

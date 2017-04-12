@@ -9,6 +9,7 @@ import {
 	Text,
 	StyleSheet,
 	Platform,
+	TouchableOpacity,
 } from "react-native";
 
 import theme from "AppTheme";
@@ -21,6 +22,7 @@ export class BlockerHistoryListItem extends Component {
 	static propTypes = {
 
 		itemText: React.PropTypes.string.isRequired,
+		navigation: React.PropTypes.object.isRequired,
 	};
 
 	constructor (props) {
@@ -33,9 +35,11 @@ export class BlockerHistoryListItem extends Component {
 		return (
 
 			<View style={styles.containerView}>
-				<View style={styles.itemTextContainer}>
-					<Text style={styles.itemText}>{this.props.itemText}</Text>
-				</View>
+				<TouchableOpacity onPress={() => this.props.navigation.navigate ("TabTwo")}>
+					<View style={styles.itemTextContainer}>
+						<Text style={styles.itemText}>{this.props.itemText}</Text>
+					</View>
+				</TouchableOpacity>
 			</View>
 		);
 	}

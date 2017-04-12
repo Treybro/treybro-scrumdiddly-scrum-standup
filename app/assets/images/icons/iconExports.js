@@ -19,6 +19,7 @@ import okIcon from "./icon-ok.png";
 import warningIcon from "./icon-warning.png";
 import blockerIcon from "./icon-blocker.png";
 import historyIcon from "./icon-history.png";
+import backIcon from "./icon-back.png";
 
 export default function getIconAsset (assetName) {
 
@@ -58,5 +59,7 @@ export default function getIconAsset (assetName) {
 		return blockerIcon;
 	case "historyIcon":
 		return historyIcon;
+	case "backIcon":
+		return backIcon;
 	}
 }

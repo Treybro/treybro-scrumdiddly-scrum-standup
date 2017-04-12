@@ -13,7 +13,11 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 
-import { getScrumBlockers } from "BlockerHistoryActions";
+import { 
+
+	getScrumBlockers,
+	setNavigationBack,
+} from "BlockerHistoryActions";
 
 import moment from "moment";
 import MenuButton from "MenuButton";
@@ -34,6 +38,8 @@ export class BlockerHistory extends Component {
 
 		currentBlockers: React.PropTypes.array.isRequired,
 		getScrumBlockers: React.PropTypes.func.isRequired,
+		navigation: React.PropTypes.object.isRequired,
+		setNavigationBack: React.PropTypes.func.isRequired,
 	};
 
 	//	Navigation bar options
@@ -66,6 +72,10 @@ export class BlockerHistory extends Component {
 					style={[styles.icon, {tintColor: tintColor}]} />
 			),
 		}),
+		tabBar: () => ({
+
+			visible: false,
+		}),
 	};
 
 	constructor (props) {
@@ -86,6 +96,7 @@ export class BlockerHistory extends Component {
 
 		//	Get all the current blockers for the user
 		this.props.getScrumBlockers ();
+		this.props.setNavigationBack (this.props.navigation);
 	}
 
 	componentDidMount () {
@@ -172,7 +183,9 @@ export class BlockerHistory extends Component {
 
 		return (
 
-			<BlockerHistoryListItem itemText={rowData} />
+			<BlockerHistoryListItem 
+				itemText={rowData} 
+				navigation={this.props.navigation}/>
 		);
 	}
 }
@@ -200,6 +213,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
 
 	getScrumBlockers: () => dispatch (getScrumBlockers ()),
+	setNavigationBack: (backNavigation) => dispatch (setNavigationBack (backNavigation)),
 });
 
 export default connect (mapStateToProps, mapDispatchToProps)(BlockerHistory);
