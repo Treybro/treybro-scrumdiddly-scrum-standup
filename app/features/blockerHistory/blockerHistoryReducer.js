@@ -6,6 +6,8 @@ import {
 
 	RECEIVE_SCRUM_BLOCKERS,
 	SET_NAVIGATION_BACK,
+	SELECTED_SCRUM_ITEM,
+	FINDING_SCRUM_ITEM,
 } from "BlockerHistoryActions";
 
 //  Default state to prepare for null
@@ -13,6 +15,8 @@ const blockerHistoryState = {
 
 	currentBlockers: [],
 	backNavigation: {},
+	displayDetails: false,
+	selectedScrumItem: {},
 };
 
 const blockerHistoryReducer = (state = blockerHistoryState, action) => {
@@ -33,6 +37,23 @@ const blockerHistoryReducer = (state = blockerHistoryState, action) => {
 
 			...state,
 			backNavigation: action.backNavigation,
+		};
+	}
+	case FINDING_SCRUM_ITEM : {
+
+		return {
+
+			...state,
+			displayDetails: false,
+		};
+	}
+	case SELECTED_SCRUM_ITEM : {
+
+		return {
+
+			...state,
+			selectedScrumItem: action.scrum,
+			displayDetails: true,
 		};
 	}
 	default:

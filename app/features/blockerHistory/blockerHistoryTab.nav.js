@@ -20,7 +20,7 @@ const DailyTabNav = TabNavigator ({
 }, {
 
 	animationEnabled: true,
-	swipeEnabled: true,
+	swipeEnabled: false,
 	lazyLoad: false,
 	initialRouteName: "TabOne",
 	order: ["TabOne","TabTwo"],

@@ -4,16 +4,18 @@
 
 import React, { Component } from "react";
 import {
-
-	View,
+	
 	StyleSheet,
 	Platform,
 	Image,
-	Text,
 } from "react-native";
+import { connect } from "react-redux";
+
 import BackButton from "BackButton";
 import theme from "AppTheme";
 import getIconAsset from "IconAssets";
+
+import SelectedScrumItem from "SelectedScrumItem";
 
 /*
 *	Displays the Selected Scrum
@@ -22,6 +24,7 @@ export class SelectedScrum extends Component {
 
 	static propTypes = {
 		
+		displayDetails: React.PropTypes.bool.isRequired,
 	};
 
 	//	Navigation bar options
@@ -67,11 +70,14 @@ export class SelectedScrum extends Component {
 
 	render () {
 
+		if (this.props.displayDetails === false) {
+
+			return null;
+		}
+
 		return (
 
-			<View style={styles.containerView}>
-				<Text>Hello</Text>
-			</View>
+			<SelectedScrumItem />
 		);
 	}
 }
@@ -85,4 +91,12 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default SelectedScrum;
+/*
+* Mapping for redux state.
+*/
+const mapStateToProps = state => ({
+
+	displayDetails: state.blockerHistoryReducer.displayDetails,
+});
+
+export default connect (mapStateToProps, null)(SelectedScrum);

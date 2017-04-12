@@ -108,7 +108,7 @@ export class BlockerHistory extends Component {
 				currentBlockersMap[blocker.createdAt] = [];
 			}
 
-			currentBlockersMap[blocker.createdAt].push (blocker.itemText);
+			currentBlockersMap[blocker.createdAt].push ({"itemText":blocker.itemText,"itemId":blocker.id});
 		});
 
 		this.setState ({
@@ -128,8 +128,9 @@ export class BlockerHistory extends Component {
 					currentBlockersMap[blocker.createdAt] = [];
 				}
 
-				currentBlockersMap[blocker.createdAt].push (blocker.itemText);
+				currentBlockersMap[blocker.createdAt].push ({"itemText":blocker.itemText,"itemId":blocker.id});
 			});
+
 			this.setState ({
 
 				dataSource: this.state.ds.cloneWithRowsAndSections (currentBlockersMap),
@@ -184,7 +185,8 @@ export class BlockerHistory extends Component {
 		return (
 
 			<BlockerHistoryListItem 
-				itemText={rowData} 
+				itemText={rowData.itemText}
+				itemId={rowData.itemId} 
 				navigation={this.props.navigation}/>
 		);
 	}

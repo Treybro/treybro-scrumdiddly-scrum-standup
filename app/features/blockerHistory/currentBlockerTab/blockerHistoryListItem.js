@@ -11,7 +11,9 @@ import {
 	Platform,
 	TouchableOpacity,
 } from "react-native";
+import { connect } from "react-redux";
 
+import { selectScrumItem } from "BlockerHistoryActions";
 import theme from "AppTheme";
 
 /*
@@ -22,7 +24,9 @@ export class BlockerHistoryListItem extends Component {
 	static propTypes = {
 
 		itemText: React.PropTypes.string.isRequired,
+		itemId: React.PropTypes.number.isRequired,
 		navigation: React.PropTypes.object.isRequired,
+		selectScrumItem: React.PropTypes.func.isRequired,
 	};
 
 	constructor (props) {
@@ -35,13 +39,20 @@ export class BlockerHistoryListItem extends Component {
 		return (
 
 			<View style={styles.containerView}>
-				<TouchableOpacity onPress={() => this.props.navigation.navigate ("TabTwo")}>
+				<TouchableOpacity onPress={() => this._selectScrumItem ()}>
 					<View style={styles.itemTextContainer}>
 						<Text style={styles.itemText}>{this.props.itemText}</Text>
 					</View>
 				</TouchableOpacity>
 			</View>
 		);
+	}
+
+	//	Selects the scrumItem
+	_selectScrumItem () {
+
+		this.props.selectScrumItem (this.props.itemId);
+		this.props.navigation.navigate ("TabTwo");
 	}
 }
 
@@ -56,7 +67,7 @@ const styles = StyleSheet.create({
 	},
 	itemTextContainer: {
 
-		minHeight: 40,
+		minHeight: 60,
 		justifyContent: "center",
 		borderRightWidth: 5, 
 		borderRightColor: theme.lightOrange,
@@ -73,4 +84,12 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default BlockerHistoryListItem;
+/*
+* Mapping for redux dispatch functions.
+*/
+const mapDispatchToProps = dispatch => ({
+
+	selectScrumItem: (itemId) => dispatch (selectScrumItem (itemId)),
+});
+
+export default connect (null, mapDispatchToProps)(BlockerHistoryListItem);
